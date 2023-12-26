@@ -27,13 +27,13 @@ router.post(
 );
 
 //Passport Logout
-router.get("/logout", (req, res, next) => {
-  req.logout((err) => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/")
-  });
-});
+// router.get("/logout", (req, res, next) => {
+//   req.logout((err) => {
+//     if (err) {
+//       return next(err);
+//     }
+//     res.redirect("/")
+//   });
+// });
 
 export default router;
