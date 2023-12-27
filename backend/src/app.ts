@@ -5,6 +5,7 @@ import path from "path";
 import cookieParser from 'cookie-parser';
 import logger from "morgan";
 import cors from 'cors';
+import Session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import bcrypt from 'bcrypt';
@@ -30,7 +31,8 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use('/public', express.static('public'))
+app.use('/public', express.static('public'));
+app.use(Session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -50,7 +52,6 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
   res.json(err);
   console.log(err)
 });

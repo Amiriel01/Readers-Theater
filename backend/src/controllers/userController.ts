@@ -28,7 +28,7 @@ export function user_create() {
             .trim()
             .isLength({ min: 1 })
             .escape(),
-        body("passwrd", "Password cannot be blank.")
+        body("password", "Password cannot be blank.")
             .trim()
             .isLength({ min: 1 })
             .isLength({ max: 100 })
@@ -43,7 +43,6 @@ export function user_create() {
             .isLength({ max: 250 })
             .escape(),
 
-
         asyncHandler(async (req, res, next) => {
             //take out validation errors from the request
             const errors = validationResult(req);
@@ -52,6 +51,8 @@ export function user_create() {
             const user = new User({
                 username: req.body.username,
                 password: req.body.password,
+                profile_name: req.body.profile_name,
+                about_section: req.body.about_section,
             });
 
             //check for errors
