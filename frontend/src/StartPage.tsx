@@ -17,10 +17,10 @@ export default function StartPage() {
                 </Col>
             </Row>
             <Link to='/Login'>
-                <MyButton id='start-page-button' title='Login'></MyButton>
+                <MyButton className='start-page-button' title='Login'></MyButton>
             </Link>
             <Link to='/SignUp'>
-                <MyButton id='start-page-button' title='Sign Up'></MyButton>
+                <MyButton className='start-page-button' title='Sign Up'></MyButton>
             </Link>
         </>
     )
