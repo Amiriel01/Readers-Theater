@@ -7,10 +7,12 @@ import axios from 'axios';
 import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
+import Alert from 'react-bootstrap/Alert';
 
 interface SignUp {
     username: string,
     password: string,
+    confirm_password: string,
     profile_name: string,
     about_section: string,
 }
@@ -20,10 +22,12 @@ export default function SignUp() {
     const [signUp, setSignUp] = useState({
         username: '',
         password: '',
+        confirm_password: "",
         profile_name: '',
         about_section: '',
     });
 
+    const [alertShow, setAlertShow] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (event: FormEvent) => {
@@ -37,20 +41,25 @@ export default function SignUp() {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        const signUpData = {
-            username: signUp.username,
-            password: signUp.password,
-            profile_name: signUp.profile_name,
-            about_section: signUp.about_section,
-        }
-        setSignUp(signUpData)
-
-        await axios.post("http://localhost:3000/users/userCreate", signUpData).then((response) => {
-            console.log(response.status, response.data);
-            if (response.status === 200) {
-                navigate('/StartPage')
+        if (signUp.password === signUp.confirm_password) {
+            const signUpData = {
+                username: signUp.username,
+                password: signUp.password,
+                confirm_password: signUp.confirm_password,
+                profile_name: signUp.profile_name,
+                about_section: signUp.about_section,
             }
-        })
+            setSignUp(signUpData)
+
+            await axios.post("http://localhost:3000/users/userCreate", signUpData).then((response) => {
+                console.log(response.status, response.data);
+                if (response.status === 200) {
+                    navigate('/StartPage')
+                }
+            })
+        } else {
+            setAlertShow(true)
+        }
     }
 
     const { pathname } = useLocation();
@@ -94,6 +103,26 @@ export default function SignUp() {
                             />
                         </FloatingLabel>
                     </Form.Group>
+                    <Form.Group className="mb-3">
+                        <FloatingLabel
+                            label="Confirm Password">
+                            <Form.Control
+                                required
+                                type="password"
+                                name='confirm_password'
+                                placeholder='Confirm Password'
+                                value={signUp.confirm_password}
+                                onChange={handleChange}
+                            />
+                        </FloatingLabel>
+                    </Form.Group>
+                    <Row>
+                        <Col>
+                            <Alert hidden={!alertShow} variant={"danger"}>
+                                Passwords Must Match
+                            </Alert>
+                        </Col>
+                    </Row>
                     <Form.Group className="mb-3">
                         <FloatingLabel
                             label="Profile Name">
