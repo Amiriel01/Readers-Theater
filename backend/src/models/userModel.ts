@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
+import passportLocalMongoose from 'passport-local-mongoose';
 
 const UserSchema = new Schema({
     username: {
@@ -25,5 +26,15 @@ const UserSchema = new Schema({
         maxLength: 250,
     }
 })
+
+UserSchema.plugin(passportLocalMongoose);
+
+// UserSchema.methods.authenticate = function (password) {
+//     return this.password === this.hashPassword(password);
+// }
+
+// UserSchema.methods.authenticate = function(password) {      
+//     return this.password === password;
+//   }
 
 export default mongoose.model("User", UserSchema);

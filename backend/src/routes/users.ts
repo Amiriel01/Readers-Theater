@@ -23,7 +23,10 @@ router.post(
   passport.authenticate("local", {
     successRedirect: "/",
     failureRedirect: "/users/login"
-  })
+  }),
+  function (req, res) {
+    res.json(req.body.username)
+  }
 );
 
 //Passport Logout
@@ -32,7 +35,7 @@ router.post(
 //     if (err) {
 //       return next(err);
 //     }
-//     res.redirect("/")
+//     res.json("User Logged Out")
 //   });
 // });
 

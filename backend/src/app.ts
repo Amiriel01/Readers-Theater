@@ -10,6 +10,7 @@ import passport from 'passport';
 import LocalStrategy from 'passport-local';
 import bcrypt from 'bcrypt';
 import User from './models/userModel.ts';
+import passportLocalMongoose from 'passport-local-mongoose';
 
 import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';
@@ -35,6 +36,7 @@ app.use('/public', express.static('public'));
 app.use(Session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
+// passport.use(new LocalStrategy(User.authenticate()));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -55,6 +57,9 @@ app.use(function(err, req, res, next) {
   res.json(err);
   console.log(err)
 });
+
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
 
 passport.use(
   new LocalStrategy(async (username, password, done) => {

@@ -1,6 +1,7 @@
 import { body, validationResult } from 'express-validator';
 import User from "../models/userModel.ts";
 import asyncHandler from "express-async-handler";
+import bcrypt from 'bcrypt';
 
 //GET a list of all users with details
 export function user_list() {
@@ -31,7 +32,21 @@ export function user_create() {
         body("password", "Password cannot be blank.")
             .trim()
             .isLength({ min: 1 })
-            .isLength({ max: 100 })
+            .isLength({ max: 25 })
+            .escape(),
+        body("confirm_password", "Password cannot be blank.")
+            .trim()
+            .isLength({ min: 5 })
+            .isLength({ max: 25 })
+            .custom(async (confirmPassword, { req }) => {
+                console.log(confirmPassword)
+                const password = req.body.password
+                console.log(password)
+                if (password !== confirmPassword) {
+                    throw new Error('Passwords must match.')
+                }
+                return true;
+            })
             .escape(),
         body("profile_name", "Profile name cannot be blank.")
             .trim()
@@ -46,11 +61,12 @@ export function user_create() {
         asyncHandler(async (req, res, next) => {
             //take out validation errors from the request
             const errors = validationResult(req);
+            const hashPassword = await bcrypt.hashSync(req.body.password, 10);
 
             //create user object with escaped and trimmed info
             const user = new User({
                 username: req.body.username,
-                password: req.body.password,
+                password: hashPassword,
                 profile_name: req.body.profile_name,
                 about_section: req.body.about_section,
             });
