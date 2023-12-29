@@ -1,5 +1,4 @@
 #start-page-container {
-    /* background-color: rgb(96, 130, 182); */
     background-image: url(images/bookpages1.png);
     height: 100vh;
     display: flex;
@@ -7,28 +6,87 @@
     align-items: center;
 }
 
-#start-page-info-section {
-    background-color: rgb(250, 218, 221);
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    width: 60%;
-    height: 60%;
-    text-align: center;
+@media(min-width: 960px) {
+    #start-page-title {
+        margin-top: 5%;
+        font-weight: bold;
+        font-size: 4rem;
+    }
+
+    #start-page-subtitle {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+    }
+
+    #start-page-info-section {
+        background-color: rgb(250, 218, 221);
+        box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+        width: 60%;
+        height: 60%;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    #start-page-button1 {
+        margin-right: 2rem;
+    }
+
+    #start-page-subtitle {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 3rem;
+    }
 }
 
-#start-page-title {
-    margin-top: 12%;
-    font-weight: bold;
-    font-size: 3rem;
+@media(max-width: 959px) {
+
+    #start-page-info-section {
+        background-color: rgb(250, 218, 221);
+        box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+        width: 60%;
+        height: 80%;
+        text-align: center;
+        padding: 1rem;
+    }
 }
 
-#start-page-subtitle {
-    font-size: 1.5rem;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+@media(max-width: 655px) {
+    #start-page-title {
+        margin-top: 5%;
+        font-weight: bold;
+        font-size: 3rem;
+    }
+
+    #start-page-info-section {
+        background-color: rgb(250, 218, 221);
+        box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+        width: 60%;
+        height: 80%;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    #start-page-button1 {
+        margin-right: 0px;
+    }
 }
 
-#start-page-button1 {
-    margin-right: 2rem;
+@media(max-width: 505px) {
+    #start-page-info-section {
+        background-color: rgb(250, 218, 221);
+        box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+        width: 60%;
+        height: 95%;
+        text-align: center;
+        padding: 1rem;
+    }
+
+    #start-page-subtitle {
+        font-size: 1.5rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
 }
 
 #start-page-button1,

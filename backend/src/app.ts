@@ -7,10 +7,12 @@ import logger from "morgan";
 import cors from 'cors';
 import Session from 'express-session';
 import passport from 'passport';
-import LocalStrategy from 'passport-local';
+// import LocalStrategy from 'passport-local';
+// import JwtStrategy from 'passport-jwt';
+import {Strategy as JwtStrategy, ExtractJwt, StrategyOptions} from 'passport-jwt';
 import bcrypt from 'bcrypt';
 import User from './models/userModel.ts';
-import passportLocalMongoose from 'passport-local-mongoose';
+// import passportLocalMongoose from 'passport-local-mongoose';
 
 import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';
@@ -35,7 +37,7 @@ app.use(cookieParser());
 app.use('/public', express.static('public'));
 app.use(Session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
-app.use(passport.session());
+// app.use(passport.session());
 // passport.use(new LocalStrategy(User.authenticate()));
 
 app.use('/', indexRouter);
@@ -60,10 +62,16 @@ app.use(function(err, req, res, next) {
 
 // passport.serializeUser(User.serializeUser());
 // passport.deserializeUser(User.deserializeUser());
+const options: StrategyOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), 
+  secretOrKey: process.env.JWT_KEY,
+}
 
 passport.use(
-  new LocalStrategy(async (username, password, done) => {
+  new JwtStrategy(options, async (username, password, done) => {
     try {
+      console.log('random')
+      console.log(username, password)
       const user = await User.findOne({ username: username });
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
@@ -73,13 +81,14 @@ passport.use(
       };
       return done(null, user);
     } catch(err) {
+      console.log('some error')
       return done(err);
     };
   })
 );
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, (user as any)._id);
 });
 
 passport.deserializeUser(async (id, done) => {

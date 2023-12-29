@@ -40,6 +40,7 @@ export default function Login() {
             password: login.password,
         }
         setLogin(signUpData)
+        console.log(signUpData)
 
         await axios.post("http://localhost:3000/users/login", signUpData).then((response) => {
             console.log(response.status, response.data);

@@ -20,12 +20,12 @@ router.post("/userCreate", user_create());
 //Passport Login
 router.post(
   "/login",
-  passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/users/login"
+  passport.authenticate("jwt", {
+    session: false,
   }),
   function (req, res) {
-    res.json(req.body.username)
+    console.log('something random')
+    res.json(req.user)
   }
 );
 
