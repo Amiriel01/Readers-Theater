@@ -150,11 +150,11 @@ export default function SignUp() {
                         </FloatingLabel>
                     </Form.Group>
                     <Row>
-                        <MyButton className='sign-up-page-button' title='Sign Up'></MyButton>
+                        <MyButton id='sign-up-page-button' title='Sign Up'></MyButton>
                     </Row>
                     <Row>
                         <Link to='/StartPage'>
-                            <MyButton className='sign-up-page-button' title='Return to Homepage'></MyButton>
+                            <MyButton id='sign-up-page-button' title='Return to Homepage'></MyButton>
                         </Link>
                     </Row>
                 </Form>
