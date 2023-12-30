@@ -1,4 +1,5 @@
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import MyButton from './MyButton';
 import Row from 'react-bootstrap/Row';
@@ -8,16 +9,17 @@ import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
 import Alert from 'react-bootstrap/Alert';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 interface SignUp {
     username: string,
     password: string,
     confirm_password: string,
-    profile_name: string,
-    about_section: string,
 }
 
-export default function SignUp() {
+export default function SignUp({ setLoggedIn }: {
+    setLoggedIn: (data: boolean) => void,
+}) {
 
     const [signUp, setSignUp] = useState({
         username: '',
@@ -29,6 +31,8 @@ export default function SignUp() {
 
     const [alertShow, setAlertShow] = useState(false);
     const navigate = useNavigate();
+    const [showPassword1, setShowPassword1] = useState(false);
+    const [showPassword2, setShowPassword2] = useState(false);
 
     const handleChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
@@ -54,7 +58,8 @@ export default function SignUp() {
             await axios.post("http://localhost:3000/users/userCreate", signUpData).then((response) => {
                 console.log(response.status, response.data);
                 if (response.status === 200) {
-                    navigate('/StartPage')
+                    setLoggedIn(true)
+                    navigate('/ProfilePage')
                 }
             })
         } else {
@@ -96,12 +101,15 @@ export default function SignUp() {
                                 label="Password">
                                 <Form.Control
                                     required
-                                    type="password"
+                                    type={showPassword1 ? "text" : "password"}
                                     name='password'
                                     placeholder='Password'
                                     value={signUp.password}
                                     onChange={handleChange}
                                 />
+                                <Button onClick={() => setShowPassword1(!showPassword1)}>
+                                    {showPassword1 ? <FaEyeSlash /> : <FaEye />}
+                                </Button>
                             </FloatingLabel>
                         </Form.Group>
                         <Form.Group className="mb-3">
@@ -109,12 +117,14 @@ export default function SignUp() {
                                 label="Confirm Password">
                                 <Form.Control
                                     required
-                                    type="password"
+                                    type={showPassword2 ? "text" : "password"}
                                     name='confirm_password'
                                     placeholder='Confirm Password'
                                     value={signUp.confirm_password}
-                                    onChange={handleChange}
-                                />
+                                    onChange={handleChange} />
+                                <Button onClick={() => setShowPassword2(!showPassword2)}>
+                                    {showPassword2 ? <FaEyeSlash /> : <FaEye />}
+                                </Button>
                             </FloatingLabel>
                         </Form.Group>
                         <Row>
@@ -132,7 +142,7 @@ export default function SignUp() {
                         </div>
                     </Form>
                 </Row>
-            </div>
+            </div >
         </>
     )
 }
