@@ -70,95 +70,95 @@ export default function SignUp() {
 
     return (
         <>
-            <Row>
-                <Row>
-                    <Col>
-                        Sign Up To Join Reader's Theater!
-                    </Col>
-                </Row>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3">
-                        <FloatingLabel
-                            label="Username">
-                            <Form.Control
-                                required
-                                type="text"
-                                name='username'
-                                placeholder='Username'
-                                value={signUp.username}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <FloatingLabel
-                            label="Password">
-                            <Form.Control
-                                required
-                                type="password"
-                                name='password'
-                                placeholder='Password'
-                                value={signUp.password}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <FloatingLabel
-                            label="Confirm Password">
-                            <Form.Control
-                                required
-                                type="password"
-                                name='confirm_password'
-                                placeholder='Confirm Password'
-                                value={signUp.confirm_password}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
+            <div id='signup-page-container'>
+                <Row id='signup-page-info-container'>
                     <Row>
-                        <Col>
-                            <Alert hidden={!alertShow} variant={"danger"}>
-                                Passwords Must Match
-                            </Alert>
+                        <Col id='signup-page-title'>
+                            Sign Up To Join Reader's Theater!
                         </Col>
                     </Row>
-                    <Form.Group className="mb-3">
-                        <FloatingLabel
-                            label="Profile Name">
-                            <Form.Control
-                                required
-                                type="text"
-                                name='profile_name'
-                                placeholder='Profile Name'
-                                value={signUp.profile_name}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <FloatingLabel
-                            label="About Me">
-                            <Form.Control
-                                as="textarea"
-                                style={{ height: '100px' }}
-                                name='about_section'
-                                placeholder='About Me'
-                                value={signUp.about_section}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Row>
-                        <MyButton id='sign-up-page-button' title='Sign Up'></MyButton>
-                    </Row>
-                    <Row>
-                        <Link to='/StartPage'>
-                            <MyButton id='sign-up-page-button' title='Return to Homepage'></MyButton>
-                        </Link>
-                    </Row>
-                </Form>
-            </Row>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3">
+                            <FloatingLabel
+                                label="Username">
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    name='username'
+                                    placeholder='Username'
+                                    value={signUp.username}
+                                    onChange={handleChange}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <FloatingLabel
+                                label="Password">
+                                <Form.Control
+                                    required
+                                    type="password"
+                                    name='password'
+                                    placeholder='Password'
+                                    value={signUp.password}
+                                    onChange={handleChange}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <FloatingLabel
+                                label="Confirm Password">
+                                <Form.Control
+                                    required
+                                    type="password"
+                                    name='confirm_password'
+                                    placeholder='Confirm Password'
+                                    value={signUp.confirm_password}
+                                    onChange={handleChange}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Row>
+                            <Col>
+                                <Alert hidden={!alertShow} variant={"danger"}>
+                                    Passwords Must Match
+                                </Alert>
+                            </Col>
+                        </Row>
+                        <Form.Group className="mb-3">
+                            <FloatingLabel
+                                label="Profile Name">
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    name='profile_name'
+                                    placeholder='Profile Name'
+                                    value={signUp.profile_name}
+                                    onChange={handleChange}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <FloatingLabel
+                                label="About Me">
+                                <Form.Control
+                                    as="textarea"
+                                    style={{ height: '100px' }}
+                                    name='about_section'
+                                    placeholder='About Me'
+                                    value={signUp.about_section}
+                                    onChange={handleChange}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <div id='signup-buttons-container'>
+                            <MyButton id='signup-page-button1' title='Sign Up'></MyButton>
+                            <Link to='/StartPage'>
+                                <MyButton id='signup-page-button2' title='Return to Homepage'></MyButton>
+                            </Link>
+                        </div>
+                    </Form>
+                </Row>
+            </div>
         </>
     )
 }
