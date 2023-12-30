@@ -124,32 +124,6 @@ export default function SignUp() {
                                 </Alert>
                             </Col>
                         </Row>
-                        <Form.Group className="mb-3">
-                            <FloatingLabel
-                                label="Profile Name">
-                                <Form.Control
-                                    required
-                                    type="text"
-                                    name='profile_name'
-                                    placeholder='Profile Name'
-                                    value={signUp.profile_name}
-                                    onChange={handleChange}
-                                />
-                            </FloatingLabel>
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <FloatingLabel
-                                label="About Me">
-                                <Form.Control
-                                    as="textarea"
-                                    style={{ height: '100px' }}
-                                    name='about_section'
-                                    placeholder='About Me'
-                                    value={signUp.about_section}
-                                    onChange={handleChange}
-                                />
-                            </FloatingLabel>
-                        </Form.Group>
                         <div id='signup-buttons-container'>
                             <MyButton id='signup-page-button1' title='Sign Up'></MyButton>
                             <Link to='/StartPage'>

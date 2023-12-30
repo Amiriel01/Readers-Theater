@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 const Schema = mongoose.Schema;
-import passportLocalMongoose from 'passport-local-mongoose';
+// import passportLocalMongoose from 'passport-local-mongoose';
 
 const UserSchema = new Schema({
     username: {
@@ -15,19 +15,9 @@ const UserSchema = new Schema({
         required: true,
         maxLength: 100,
     },
-    profile_name: {
-        type: String,
-        required: true,
-        minLength: 5,
-        maxLength: 25,
-    },
-    about_section: {
-        type: String,
-        maxLength: 250,
-    }
 })
 
-UserSchema.plugin(passportLocalMongoose);
+// UserSchema.plugin(passportLocalMongoose);
 
 // UserSchema.methods.authenticate = function (password) {
 //     return this.password === this.hashPassword(password);
