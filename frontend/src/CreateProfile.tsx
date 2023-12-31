@@ -5,12 +5,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import MyButton from "./MyButton";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { useNavigate } from "react-router";
 
 export default function CreateProfile() {
 
     const [user, setUser] = useState('');
     const [image, setImage] = useState<File | null>(null);
     const [imageURL, setImageURL] = useState(null);
+    const navigate = useNavigate();
 
     async function getUser() {
         try {
@@ -85,61 +87,64 @@ export default function CreateProfile() {
         try {
             const response = await axios.post("http://localhost:3000/profile/profile_create", profileFormData);
             console.log(response.status, response.data);
+            navigate('/ProfilePage')
         } catch (err) {
             console.log(err)
         }
     }
 
     return (
-        <Row id="event-form-page-container">
-            <Row>
-                <Col>
-                    Hello, {user}! Create your profile.
-                </Col>
+        <div id="create-profile-page-container">
+            <Row id='create-profile-page-info-container'>
+                <Row>
+                    <Col id='create-profile-page-title'>
+                        Hello, {user}! Create your profile.
+                    </Col>
+                </Row>
+                <Form onSubmit={submitImage} id="event-form-">
+                    <Form.Group className="mb-3" >
+                        <Form.Control
+                            type="file"
+                            accept="image/*"
+                            onChange={onInputChange}
+                        />
+                    </Form.Group>
+                    <div>
+                        <MyButton id='create-profile-page-button1' title='Select Image'></MyButton>
+                    </div>
+                </Form>
+                <Form onSubmit={formSubmit}>
+                    <Form.Group className="mb-3">
+                        <FloatingLabel
+                            label="Profile Name">
+                            <Form.Control
+                                required
+                                type="text"
+                                name='profile_name'
+                                placeholder='Type Profile Name Here'
+                                value={profileData.profile_name}
+                                onChange={handleChange}
+                            />
+                        </FloatingLabel>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <FloatingLabel
+                            label="About Section">
+                            <Form.Control
+                                required
+                                type="text"
+                                name='about_section'
+                                placeholder='Type Information About Yourself Here'
+                                value={profileData.about_section}
+                                onChange={handleChange}
+                            />
+                        </FloatingLabel>
+                    </Form.Group>
+                    <div>
+                        <MyButton id='create-profile-page-button2' title='Submit Profile'></MyButton>
+                    </div>
+                </Form>
             </Row>
-            <Form onSubmit={submitImage} id="event-form-">
-                <Form.Group className="mb-3" >
-                    <Form.Control
-                        type="file"
-                        accept="image/*"
-                        onChange={onInputChange}
-                    />
-                </Form.Group>
-                <div>
-                    <MyButton id='create-profile-page-button' title='Select Image'></MyButton>
-                </div>
-            </Form>
-            <Form onSubmit={formSubmit}>
-                <Form.Group className="mb-3">
-                    <FloatingLabel
-                        label="Profile Name">
-                        <Form.Control
-                            required
-                            type="text"
-                            name='profile_name'
-                            placeholder='Type Profile Name Here'
-                            value={profileData.profile_name}
-                            onChange={handleChange}
-                        />
-                    </FloatingLabel>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <FloatingLabel
-                        label="About Section">
-                        <Form.Control
-                            required
-                            type="text"
-                            name='about_section'
-                            placeholder='Type Information About Yourself Here'
-                            value={profileData.about_section}
-                            onChange={handleChange}
-                        />
-                    </FloatingLabel>
-                </Form.Group>
-                <div>
-                    <MyButton id='create-profile-page-button' title='Submit Profile'></MyButton>
-                </div>
-            </Form>
-        </Row>
+        </div>
     )
 }

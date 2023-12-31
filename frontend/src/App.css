@@ -405,7 +405,7 @@ input.form-control {
 }
 
 #login-page-info-container {
-    background-color: #faece0;
+    background-color: #f4ad96;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     padding: 5rem;
 }
@@ -447,4 +447,43 @@ input.form-control {
     #login-page-button1 {
         margin-right: 0px;
     }
+}
+
+/*Create Profile Page*/
+#create-profile-page-container {
+    background-image: url(images/bookpages1.png);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#create-profile-page-info-container {
+    background-color: #fddde8;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    padding: 5rem;
+}
+
+#create-profile-page-title {
+    font-size: 2rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+#create-profile-page-button1,
+#create-profile-page-button2 {
+    width: 10rem;
+    height: 3rem;
+    background-color: white;
+    font-weight: bold;
+}
+
+#create-profile-page-button1 {
+    margin-bottom: 1rem;
+}
+
+#create-profile-page-button1:hover,
+#create-profile-page-button2:hover {
+    background-color: rgb(248, 196, 198);
 }

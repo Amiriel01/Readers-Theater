@@ -35,7 +35,7 @@ export function profile_details_create() {
             const errors = validationResult(req);
 
             const profileDetails = new Profile({
-                user: "6590656e82e961c23fe35d78",
+                user: "6591f5e018252d4fa589528c",
                 profile_name: req.body.profile_name,
                 about_section: req.body.about_section,
                 imageURL: req.body.imageURL,
