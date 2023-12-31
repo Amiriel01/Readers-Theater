@@ -12,10 +12,12 @@ import passport from 'passport';
 import {Strategy as JwtStrategy, ExtractJwt, StrategyOptions} from 'passport-jwt';
 import bcrypt from 'bcrypt';
 import User from './models/userModel.ts';
+import Profile from './models/profileModel.ts';
 // import passportLocalMongoose from 'passport-local-mongoose';
 
 import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';
+import profileRouter from './routes/profile.ts';
 
 const app = express();
 
@@ -42,6 +44,7 @@ app.use(passport.initialize());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

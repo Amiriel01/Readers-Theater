@@ -5,6 +5,7 @@ import Login from './Login';
 import SignUp from './SignUp';
 import { useState } from 'react';
 import ProfilePage from './ProfilePage';
+import CreateProfile from './CreateProfile';
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -18,9 +19,9 @@ export interface User {
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  const [user, setUser] = useState<string>("");
-  console.log(user)
+  // const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  // const [user, setUser] = useState<string>("");
+  // console.log(user)
 
   return (
     <>
@@ -29,13 +30,14 @@ function App() {
           <Route path="*" element={<StartPage />}></Route>
           <Route path="/Login" element={<Login />}></Route>
           <Route path="/SignUp" element={<SignUp
-            setLoggedIn={setLoggedIn}
-            setUser={setUser}
+            // setLoggedIn={setLoggedIn}
+            // setUser={setUser}
           />}></Route>
           <Route path="/ProfilePage" element={<ProfilePage
-            loggedIn={loggedIn}
-            user={user}
+            // loggedIn={loggedIn}
+            // user={user}
           />}></Route>
+          <Route path="/CreateProfile" element={<CreateProfile />}></Route>
         </Routes>
       </div>
     </>

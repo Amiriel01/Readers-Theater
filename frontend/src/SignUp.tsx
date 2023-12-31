@@ -17,10 +17,7 @@ interface SignUp {
     confirm_password: string,
 }
 
-export default function SignUp({ setLoggedIn, setUser }: {
-    setLoggedIn: (data: boolean) => void,
-    setUser: (data: string) => void,
-}) {
+export default function SignUp() {
 
     const [signUp, setSignUp] = useState({
         username: '',
@@ -76,9 +73,9 @@ export default function SignUp({ setLoggedIn, setUser }: {
                 const response = await axios.post("http://localhost:3000/users/userCreate", signUpData);
                 console.log(response.status, response.data);
                 if (response.status === 200) {
-                    setUser(response.data.username);
-                    setLoggedIn(true)
-                    navigate('/Login')
+                    // setUser(response.data.username);
+                    // setLoggedIn(true)
+                    navigate('/CreateProfile')
                 }
             } catch (ex) {
                 // console.log(ex);
