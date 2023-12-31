@@ -17,8 +17,9 @@ interface SignUp {
     confirm_password: string,
 }
 
-export default function SignUp({ setLoggedIn }: {
+export default function SignUp({ setLoggedIn, setUser }: {
     setLoggedIn: (data: boolean) => void,
+    setUser: (data: string) => void,
 }) {
 
     const [signUp, setSignUp] = useState({
@@ -29,7 +30,8 @@ export default function SignUp({ setLoggedIn }: {
         about_section: '',
     });
 
-    const [alertShow, setAlertShow] = useState(false);
+    const [passwordAlertShow, setPasswordAlertShow] = useState(false);
+    const [usernameAlertShow, setUsernameAlertShow] = useState(false);
     const navigate = useNavigate();
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
@@ -55,17 +57,40 @@ export default function SignUp({ setLoggedIn }: {
             }
             setSignUp(signUpData)
 
-            await axios.post("http://localhost:3000/users/userCreate", signUpData).then((response) => {
+            // axios.post("http://localhost:3000/users/userCreate", signUpData).then((response) => {
+            //     console.log(response.status, response.data);
+            //     if (response.status === 200) {
+            //         setUser(response.data.username);
+            //         setLoggedIn(true)
+            //         navigate('/ProfilePage')
+            //     }
+            // }).catch((ex) => {
+            //     console.log(ex);
+            //     if (ex.response.status) {
+            //         setUsernameAlertShow(true)
+            //         console.log(usernameAlertShow)
+            //     }
+            // })
+
+            try {
+                const response = await axios.post("http://localhost:3000/users/userCreate", signUpData);
                 console.log(response.status, response.data);
                 if (response.status === 200) {
+                    setUser(response.data.username);
                     setLoggedIn(true)
                     navigate('/ProfilePage')
                 }
-            })
+            } catch (ex) {
+                console.log(ex);
+                if (ex.response.status === 500) {
+                    setUsernameAlertShow(true)
+                }
+            } 
         } else {
-            setAlertShow(true)
+            setPasswordAlertShow(true)
         }
     }
+
 
     const { pathname } = useLocation();
 
@@ -96,6 +121,13 @@ export default function SignUp({ setLoggedIn }: {
                                 />
                             </FloatingLabel>
                         </Form.Group>
+                        <Row>
+                            <Col>
+                                <Alert hidden={!usernameAlertShow} variant={"danger"}>
+                                    Username Taken
+                                </Alert>
+                            </Col>
+                        </Row>
                         <Form.Group className="mb-3">
                             <FloatingLabel
                                 label="Password">
@@ -129,7 +161,7 @@ export default function SignUp({ setLoggedIn }: {
                         </Form.Group>
                         <Row>
                             <Col>
-                                <Alert hidden={!alertShow} variant={"danger"}>
+                                <Alert hidden={!passwordAlertShow} variant={"danger"}>
                                     Passwords Must Match
                                 </Alert>
                             </Col>

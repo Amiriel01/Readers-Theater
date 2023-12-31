@@ -1,9 +1,15 @@
 
 
-export default function ProfilePage({loggedIn}: {
+export default function ProfilePage({ user, loggedIn }: {
     loggedIn: boolean,
+    user: string,
 }) {
+    console.log(loggedIn)
+    console.log(user)
+
     return (
-        <p>Test</p>
+        <>
+            <p>Hello, {user}!</p>
+        </>
     )
 }
