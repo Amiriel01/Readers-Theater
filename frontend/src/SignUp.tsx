@@ -78,10 +78,10 @@ export default function SignUp({ setLoggedIn, setUser }: {
                 if (response.status === 200) {
                     setUser(response.data.username);
                     setLoggedIn(true)
-                    navigate('/ProfilePage')
+                    navigate('/Login')
                 }
             } catch (ex) {
-                console.log(ex);
+                // console.log(ex);
                 if (ex.response.status === 500) {
                     setUsernameAlertShow(true)
                 }
