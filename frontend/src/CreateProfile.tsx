@@ -87,7 +87,7 @@ export default function CreateProfile() {
         try {
             const response = await axios.post("http://localhost:3000/profile/profile_create", profileFormData);
             console.log(response.status, response.data);
-            navigate('/ProfilePage')
+            navigate('/UserProfilePage')
         } catch (err) {
             console.log(err)
         }

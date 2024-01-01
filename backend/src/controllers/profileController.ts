@@ -6,9 +6,8 @@ import { body, validationResult } from 'express-validator';
 //GET profile details
 export function profile_details_get() {
     return asyncHandler(async (req, res, next) => {
-        const user = await User.findById(req.params.id).exec();
-        const profile = await Profile.findOne({ user: req.body.username }).exec();
-        console.log(user)
+        const profile = await Profile.findById(req.params.id).exec();
+        // console.log(user)
         console.log(profile);
         res.json(profile);
     })

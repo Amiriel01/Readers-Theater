@@ -4,7 +4,7 @@ import StartPage from './StartPage';
 import Login from './Login';
 import SignUp from './SignUp';
 import { useState } from 'react';
-import ProfilePage from './ProfilePage';
+import UserProfilePage from './UserProfilePage';
 import CreateProfile from './CreateProfile';
 
 export interface SiteLoggedIn {
@@ -33,7 +33,7 @@ function App() {
             // setLoggedIn={setLoggedIn}
             // setUser={setUser}
           />}></Route>
-          <Route path="/ProfilePage" element={<ProfilePage
+          <Route path="/UserProfilePage" element={<UserProfilePage
             // loggedIn={loggedIn}
             // user={user}
           />}></Route>

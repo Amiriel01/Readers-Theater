@@ -48,7 +48,7 @@ export default function Login() {
         await axios.post("http://localhost:3000/users/login", signUpData).then((response) => {
             console.log(response.status, response.data);
             if (response.status === 200) {
-                navigate('/StartPage')
+                navigate('/UserProfilePage')
             } else {
                 setAlertShow(true)
             }
