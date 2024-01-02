@@ -6,6 +6,7 @@ import SignUp from './SignUp';
 import { useState } from 'react';
 import UserProfilePage from './UserProfilePage';
 import CreateProfile from './CreateProfile';
+import UpdateProfile from './UpdateProfile';
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -38,6 +39,7 @@ function App() {
             // user={user}
           />}></Route>
           <Route path="/CreateProfile" element={<CreateProfile />}></Route>
+          <Route path="/UpdateProfile" element={<UpdateProfile />}></Route>
         </Routes>
       </div>
     </>

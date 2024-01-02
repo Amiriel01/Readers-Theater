@@ -1,24 +1,42 @@
 import axios from 'axios';
 import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
-import Form from 'react-bootstrap/Form';
+import { useParams, useLocation, Link } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Form from 'react-bootstrap/Form';
 import MyButton from "./MyButton";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import { useNavigate } from "react-router";
 
-export default function CreateProfile() {
+export default function UpdateProfile() {
+
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname]);
 
     const [user, setUser] = useState('');
+    const [profile, setProfile] = useState({
+        profile_name: '',
+        about_section: '',
+        imageURL: '',
+    });
+
+    const [profileUpdate, setProfileUpdate] = useState({
+        profile_name: '',
+        about_section: '',
+        imageURL: '',
+    });
+
     const [image, setImage] = useState<File | null>(null);
     const [imageURL, setImageURL] = useState(null);
-    const navigate = useNavigate();
 
     async function getUser() {
         try {
             const response = await axios.get('http://localhost:3000/users/user/6590559d82e961c23fe35d72');
-            // console.log(response.status, response.data)
+            console.log(response.status, response.data)
             setUser(response.data.username);
+            // console.log(response.data._id)
         } catch (err) {
             console.log(err)
         }
@@ -26,6 +44,20 @@ export default function CreateProfile() {
 
     useEffect(() => {
         getUser()
+    }, []);
+
+    async function getProfile() {
+        try {
+            const response = await axios.get('http://localhost:3000/profile/profile_details/6591ed9fbde4e220c90fbc84');
+            console.log(response.status, response.data)
+            setProfile(response.data);
+        } catch (err) {
+            console.log(err)
+        }
+    };
+
+    useEffect(() => {
+        getProfile()
     }, []);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -55,50 +87,50 @@ export default function CreateProfile() {
         }
     };
 
-    const initialValues = {
-        profile_name: "",
-        about_section: "",
-        imageURL: "",
-    }
-
-    const [profileData, setProfileData] = useState(initialValues);
+    useEffect(() => {
+        const profileTestInitialValues = {
+            profile_name: profile?.profile_name ?? "",
+            about_section: profile?.about_section ?? "",
+        }
+        setProfileUpdate(profileTestInitialValues);
+    }, [profile]);
 
     const handleChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
-        // console.log(event.target)
-        setProfileData({
-            ...profileData,
-            [name]: value
+        setProfileUpdate({
+            ...profileUpdate,
+            [name]: value,
         })
-    }
+    };
 
-    async function formSubmit(event: FormEvent) {
+    const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
 
-        const profileFormData = {
-            profile_name: profileData.profile_name,
-            about_section: profileData.about_section,
+        const profileDataUpdate = {
+            profile_name: profileUpdate.profile_name,
+            about_section: profileUpdate.about_section,
             imageURL: imageURL,
-            user: user,
+            // user: user._id,
         }
 
-        setProfileData(initialValues);
+        axios.put('http://localhost:3000/profile/profile_details/6591ed9fbde4e220c90fbc84', profileDataUpdate).then((response) => {
+            console.log(response.status, response.data)
+        })
+    };
 
-        try {
-            const response = await axios.post("http://localhost:3000/profile/profile_create", profileFormData);
-            console.log(response.status, response.data);
-            navigate('/UserProfilePage')
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    // const handleDeleteProfile = () => {
+
+    //     axios.delete('http://localhost:3000/profile/profile_details/6591f6e9db0157717c61a870');
+    // };
+
 
     return (
+        <>
         <div id="create-profile-page-container">
             <Row id='create-profile-page-info-container'>
                 <Row>
                     <Col id='create-profile-page-title'>
-                        Hello, {user}! Create your profile.
+                        Hello, {user}! Update your profile.
                     </Col>
                 </Row>
                 <Form onSubmit={submitImage} id="event-form-">
@@ -110,10 +142,10 @@ export default function CreateProfile() {
                         />
                     </Form.Group>
                     <div>
-                        <MyButton id='create-profile-page-button1' title='Select Image'></MyButton>
+                        <MyButton id='update-profile-page-button1' title='Select Image'></MyButton>
                     </div>
                 </Form>
-                <Form onSubmit={formSubmit}>
+                <Form onSubmit={handleSubmit}>
                     <Form.Group className="mb-3">
                         <FloatingLabel
                             label="Profile Name">
@@ -122,7 +154,8 @@ export default function CreateProfile() {
                                 type="text"
                                 name='profile_name'
                                 placeholder='Type Profile Name Here'
-                                value={profileData.profile_name}
+                                // defaultValue={profile.profile_name}
+                                value={profileUpdate.profile_name}
                                 onChange={handleChange}
                             />
                         </FloatingLabel>
@@ -132,21 +165,24 @@ export default function CreateProfile() {
                             label="About Section">
                             <Form.Control
                                 required
-                                as="textarea"
+                                as="textarea" 
                                 rows={6}
                                 style={{ height: 'unset' }}
                                 name='about_section'
                                 placeholder='Type Information About Yourself Here'
-                                value={profileData.about_section}
+                                value={profileUpdate.about_section}
                                 onChange={handleChange}
                             />
                         </FloatingLabel>
                     </Form.Group>
                     <div>
-                        <MyButton id='create-profile-page-button2' title='Submit Profile'></MyButton>
+                        <MyButton id='update-profile-page-button2' title='Submit Profile'></MyButton>
+                        <MyButton id='update-profile-page-button3' title='Return to Start Page'></MyButton>
                     </div>
                 </Form>
+               
             </Row>
         </div>
+        </>
     )
 }

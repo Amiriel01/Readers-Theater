@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -14,7 +15,7 @@ export default function ProfilePage() {
 
     async function getUser() {
         try {
-            const response = await axios.get('http://localhost:3000/users/user/6590559d82e961c23fe35d72');
+            const response = await axios.get('http://localhost:3000/users/user/659059f182e961c23fe35d74');
             console.log(response.status, response.data)
             setUser(response.data.username);
         } catch (err) {
@@ -28,7 +29,7 @@ export default function ProfilePage() {
 
     async function getProfile() {
         try {
-            const response = await axios.get('http://localhost:3000/profile/profile_details/6591ed9fbde4e220c90fbc84');
+            const response = await axios.get('http://localhost:3000/profile/profile_details/6591ee24217da205813f13fd');
             console.log(response.status, response.data)
             setProfile(response.data);
         } catch (err) {
@@ -54,6 +55,7 @@ export default function ProfilePage() {
                     <Row id='profile-information-container'>
                         <Col lg={4} id='profile-image-container'>
                             <img id='profile-image' src={`http://localhost:3000/public/${profile.imageURL}`}></img>
+                            <Link id='update-profile-link' to='/UpdateProfile'>Update Profile</Link>
                         </Col>
                         <Col lg={6}>
                             <div id='profile-name-container'>
