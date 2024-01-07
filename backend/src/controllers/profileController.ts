@@ -8,6 +8,7 @@ export function profile_details_get() {
     return asyncHandler(async (req, res, next) => {
         const profile = await Profile.findById(req.params.id).exec();
         // console.log(user)
+        console.log(profile.about_section)
         console.log(profile);
         res.json(profile);
     })
@@ -38,6 +39,7 @@ export function profile_details_create() {
                 profile_name: req.body.profile_name,
                 about_section: req.body.about_section,
                 imageURL: req.body.imageURL,
+                friends: req.body.friends,
             });
 
             if (!errors.isEmpty()) {
@@ -81,7 +83,7 @@ export function profile_details_edit() {
                 res.json(errors)
             } else {
                 //find the staff member and update
-                const profileDetailsUpdate = await Profile.findByIdAndUpdate(req.params.id, { profile_name: req.body.profile_name, about_section: req.body.about_section, imageURL: req.body.imageURL }, { new: true }).exec()
+                const profileDetailsUpdate = await Profile.findByIdAndUpdate(req.params.id, { profile_name: req.body.profile_name, about_section: req.body.about_section, imageURL: req.body.imageURL, friends: req.body.friends }, { new: true }).exec()
                 //save profile update
                 console.log(profileDetailsUpdate)
                 res.json(profileDetailsUpdate)

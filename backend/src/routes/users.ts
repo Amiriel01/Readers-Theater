@@ -1,7 +1,7 @@
 import {Router} from "express";
 const router = Router();
 import passport from 'passport';
-import { user_list, user_get, user_create } from "../controllers/userController.ts";
+import { user_list, user_get, user_create, user_details_edit, user_delete } from "../controllers/userController.ts";
 // import { profile_details_get, profile_details_create } from "../controllers/profileController.ts";
 
 /* GET users listing. */
@@ -17,6 +17,12 @@ router.get("/userList", user_list());
 
 //GET user details
 router.get("/user/:id", user_get());
+
+//PUT user details
+router.put("/user/:id", user_details_edit());
+
+//DELETE user 
+router.delete("/user/:id", user_delete());
 
 // //GET user profile details
 // router.get("user/:id/profile", profile_details_get());

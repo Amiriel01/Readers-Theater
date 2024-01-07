@@ -449,6 +449,10 @@ input.form-control {
     }
 }
 
+.sign-up-alert {
+    margin-top: 2rem;
+}
+
 /*Create Profile Page*/
 #create-profile-page-container {
     background-image: url(images/bookpages1.png);
@@ -564,7 +568,7 @@ input.form-control {
 #update-profile-page-button1,
 #update-profile-page-button2,
 #update-profile-page-button3 {
-    width: 12rem;
+    width: 13rem;
     height: 3rem;
     background-color: rgb(254, 249, 245);
     font-weight: bold;

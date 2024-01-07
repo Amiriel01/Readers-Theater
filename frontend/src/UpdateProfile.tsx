@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import MyButton from "./MyButton";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import { useNavigate } from "react-router";
 
 export default function UpdateProfile() {
 
@@ -15,14 +16,19 @@ export default function UpdateProfile() {
         window.scrollTo(0, 0)
     }, [pathname]);
 
-    const [user, setUser] = useState('');
-    const [profile, setProfile] = useState({
+    const [user, setUser] = useState({
+        username: "",
+        password: "",
         profile_name: '',
         about_section: '',
         imageURL: '',
     });
 
-    const [profileUpdate, setProfileUpdate] = useState({
+    const navigate = useNavigate();
+
+    const [userUpdate, setUserUpdate] = useState({
+        username: "",
+        password: "",
         profile_name: '',
         about_section: '',
         imageURL: '',
@@ -33,9 +39,9 @@ export default function UpdateProfile() {
 
     async function getUser() {
         try {
-            const response = await axios.get('http://localhost:3000/users/user/6590559d82e961c23fe35d72');
+            const response = await axios.get('http://localhost:3000/users/user/6591f5e018252d4fa589528c');
             console.log(response.status, response.data)
-            setUser(response.data.username);
+            setUser(response.data);
             // console.log(response.data._id)
         } catch (err) {
             console.log(err)
@@ -44,20 +50,6 @@ export default function UpdateProfile() {
 
     useEffect(() => {
         getUser()
-    }, []);
-
-    async function getProfile() {
-        try {
-            const response = await axios.get('http://localhost:3000/profile/profile_details/6591ed9fbde4e220c90fbc84');
-            console.log(response.status, response.data)
-            setProfile(response.data);
-        } catch (err) {
-            console.log(err)
-        }
-    };
-
-    useEffect(() => {
-        getProfile()
     }, []);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -89,16 +81,16 @@ export default function UpdateProfile() {
 
     useEffect(() => {
         const profileTestInitialValues = {
-            profile_name: profile?.profile_name ?? "",
-            about_section: profile?.about_section ?? "",
+            profile_name: user?.profile_name ?? "",
+            about_section: user?.about_section ?? "",
         }
-        setProfileUpdate(profileTestInitialValues);
-    }, [profile]);
+        setUserUpdate(profileTestInitialValues);
+    }, [user]);
 
     const handleChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
-        setProfileUpdate({
-            ...profileUpdate,
+        setUserUpdate({
+            ...userUpdate,
             [name]: value,
         })
     };
@@ -107,82 +99,80 @@ export default function UpdateProfile() {
         event.preventDefault();
 
         const profileDataUpdate = {
-            profile_name: profileUpdate.profile_name,
-            about_section: profileUpdate.about_section,
+            username: user.username,
+            password: user.password,
+            profile_name: userUpdate.profile_name,
+            about_section: userUpdate.about_section,
             imageURL: imageURL,
             // user: user._id,
         }
 
-        axios.put('http://localhost:3000/profile/profile_details/6591ed9fbde4e220c90fbc84', profileDataUpdate).then((response) => {
+        axios.put('http://localhost:3000/users/user/6591f5e018252d4fa589528c', profileDataUpdate).then((response) => {
             console.log(response.status, response.data)
+            if (response.status === 200) {
+                console.log(response.data)
+                navigate('/UserProfilePage')
+            }
         })
     };
 
-    // const handleDeleteProfile = () => {
-
-    //     axios.delete('http://localhost:3000/profile/profile_details/6591f6e9db0157717c61a870');
-    // };
-
-
     return (
         <>
-        <div id="create-profile-page-container">
-            <Row id='create-profile-page-info-container'>
-                <Row>
-                    <Col id='create-profile-page-title'>
-                        Hello, {user}! Update your profile.
-                    </Col>
+            <div id="create-profile-page-container">
+                <Row id='create-profile-page-info-container'>
+                    <Row>
+                        <Col id='create-profile-page-title'>
+                            Hello, {user.username}! Update your profile.
+                        </Col>
+                    </Row>
+                    <Form onSubmit={submitImage} id="event-form-">
+                        <Form.Group className="mb-3" >
+                            <Form.Control
+                                type="file"
+                                accept="image/*"
+                                onChange={onInputChange}
+                            />
+                        </Form.Group>
+                        <div>
+                            <MyButton id='update-profile-page-button1' title='Select Image'></MyButton>
+                        </div>
+                    </Form>
+                    <Form onSubmit={handleSubmit}>
+                        <Form.Group className="mb-3">
+                            <FloatingLabel
+                                label="Profile Name">
+                                <Form.Control
+                                    required
+                                    type="text"
+                                    name='profile_name'
+                                    placeholder='Type Profile Name Here'
+                                    value={userUpdate.profile_name}
+                                    onChange={handleChange}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <FloatingLabel
+                                label="About Section">
+                                <Form.Control
+                                    required
+                                    as="textarea"
+                                    rows={6}
+                                    style={{ height: 'unset' }}
+                                    name='about_section'
+                                    placeholder='Type Information About Yourself Here'
+                                    value={userUpdate.about_section}
+                                    onChange={handleChange}
+                                />
+                            </FloatingLabel>
+                        </Form.Group>
+                        <div>
+                            <MyButton id='update-profile-page-button2' title='Submit Profile'></MyButton>
+                            <MyButton id='update-profile-page-button3' title='Return to Profile Page'></MyButton>
+                        </div>
+                    </Form>
                 </Row>
-                <Form onSubmit={submitImage} id="event-form-">
-                    <Form.Group className="mb-3" >
-                        <Form.Control
-                            type="file"
-                            accept="image/*"
-                            onChange={onInputChange}
-                        />
-                    </Form.Group>
-                    <div>
-                        <MyButton id='update-profile-page-button1' title='Select Image'></MyButton>
-                    </div>
-                </Form>
-                <Form onSubmit={handleSubmit}>
-                    <Form.Group className="mb-3">
-                        <FloatingLabel
-                            label="Profile Name">
-                            <Form.Control
-                                required
-                                type="text"
-                                name='profile_name'
-                                placeholder='Type Profile Name Here'
-                                // defaultValue={profile.profile_name}
-                                value={profileUpdate.profile_name}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
-                    <Form.Group className="mb-3">
-                        <FloatingLabel
-                            label="About Section">
-                            <Form.Control
-                                required
-                                as="textarea" 
-                                rows={6}
-                                style={{ height: 'unset' }}
-                                name='about_section'
-                                placeholder='Type Information About Yourself Here'
-                                value={profileUpdate.about_section}
-                                onChange={handleChange}
-                            />
-                        </FloatingLabel>
-                    </Form.Group>
-                    <div>
-                        <MyButton id='update-profile-page-button2' title='Submit Profile'></MyButton>
-                        <MyButton id='update-profile-page-button3' title='Return to Start Page'></MyButton>
-                    </div>
-                </Form>
-               
-            </Row>
-        </div>
+            </div>
         </>
     )
 }

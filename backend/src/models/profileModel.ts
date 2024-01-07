@@ -21,6 +21,10 @@ const ProfileSchema = new Schema({
         type: String,
         required: true,
     },
+    friends: {
+        type: Array,
+        default: [],
+    },
 })
 
 export default mongoose.model("Profile", ProfileSchema);

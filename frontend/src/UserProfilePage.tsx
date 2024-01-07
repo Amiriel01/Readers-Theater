@@ -3,11 +3,15 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useNavigate } from "react-router";
 
 export default function ProfilePage() {
 
-    const [user, setUser] = useState('');
-    const [profile, setProfile] = useState({
+    const navigate = useNavigate();
+
+    const [user, setUser] = useState({
+        username: "",
+        password: "",
         profile_name: '',
         about_section: '',
         imageURL: '',
@@ -15,9 +19,9 @@ export default function ProfilePage() {
 
     async function getUser() {
         try {
-            const response = await axios.get('http://localhost:3000/users/user/659059f182e961c23fe35d74');
+            const response = await axios.get('http://localhost:3000/users/user/6591f5e018252d4fa589528c');
             console.log(response.status, response.data)
-            setUser(response.data.username);
+            setUser(response.data);
         } catch (err) {
             console.log(err)
         }
@@ -27,19 +31,12 @@ export default function ProfilePage() {
         getUser()
     }, []);
 
-    async function getProfile() {
-        try {
-            const response = await axios.get('http://localhost:3000/profile/profile_details/6591ee24217da205813f13fd');
-            console.log(response.status, response.data)
-            setProfile(response.data);
-        } catch (err) {
-            console.log(err)
-        }
-    };
+    const handleDeleteUser = () => {
 
-    useEffect(() => {
-        getProfile()
-    }, []);
+        axios.delete('http://localhost:3000/users/user/6591f5e018252d4fa589528c');
+
+        navigate('/StartPage')
+    };
 
     return (
         <>
@@ -48,14 +45,15 @@ export default function ProfilePage() {
                     <Row >
                         <Col>
                             <h1 id='profile-page-hello'>
-                                Hello, {user}! Welcome Back.
+                                Hello, {user.username}! Welcome Back.
                             </h1>
                         </Col>
                     </Row>
                     <Row id='profile-information-container'>
                         <Col lg={4} id='profile-image-container'>
-                            <img id='profile-image' src={`http://localhost:3000/public/${profile.imageURL}`}></img>
+                            <img id='profile-image' src={`http://localhost:3000/public/${user.imageURL}`}></img>
                             <Link id='update-profile-link' to='/UpdateProfile'>Update Profile</Link>
+                            <button onClick={handleDeleteUser}>Delete User</button>
                         </Col>
                         <Col lg={6}>
                             <div id='profile-name-container'>
@@ -66,7 +64,7 @@ export default function ProfilePage() {
                                 </Row>
                                 <Row>
                                     <Col id='profile-name-info'>
-                                        {profile.profile_name}
+                                        {user.profile_name}
                                     </Col>
                                 </Row>
                             </div>
@@ -78,12 +76,17 @@ export default function ProfilePage() {
                                 </Row>
                                 <Row>
                                     <Col id='profile-about-info'>
-                                        {profile.about_section}
+                                        {user.about_section}
                                     </Col>
                                 </Row>
                             </div>
                         </Col>
                     </Row>
+                </Row>
+                <Row id='friends-posts-container'>
+                    <Col>
+                    Friend's Placeholder
+                    </Col>
                 </Row>
             </Row>
         </>
