@@ -587,3 +587,7 @@ input.form-control {
 #update-profile-page-button3:hover {
     background-color: rgb(248, 196, 198);
 }
+
+#first-input {
+    margin-top: 1rem;
+}

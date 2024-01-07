@@ -163,7 +163,7 @@ export default function SignUp() {
                         <ProgressBar now={(step / 3) * 100} />
                         {step === 1 && (
                             <>
-                                <Form.Group className="mb-3">
+                                <Form.Group className="mb-3" id='first-input'>
                                     <FloatingLabel
                                         label="Username">
                                         <Form.Control
@@ -211,7 +211,7 @@ export default function SignUp() {
                         )}
                         {step === 2 && (
                             <>
-                                <Form.Group className="mb-3" >
+                                <Form.Group className="mb-3" id='first-input'>
                                     <Form.Control
                                         type="file"
                                         accept="image/*"
@@ -222,7 +222,7 @@ export default function SignUp() {
                         )}
                         {step === 3 && (
                             <>
-                                <Form.Group className="mb-3">
+                                <Form.Group className="mb-3" id='first-input'>
                                     <FloatingLabel
                                         label="Profile Name">
                                         <Form.Control
