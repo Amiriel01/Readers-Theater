@@ -126,7 +126,7 @@ export default function SignUp() {
                     console.log(response.data)
                     // setUser(response.data.username);
                     // setLoggedIn(true)
-                    navigate('/UserProfilePage')
+                    // navigate('/UserProfilePage')
                 }
             } catch (ex) {
                 console.log(signUpData)
@@ -168,6 +168,8 @@ export default function SignUp() {
                                         label="Username">
                                         <Form.Control
                                             required
+                                            minLength={5}
+                                            maxLength={25}
                                             type="text"
                                             name='username'
                                             placeholder='Username'
@@ -227,6 +229,7 @@ export default function SignUp() {
                                         label="Profile Name">
                                         <Form.Control
                                             required
+                                            maxLength={25}
                                             type="text"
                                             name='profile_name'
                                             placeholder='Type Profile Name Here'
@@ -238,16 +241,17 @@ export default function SignUp() {
                                 <Form.Group className="mb-3">
                                     <FloatingLabel
                                         label="About Section">
-                                        <Form.Control
-                                            required
-                                            as="textarea"
-                                            rows={6}
-                                            style={{ height: 'unset' }}
-                                            name='about_section'
-                                            placeholder='Type Information About Yourself Here'
-                                            value={signUp.about_section}
-                                            onChange={handleChange}
-                                        />
+                                            <Form.Control
+                                                required
+                                                as="textarea"
+                                                rows={6}
+                                                style={{ height: 'unset' }}
+                                                name='about_section'
+                                                placeholder='Type Information About Yourself Here'
+                                                value={signUp.about_section}
+                                                onChange={handleChange}
+                                                maxLength={250}
+                                            />
                                     </FloatingLabel>
                                 </Form.Group>
                             </>
