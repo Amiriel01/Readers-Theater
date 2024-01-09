@@ -492,7 +492,7 @@ input.form-control {
     background-color: rgb(248, 196, 198);
 }
 
-/*Profile Page*/
+/*User Profile Page*/
 #profile-page-container {
     background-image: url(images/bookpages1.png);
     padding-bottom: 5rem;
@@ -536,6 +536,18 @@ input.form-control {
 }
 
 #update-profile-link:hover {
+    text-decoration: underline;
+}
+
+#delete-user-button {
+    border: none;
+    margin-bottom: 1rem;
+    color: #f4ad96 ;
+    font-weight: bold;
+    font-size: 1.25rem;
+}
+
+#delete-user-button:hover {
     text-decoration: underline;
 }
 
