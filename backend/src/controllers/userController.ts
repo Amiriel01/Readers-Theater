@@ -143,4 +143,48 @@ export function user_delete() {
         console.log("item deleted");
         res.json("item deleted");
     })
+};
+
+// PUT Add A Friend
+export function add_friend() {
+    return asyncHandler(async (req, res, next) => {
+
+        try {
+            const { userId, friendId } = req.body;
+            const friendExists = await User.findById(friendId);
+
+            // Check if the friendId is valid
+            if (!friendExists) {
+                res.status(404).json({ error: 'Friend not found' });
+            }
+            // Add friendId to the user's friends array
+            //$addToSet is used to add elements to an array field only if they are not already present in the array. It makes sure the array stays intact without duplicate items.
+            await User.findByIdAndUpdate(userId, { $addToSet: { friends: friendId } });
+
+            res.status(200).json({ message: 'Friend added successfully' });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    })
+};
+
+// //DELETE Remove A Friend
+export function delete_friend() {
+    return asyncHandler(async (req, res, next) => {
+        try {
+            const { userId, friendId } = req.body;
+
+            // Remove friendId from the user's friends array
+            //$pull, removes elements from the array that match a specified condition, it allows for removal of one or more elements based on the criteria
+            await User.findByIdAndUpdate(userId, { $pull: { friends: friendId } });
+
+            res.status(200).json({ message: 'Friend deleted successfully' });
+
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+    })
 }

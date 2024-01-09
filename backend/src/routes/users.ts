@@ -1,7 +1,7 @@
 import {Router} from "express";
 const router = Router();
 import passport from 'passport';
-import { user_list, user_get, user_create, user_details_edit, user_delete } from "../controllers/userController.ts";
+import { user_list, user_get, user_create, user_details_edit, user_delete, add_friend, delete_friend } from "../controllers/userController.ts";
 
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -22,6 +22,12 @@ router.put("/user/:id", user_details_edit());
 
 //DELETE user 
 router.delete("/user/:id", user_delete());
+
+//POST Add Friend
+router.put("/addFriend", add_friend());
+
+//DELETE Delete Friend
+router.delete("/deleteFriend", delete_friend());
 
 //Passport Login
 router.post(
