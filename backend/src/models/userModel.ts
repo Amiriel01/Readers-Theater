@@ -29,10 +29,10 @@ const UserSchema = new Schema({
         type: String,
         required: true,
     },
-    friends: {
-        type: Array,
-        default: [],
-    },
+    friends: [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+    }],
 })
 
 // UserSchema.plugin(passportLocalMongoose);
