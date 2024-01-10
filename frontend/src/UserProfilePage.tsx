@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router";
+import Card from 'react-bootstrap/Card';
 
 export default function ProfilePage() {
 
@@ -15,9 +16,13 @@ export default function ProfilePage() {
         profile_name: '',
         about_section: '',
         imageURL: '',
+        friends: [],
     });
 
-    async function getUser() {
+    const [friendData, setFriendData] = useState([]);
+
+    // async function getUser() {
+    const getUser = async () => {
         try {
             const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
             console.log(response.status, response.data)
@@ -28,8 +33,37 @@ export default function ProfilePage() {
     };
 
     useEffect(() => {
-        getUser()
+        getUser();
     }, []);
+
+    const renderFriends = async () => {
+        if (!user || !user.friends) {
+            return null;
+        }
+
+        // Clear the friendData state before making new requests
+        setFriendData([]);
+
+        await Promise.all(user.friends.map(async (friendId) => {
+            try {
+                // Fetch details for each friend using their ObjectId
+                const response = await axios.get(`http://localhost:3000/users/user/${friendId}`)  // Replace with your actual API endpoint
+                // console.log(response.data.profile_name);
+                // console.log(response.data.imageURL);
+                setFriendData(prevData => [...prevData, response.data]);
+            } catch (error) {
+                console.error('Error fetching friend data:', error);
+            }
+        }));
+    };
+
+    // Display profile_name and imageURL for each friend
+    console.log(friendData)
+
+    useEffect(() => {
+        renderFriends();
+    }, [user]);
+
 
     const handleDeleteUser = () => {
 
@@ -85,7 +119,25 @@ export default function ProfilePage() {
                 </Row>
                 <Row id='friends-posts-container'>
                     <Col>
-                    Friend's Placeholder
+                        <div id='following-container'>
+                            <Row>
+                                <Col id='following-title'>
+                                    Following:
+                                </Col>
+                            </Row>
+                            <div id='friend-card-container'>
+                                {friendData.map((friend, index) => {
+                                    return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
+                                        <Card id='friend-card'>
+                                            <img className='friend-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
+                                            <Card.Body>
+                                                <Card.Title>{friend.profile_name}</Card.Title>
+                                            </Card.Body>
+                                        </Card>
+                                    </Link>
+                                })}
+                            </div>
+                        </div>
                     </Col>
                 </Row>
             </Row>

@@ -39,7 +39,7 @@ function App() {
             // user={user}
           />}></Route>
           <Route path="/UpdateProfile" element={<UpdateProfile />}></Route>
-          <Route path="/OtherProfilePage" element={<OtherProfilePage />}></Route>
+          <Route path="/users/user/:id" element={<OtherProfilePage />}></Route>
         </Routes>
       </div>
     </>
