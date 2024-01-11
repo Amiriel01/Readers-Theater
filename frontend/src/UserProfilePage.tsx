@@ -19,7 +19,7 @@ export default function ProfilePage() {
         friends: [],
     });
 
-    const [friendData, setFriendData] = useState([]);
+    // const [friendData, setFriendData] = useState([]);
 
     // async function getUser() {
     const getUser = async () => {
@@ -36,33 +36,34 @@ export default function ProfilePage() {
         getUser();
     }, []);
 
-    const renderFriends = async () => {
-        if (!user || !user.friends) {
-            return null;
-        }
+    // const renderFriends = async () => {
+    //     console.log("coewbvoewb")
+    //     if (!user || !user.friends) {
+    //         return null;
+    //     }
 
-        // Clear the friendData state before making new requests
-        setFriendData([]);
+    //     // Clear the friendData state before making new requests
+    //     setFriendData([]);
 
-        await Promise.all(user.friends.map(async (friendId) => {
-            try {
-                // Fetch details for each friend using their ObjectId
-                const response = await axios.get(`http://localhost:3000/users/user/${friendId}`)  // Replace with your actual API endpoint
-                // console.log(response.data.profile_name);
-                // console.log(response.data.imageURL);
-                setFriendData(prevData => [...prevData, response.data]);
-            } catch (error) {
-                console.error('Error fetching friend data:', error);
-            }
-        }));
-    };
+    //     await Promise.all(user.friends.map(async (friendId) => {
+    //         try {
+    //             // Fetch details for each friend using their ObjectId
+    //             const response = await axios.get(`http://localhost:3000/users/user/${friendId}`)  // Replace with your actual API endpoint
+    //             // console.log(response.data.profile_name);
+    //             // console.log(response.data.imageURL);
+    //             setFriendData(prevData => [...prevData, response.data]);
+    //         } catch (error) {
+    //             console.error('Error fetching friend data:', error);
+    //         }
+    //     }));
+    // };
 
-    // Display profile_name and imageURL for each friend
-    console.log(friendData)
+    // // Display profile_name and imageURL for each friend
+    // console.log(friendData)
 
-    useEffect(() => {
-        renderFriends();
-    }, [user]);
+    // useEffect(() => {
+    //     renderFriends();
+    // }, [user]);
 
 
     const handleDeleteUser = () => {
@@ -126,7 +127,7 @@ export default function ProfilePage() {
                                 </Col>
                             </Row>
                             <div id='friend-card-container'>
-                                {friendData.map((friend, index) => {
+                                {user.friends.map((friend, index) => {
                                     return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
                                         <Card id='friend-card'>
                                             <img className='friend-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>

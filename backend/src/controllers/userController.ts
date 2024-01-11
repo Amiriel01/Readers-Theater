@@ -15,7 +15,7 @@ export function user_list() {
 //GET single user with details
 export function user_get() {
     return asyncHandler(async (req, res, next) => {
-        const userDetails = await User.findById(req.params.id).exec();
+        const userDetails = await User.findById(req.params.id).populate('friends').exec();
         console.log(userDetails);
         res.json(userDetails);
     });
@@ -161,7 +161,7 @@ export function add_friend() {
             //$addToSet is used to add elements to an array field only if they are not already present in the array. It makes sure the array stays intact without duplicate items.
             await User.findByIdAndUpdate(userId, { $addToSet: { friends: friendId } });
 
-            res.status(200).json({ message: 'Friend added successfully' });
+            res.status(200).json(await User.findById(userId).populate('friends').exec());
 
         } catch (error) {
             console.error(error);
@@ -179,8 +179,7 @@ export function delete_friend() {
             // Remove friendId from the user's friends array
             //$pull, removes elements from the array that match a specified condition, it allows for removal of one or more elements based on the criteria
             await User.findByIdAndUpdate(userId, { $pull: { friends: friendId } });
-
-            res.status(200).json({ message: 'Friend deleted successfully' });
+            res.status(200).json(await User.findById(userId).populate('friends').exec());
 
         } catch (error) {
             console.error(error);

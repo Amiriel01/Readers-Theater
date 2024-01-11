@@ -32,15 +32,15 @@ export default function OtherProfilePage() {
     const [userId, setUserId] = useState('');
     const [friendId, setFriendId] = useState();
     const [isFriend, setIsFriend] = useState(false);
-    const [pageRerender, setPageRerender] = useState(0);
-    const [friendData, setFriendData] = useState([]);
+    // const [pageRerender, setPageRerender] = useState(0);
+    // const [friendData, setFriendData] = useState([]);
     // console.log(pageRerender)
     // console.log(isFriend)
 
     async function getProfile() {
         try {
             const response = await axios.get(`http://localhost:3000/users/user/${id}`);
-            console.log(response.status, response.data)
+            // console.log(response.status, response.data)
             setProfile(response.data);
             setFriendId(response.data._id);
 
@@ -48,21 +48,26 @@ export default function OtherProfilePage() {
             console.log(err)
         }
     };
-    console.log('friendId', friendId)
+
+    // console.log('friendId', friendId)
     useEffect(() => {
         getProfile();
-    }, [pageRerender]);
+    }, []);
 
     async function getUser() {
         try {
             const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
-            console.log(response.status, response.data)
+            // console.log(response.status, response.data)
             setUser(response.data);
             setUserId(response.data._id)
-
+            console.log(response.data)
             // Check if friendId is already in the friends array to determine isFriend
-            if (response.data.friends.includes(friendId)) {
+            // if (response.data.friends.includes(friendId)) {
+                
+            // }
+            if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1 ) {
                 setIsFriend(true);
+                console.log("aogvboeb");
             }
 
         } catch (err) {
@@ -74,50 +79,57 @@ export default function OtherProfilePage() {
         getUser()
     }, [profile]);
 
+    useEffect(() => {
+        getProfile();
+    }, [id]);
+
     const handleFriendButtonClick = async (event, userId, friendId, isFriend) => {
         try {
             if (isFriend) {
                 // Delete friend
-                await axios.delete("http://localhost:3000/users/deleteFriend", { data: { userId, friendId } });
-                setIsFriend(false)
+                const followerDeleteResponse = await axios.delete("http://localhost:3000/users/deleteFriend", { data: { userId, friendId } });
+                setIsFriend(false);
+                setUser(followerDeleteResponse.data);
             } else {
                 // Add friend
-                await axios.put('http://localhost:3000/users/addFriend', { userId, friendId });
+                const followerAddData = await axios.put('http://localhost:3000/users/addFriend', { userId, friendId });
+                setIsFriend(true);
+                setUser(followerAddData.data);
             }
         } catch (error) {
             console.error(error);
         }
-        setPageRerender(pageRerender + 1)
+        // setPageRerender(pageRerender + 1)
     };
 
-    const renderFriends = async () => {
-        if (!profile || !profile.friends) {
-            return null;
-        }
+    // const renderFriends = async () => {
+    //     if (!profile || !profile.friends) {
+    //         return null;
+    //     }
 
-        // Clear the friendData state before making new requests
-        setFriendData([]);
+    //     // Clear the friendData state before making new requests
+    //     setFriendData([]);
 
-        await Promise.all(profile.friends.map(async (friendId) => {
-            try {
-                // Fetch details for each friend using their ObjectId
-                const response = await axios.get(`http://localhost:3000/users/user/${friendId}`)  // Replace with your actual API endpoint
+    //     await Promise.all(profile.friends.map(async (friendId) => {
+    //         try {
+    //             // Fetch details for each friend using their ObjectId
+    //             const response = await axios.get(`http://localhost:3000/users/user/${friendId}`)  // Replace with your actual API endpoint
 
-                // console.log(response.data.profile_name);
-                // console.log(response.data.imageURL);
-                setFriendData((prevData) => [...prevData, response.data]);
-            } catch (error) {
-                console.error('Error fetching friend data:', error);
-            }
-        }));
-    };
+    //             // console.log(response.data.profile_name);
+    //             // console.log(response.data.imageURL);
+    //             setFriendData((prevData) => [...prevData, response.data]);
+    //         } catch (error) {
+    //             console.error('Error fetching friend data:', error);
+    //         }
+    //     }));
+    // };
 
     // Display profile_name and imageURL for each friend
-    console.log(friendData)
+    // console.log(friendData)
 
-    useEffect(() => {
-        renderFriends();
-    }, [user]);
+    // useEffect(() => {
+    //     renderFriends();
+    // }, [user]);
 
 
     return (
@@ -168,7 +180,7 @@ export default function OtherProfilePage() {
                                 </Col>
                             </Row>
                             <div id='friend-card-container'>
-                                {friendData.map((friend, index) => {
+                                {profile.friends.map((friend, index) => {
                                     return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
                                         <Card id='friend-card'>
                                             <img className='friend-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
