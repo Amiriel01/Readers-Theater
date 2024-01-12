@@ -1,10 +1,13 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import MyButton from './MyButton';
 
 export default function ProfilePage() {
 
@@ -19,9 +22,18 @@ export default function ProfilePage() {
         friends: [],
     });
 
-    // const [friendData, setFriendData] = useState([]);
+    const [newPost, setNewPost] = useState({
+        user: {},
+        title: '',
+        content: '',
+    })
 
-    // async function getUser() {
+    const [allPosts, setAllPosts] = useState([{
+        user: {},
+        title: '',
+        content: '',
+    }])
+
     const getUser = async () => {
         try {
             const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
@@ -36,35 +48,19 @@ export default function ProfilePage() {
         getUser();
     }, []);
 
-    // const renderFriends = async () => {
-    //     console.log("coewbvoewb")
-    //     if (!user || !user.friends) {
-    //         return null;
-    //     }
+    const getAllPosts = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/posts/postsList');
+            console.log(response.status, response.data)
+            setAllPosts(response.data);
+        } catch (err) {
+            console.log(err)
+        }
+    };
 
-    //     // Clear the friendData state before making new requests
-    //     setFriendData([]);
-
-    //     await Promise.all(user.friends.map(async (friendId) => {
-    //         try {
-    //             // Fetch details for each friend using their ObjectId
-    //             const response = await axios.get(`http://localhost:3000/users/user/${friendId}`)  // Replace with your actual API endpoint
-    //             // console.log(response.data.profile_name);
-    //             // console.log(response.data.imageURL);
-    //             setFriendData(prevData => [...prevData, response.data]);
-    //         } catch (error) {
-    //             console.error('Error fetching friend data:', error);
-    //         }
-    //     }));
-    // };
-
-    // // Display profile_name and imageURL for each friend
-    // console.log(friendData)
-
-    // useEffect(() => {
-    //     renderFriends();
-    // }, [user]);
-
+    useEffect(() => {
+        getAllPosts();
+    }, [newPost]);
 
     const handleDeleteUser = () => {
 
@@ -72,6 +68,42 @@ export default function ProfilePage() {
 
         navigate('/StartPage')
     };
+
+    const handleChange = (event: FormEvent) => {
+        const { name, value } = event.target as any;
+        setNewPost({
+            ...newPost,
+            [name]: value
+        })
+    };
+
+    async function handleSubmit(event: FormEvent) {
+        event.preventDefault();
+
+        const postData = {
+            user: user,
+            title: newPost.title,
+            content: newPost.content,
+        }
+        setNewPost(postData);
+
+        try {
+            const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
+            console.log(response.status, response.data);
+            if (response.status === 200) {
+                console.log(response.data);
+                // setPost(response.data);
+                setNewPost({
+                    user: {},
+                    title: '',
+                    content: '',
+                })
+            }
+        } catch (ex) {
+            console.log(ex);
+        }
+    }
+
 
     return (
         <>
@@ -118,30 +150,89 @@ export default function ProfilePage() {
                         </Col>
                     </Row>
                 </Row>
-                <Row id='friends-posts-container'>
-                    <Col>
-                        <div id='following-container'>
+                <Row id='following-posts-container'>
+                    <div id='following-container'>
+                        <Row>
+                            <Col id='following-title'>
+                                Followed Readers
+                            </Col>
+                        </Row>
+                        <div id='following-cards-container'>
+                            {user.friends.map((friend, index) => {
+                                return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
+                                    <Card id='following-card'>
+                                        <img className='following-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
+                                        <Card.Body>
+                                            <Card.Title>{friend.profile_name}</Card.Title>
+                                        </Card.Body>
+                                    </Card>
+                                </Link>
+                            })}
+                        </div>
+                    </div>
+                    <div id='posts-container'>
+                        <div id='post-form'>
                             <Row>
-                                <Col id='following-title'>
-                                    Following:
+                                <Col className='posts-title'>
+                                    Write a New Post
                                 </Col>
                             </Row>
-                            <div id='friend-card-container'>
-                                {user.friends.map((friend, index) => {
-                                    return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
-                                        <Card id='friend-card'>
-                                            <img className='friend-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
-                                            <Card.Body>
-                                                <Card.Title>{friend.profile_name}</Card.Title>
-                                            </Card.Body>
-                                        </Card>
-                                    </Link>
-                                })}
-                            </div>
+                            <Form onSubmit={handleSubmit}>
+                                <Form.Group className="mb-3" id='first-input'>
+                                    <FloatingLabel
+                                        label="Post Title">
+                                        <Form.Control
+                                            required
+                                            maxLength={25}
+                                            type="text"
+                                            name='title'
+                                            placeholder='Type Post Title Here'
+                                            value={newPost.title}
+                                            onChange={handleChange}
+                                        />
+                                    </FloatingLabel>
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <FloatingLabel
+                                        label="Post Content">
+                                        <Form.Control
+                                            required
+                                            as="textarea"
+                                            rows={6}
+                                            style={{ height: 'unset' }}
+                                            name='content'
+                                            placeholder='Type Post Content Here'
+                                            value={newPost.content}
+                                            onChange={handleChange}
+                                            maxLength={500}
+                                        />
+                                    </FloatingLabel>
+                                </Form.Group>
+                                <MyButton id='user-post-button' title='Post Your Thoughts!'></MyButton>
+                            </Form>
                         </div>
-                    </Col>
-                </Row>
-            </Row>
+                        <div id='finished-posts'>
+                            <Row>
+                                <Col className='posts-title'>
+                                    Previous Posts
+                                </Col>
+                            </Row>
+                            {allPosts.filter(postUser => postUser.user._id === user._id).map((userPost) => (
+                                <div key={userPost._id}>
+                                    <Card id='posts-card'>
+                                        <Card.Body>
+                                            <Card.Title>{userPost.title}</Card.Title>
+                                            <Card.Text>
+                                                {userPost.content}
+                                            </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </Row >
+            </Row >
         </>
     )
 }

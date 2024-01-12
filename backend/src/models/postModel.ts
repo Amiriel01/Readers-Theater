@@ -11,10 +11,10 @@ const PostSchema = new Schema({
         minLength: 1,
         maxLength: 25,
     },
-    post: {
+    content: {
         type: String,
         minLength: 1,
-        maxLength: 500,
+        maxLength: 250,
     }
 });
 

@@ -30,10 +30,10 @@ export function post_create() {
             .isLength({ min: 1 })
             .isLength({ max: 25 })
             .escape(),
-        body("post", "Post cannot be blank.")
+        body("content", "Content cannot be blank.")
             .trim()
             .isLength({ min: 1 })
-            .isLength({ max: 500 })
+            .isLength({ max: 250 })
             .escape(),
 
         asyncHandler(async (req, res, next) => {
@@ -43,7 +43,7 @@ export function post_create() {
             //create user object with escaped and trimmed info
             const post = new Post({
                 title: req.body.title,
-                post: req.body.post,
+                content: req.body.content,
                 user: req.body.user,
             });
 
@@ -71,10 +71,10 @@ export function post_edit() {
             .isLength({ min: 1 })
             .isLength({ max: 25 })
             .escape(),
-        body("post", "Post cannot be blank.")
+        body("content", "Content cannot be blank.")
             .trim()
             .isLength({ min: 1 })
-            .isLength({ max: 500 })
+            .isLength({ max: 250 })
             .escape(),
 
         asyncHandler(async (req, res, next) => {
@@ -91,7 +91,7 @@ export function post_edit() {
                 //find the staff member and update
                 const postUpdate = await Post.findByIdAndUpdate(req.params.id, {
                     title: req.body.title,
-                    post: req.body.post,
+                    content: req.body.content,
                     user: req.body.user
                 }, { new: true }).exec()
                 //save profile update
