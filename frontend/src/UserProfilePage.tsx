@@ -9,9 +9,10 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 
-export default function ProfilePage() {
+export default function UserProfilePage() {
 
     const navigate = useNavigate();
+    const [postId, setPostId] = useState("");
 
     const [user, setUser] = useState({
         username: "",
@@ -102,8 +103,17 @@ export default function ProfilePage() {
         } catch (ex) {
             console.log(ex);
         }
-    }
+    };
 
+    const handleDeletePost = async (event, postId) => {
+
+        try {
+            const postDeleteResponse = await axios.delete(`http://localhost:3000/posts/postDetails/${postId}`);
+            setAllPosts(postDeleteResponse.data)
+        } catch (error) {
+            console.error(error);
+        };
+    };
 
     return (
         <>
@@ -158,8 +168,8 @@ export default function ProfilePage() {
                             </Col>
                         </Row>
                         <div id='following-cards-container'>
-                            {user.friends.map((friend, index) => {
-                                return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
+                            {user.friends.map((friend) => {
+                                return <Link to={"/users/user/" + friend._id} key={friend._id} id='following-link'>
                                     <Card id='following-card'>
                                         <img className='following-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
                                         <Card.Body>
@@ -226,6 +236,14 @@ export default function ProfilePage() {
                                                 {userPost.content}
                                             </Card.Text>
                                         </Card.Body>
+                                        <div id='post-buttons-container'>
+                                            <MyButton id='edit-post-button' title='Edit'></MyButton>
+                                            <MyButton id='delete-post-button' title='Delete'
+                                                onClick={(event) => {
+                                                    setPostId(userPost._id);
+                                                    handleDeletePost(event, userPost._id);
+                                                }}></MyButton>
+                                        </div>
                                     </Card>
                                 </div>
                             ))}

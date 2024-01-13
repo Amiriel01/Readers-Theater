@@ -107,6 +107,6 @@ export function post_delete() {
     return asyncHandler(async (req, res, next) => {
         const postDelete = await Post.findByIdAndDelete(req.params.id).exec();
         console.log("item deleted");
-        res.json("item deleted");
+        res.status(200).json(await Post.find().populate('user').exec());
     })
 };

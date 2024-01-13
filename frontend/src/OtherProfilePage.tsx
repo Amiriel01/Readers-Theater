@@ -32,10 +32,12 @@ export default function OtherProfilePage() {
     const [userId, setUserId] = useState('');
     const [friendId, setFriendId] = useState();
     const [isFriend, setIsFriend] = useState(false);
-    // const [pageRerender, setPageRerender] = useState(0);
-    // const [friendData, setFriendData] = useState([]);
-    // console.log(pageRerender)
-    // console.log(isFriend)
+
+    const [allPosts, setAllPosts] = useState([{
+        user: {},
+        title: '',
+        content: '',
+    }]);
 
     async function getProfile() {
         try {
@@ -49,7 +51,6 @@ export default function OtherProfilePage() {
         }
     };
 
-    // console.log('friendId', friendId)
     useEffect(() => {
         getProfile();
     }, []);
@@ -60,16 +61,11 @@ export default function OtherProfilePage() {
             // console.log(response.status, response.data)
             setUser(response.data);
             setUserId(response.data._id)
-            console.log(response.data)
-            // Check if friendId is already in the friends array to determine isFriend
-            // if (response.data.friends.includes(friendId)) {
-                
-            // }
-            if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1 ) {
+            // console.log(response.data)
+            // Check if friendId is already in the friends array 
+            if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1) {
                 setIsFriend(true);
-                console.log("aogvboeb");
             }
-
         } catch (err) {
             console.log(err)
         }
@@ -99,38 +95,21 @@ export default function OtherProfilePage() {
         } catch (error) {
             console.error(error);
         }
-        // setPageRerender(pageRerender + 1)
     };
 
-    // const renderFriends = async () => {
-    //     if (!profile || !profile.friends) {
-    //         return null;
-    //     }
+    const getAllPosts = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/posts/postsList');
+            console.log(response.status, response.data)
+            setAllPosts(response.data);
+        } catch (err) {
+            console.log(err)
+        }
+    };
 
-    //     // Clear the friendData state before making new requests
-    //     setFriendData([]);
-
-    //     await Promise.all(profile.friends.map(async (friendId) => {
-    //         try {
-    //             // Fetch details for each friend using their ObjectId
-    //             const response = await axios.get(`http://localhost:3000/users/user/${friendId}`)  // Replace with your actual API endpoint
-
-    //             // console.log(response.data.profile_name);
-    //             // console.log(response.data.imageURL);
-    //             setFriendData((prevData) => [...prevData, response.data]);
-    //         } catch (error) {
-    //             console.error('Error fetching friend data:', error);
-    //         }
-    //     }));
-    // };
-
-    // Display profile_name and imageURL for each friend
-    // console.log(friendData)
-
-    // useEffect(() => {
-    //     renderFriends();
-    // }, [user]);
-
+    useEffect(() => {
+        getAllPosts();
+    }, []);
 
     return (
         <>
@@ -171,28 +150,47 @@ export default function OtherProfilePage() {
                         </Col>
                     </Row>
                 </Row>
-                <Row id='friends-posts-container'>
-                    <Col>
-                        <div id='following-container'>
+                <Row id='following-posts-container'>
+                    <div id='following-container'>
+                        <Row>
+                            <Col id='following-title'>
+                                Followed Readers
+                            </Col>
+                        </Row>
+                        <div id='following-card-container'>
+                            {profile.friends.map((friend, index) => {
+                                return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
+                                    <Card id='following-card'>
+                                        <img className='following-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
+                                        <Card.Body>
+                                            <Card.Title>{friend.profile_name}</Card.Title>
+                                        </Card.Body>
+                                    </Card>
+                                </Link>
+                            })}
+                        </div>
+                    </div>
+                    <div id='posts-container'>
+                        <div id='finished-posts'>
                             <Row>
-                                <Col id='following-title'>
-                                    Following:
+                                <Col className='posts-title'>
+                                    Post History
                                 </Col>
                             </Row>
-                            <div id='friend-card-container'>
-                                {profile.friends.map((friend, index) => {
-                                    return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
-                                        <Card id='friend-card'>
-                                            <img className='friend-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
-                                            <Card.Body>
-                                                <Card.Title>{friend.profile_name}</Card.Title>
-                                            </Card.Body>
-                                        </Card>
-                                    </Link>
-                                })}
-                            </div>
+                            {allPosts.filter(postUser => postUser.user._id === friendId).map((userPost) => (
+                                <div key={userPost._id}>
+                                    <Card id='posts-card'>
+                                        <Card.Body>
+                                            <Card.Title>{userPost.title}</Card.Title>
+                                            <Card.Text>
+                                                {userPost.content}
+                                            </Card.Text>
+                                        </Card.Body>
+                                    </Card>
+                                </div>
+                            ))}
                         </div>
-                    </Col>
+                    </div>
                 </Row>
             </Row>
         </>
