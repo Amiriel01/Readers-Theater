@@ -13,6 +13,14 @@ export default function UserProfilePage() {
 
     const navigate = useNavigate();
     const [postId, setPostId] = useState("");
+    const [formVisibility, setFormVisibility] = useState({});
+
+    const handleToggleForm = (postId) => {
+        setFormVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [postId]: !prevVisibility[postId],
+        }));
+    };
 
     const [user, setUser] = useState({
         username: "",
@@ -27,7 +35,13 @@ export default function UserProfilePage() {
         user: {},
         title: '',
         content: '',
-    })
+    });
+
+    const [editedPost, setEditedPost] = useState({
+        user: {},
+        title: '',
+        content: '',
+    });
 
     const [allPosts, setAllPosts] = useState([{
         user: {},
@@ -61,7 +75,7 @@ export default function UserProfilePage() {
 
     useEffect(() => {
         getAllPosts();
-    }, [newPost]);
+    }, [newPost, editedPost]);
 
     const handleDeleteUser = () => {
 
@@ -86,19 +100,63 @@ export default function UserProfilePage() {
             title: newPost.title,
             content: newPost.content,
         }
-        setNewPost(postData);
 
         try {
             const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
             console.log(response.status, response.data);
             if (response.status === 200) {
-                console.log(response.data);
-                // setPost(response.data);
+                // console.log(response.data);
+                setNewPost(response.data)
                 setNewPost({
                     user: {},
                     title: '',
                     content: '',
                 })
+            }
+        } catch (ex) {
+            console.log(ex);
+        }
+    };
+
+    const handlePostChange = (event: FormEvent) => {
+        const { name, value } = event.target as any;
+
+        setEditedPost((prevEditedPost) => ({
+            ...prevEditedPost,
+            [name]: value === '' ? userPost[name] : value,
+        }));
+    };
+
+
+    // const handlePostChange = (event: FormEvent) => {
+    //     const { name, value } = event.target as any;
+    //     setEditedPost({
+    //         ...editedPost,
+    //         [name]: value
+    //     })
+    // };
+
+    async function handlePostEdit(event: FormEvent, postId) {
+        event.preventDefault();
+
+        const postEditData = {
+            user: user,
+            title: editedPost.title,
+            content: editedPost.content,
+        }
+
+        try {
+            const response = await axios.put(`http://localhost:3000/posts/postDetails/${postId}`, postEditData);
+            console.log(response.status, response.data);
+            if (response.status === 200) {
+                console.log(response.data);
+                setEditedPost(response.data);
+                setEditedPost({
+                    user: {},
+                    title: '',
+                    content: '',
+                });
+                handleToggleForm(postId);
             }
         } catch (ex) {
             console.log(ex);
@@ -218,7 +276,7 @@ export default function UserProfilePage() {
                                         />
                                     </FloatingLabel>
                                 </Form.Group>
-                                <MyButton id='user-post-button' title='Post Your Thoughts!'></MyButton>
+                                <MyButton id='user-post-button' title='Post Your Thought!'></MyButton>
                             </Form>
                         </div>
                         <div id='finished-posts'>
@@ -237,7 +295,23 @@ export default function UserProfilePage() {
                                             </Card.Text>
                                         </Card.Body>
                                         <div id='post-buttons-container'>
-                                            <MyButton id='edit-post-button' title='Edit'></MyButton>
+                                            {/* <MyButton id='edit-post-button' title='Edit' onClick={(event) => {
+                                                setPostId(userPost._id)
+                                                handleToggleForm(userPost._id)
+                                            }}></MyButton> */}
+                                            <MyButton
+                                                id='edit-post-button'
+                                                title='Edit'
+                                                onClick={(event) => {
+                                                    setPostId(userPost._id);
+                                                    setEditedPost({
+                                                        user: userPost.user,
+                                                        title: userPost.title,
+                                                        content: userPost.content,
+                                                    });
+                                                    handleToggleForm(userPost._id);
+                                                }}
+                                            ></MyButton>
                                             <MyButton id='delete-post-button' title='Delete'
                                                 onClick={(event) => {
                                                     setPostId(userPost._id);
@@ -245,6 +319,40 @@ export default function UserProfilePage() {
                                                 }}></MyButton>
                                         </div>
                                     </Card>
+                                    {formVisibility[userPost._id] && (
+                                        <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
+                                            <Form.Group className="mb-3" id='first-input'>
+                                                <FloatingLabel
+                                                    label="Post Title">
+                                                    <Form.Control
+                                                        required
+                                                        maxLength={25}
+                                                        type="text"
+                                                        name='title'
+                                                        value={editedPost.title}
+                                                        onChange={handlePostChange}
+                                                    />
+                                                </FloatingLabel>
+                                            </Form.Group>
+                                            <Form.Group className="mb-3">
+                                                <FloatingLabel
+                                                    label="Post Content">
+                                                    <Form.Control
+                                                        required
+                                                        as="textarea"
+                                                        rows={6}
+                                                        style={{ height: 'unset' }}
+                                                        name='content'
+                                                        value={editedPost.content}
+                                                        onChange={handlePostChange}
+                                                        maxLength={500}
+                                                    />
+                                                </FloatingLabel>
+                                            </Form.Group>
+                                            <MyButton id='user-post-button' title='Update Your Thought!'></MyButton>
+                                        </Form>
+                                    )}
+
                                 </div>
                             ))}
                         </div>
