@@ -174,7 +174,7 @@ export default function OtherProfilePage() {
                         <div id='finished-posts'>
                             <Row>
                                 <Col className='posts-title'>
-                                    Post History
+                                    {profile.profile_name}'s Posts
                                 </Col>
                             </Row>
                             {allPosts.filter(postUser => postUser.user._id === friendId).map((userPost) => (
