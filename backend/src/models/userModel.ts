@@ -35,6 +35,8 @@ const UserSchema = new Schema({
     }],
 })
 
+export default mongoose.model("User", UserSchema);
+
 // UserSchema.plugin(passportLocalMongoose);
 
 // UserSchema.methods.authenticate = function (password) {
@@ -44,5 +46,3 @@ const UserSchema = new Schema({
 // UserSchema.methods.authenticate = function(password) {      
 //     return this.password === password;
 //   }
-
-export default mongoose.model("User", UserSchema);
