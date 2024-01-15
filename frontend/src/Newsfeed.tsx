@@ -11,6 +11,7 @@ import Card from 'react-bootstrap/Card';
 export default function NewsFeed() {
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
+    const [showAllPosts, setShowAllPosts] = useState(true);
 
     const [user, setUser] = useState({
         username: "",
@@ -39,12 +40,15 @@ export default function NewsFeed() {
         content: '',
     });
 
-    const handleToggleForm = (postId) => {
-        setFormVisibility((prevVisibility) => ({
-            ...prevVisibility,
-            [postId]: !prevVisibility[postId],
-        }));
+    const handleTogglePosts = () => {
+        setShowAllPosts((prevShowAllPosts) => !prevShowAllPosts);
     };
+
+    const filteredPosts = showAllPosts
+        ? allPosts
+        : allPosts.filter((userPost) => user.friends.some(friend => friend._id === userPost.user._id) || user._id === userPost.user._id);
+
+
 
     const getAllPosts = async () => {
         try {
@@ -114,7 +118,7 @@ export default function NewsFeed() {
         }
     };
 
-    const handlePostChange = (event: FormEvent) => {
+    const handlePostChange = (event: FormEvent, userPost) => {
         const { name, value } = event.target as any;
 
         setEditedPost((prevEditedPost) => ({
@@ -165,7 +169,7 @@ export default function NewsFeed() {
             <Header />
             <Row id='newsfeed-page-container'>
                 <Row id='newsfeed-form-contaner'>
-                <Row>
+                    <Row>
                         <Col>
                             <h1 id='newsfeed-page-title'>
                                 Make A Post
@@ -214,8 +218,18 @@ export default function NewsFeed() {
                             </h1>
                         </Col>
                     </Row>
-                    {allPosts.map((userPost) => (
-                        <div key={userPost._id}>
+                    <Row>
+                        <Col id='posts-toggle'>
+                            <Form.Check
+                                type="switch"
+                                id="toggle-posts-switch"
+                                label="Show Followed Readers Only"
+                                onChange={handleTogglePosts}
+                            />
+                        </Col>
+                    </Row>
+                    {filteredPosts.map((userPost) => (
+                        < div key={userPost._id} >
                             <Card id='posts-card'>
                                 <Card.Body>
                                     <Card.Title>{userPost.title}</Card.Title>
@@ -248,44 +262,45 @@ export default function NewsFeed() {
                                     )}
                                 </div>
                             </Card>
-                            {formVisibility[userPost._id] && (
-                                <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
-                                    <Form.Group className="mb-3" id='first-input'>
-                                        <FloatingLabel
-                                            label="Post Title">
-                                            <Form.Control
-                                                required
-                                                maxLength={25}
-                                                type="text"
-                                                name='title'
-                                                value={editedPost.title}
-                                                onChange={handlePostChange}
-                                            />
-                                        </FloatingLabel>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <FloatingLabel
-                                            label="Post Content">
-                                            <Form.Control
-                                                required
-                                                as="textarea"
-                                                rows={6}
-                                                style={{ height: 'unset' }}
-                                                name='content'
-                                                value={editedPost.content}
-                                                onChange={handlePostChange}
-                                                maxLength={500}
-                                            />
-                                        </FloatingLabel>
-                                    </Form.Group>
-                                    <MyButton id='user-post-button' title='Update Your Thought!'></MyButton>
-                                </Form>
-                            )}
-
+                            {
+                                formVisibility[userPost._id] && (
+                                    <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
+                                        <Form.Group className="mb-3" id='first-input'>
+                                            <FloatingLabel
+                                                label="Post Title">
+                                                <Form.Control
+                                                    required
+                                                    maxLength={25}
+                                                    type="text"
+                                                    name='title'
+                                                    value={editedPost.title}
+                                                    onChange={handlePostChange}
+                                                />
+                                            </FloatingLabel>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3">
+                                            <FloatingLabel
+                                                label="Post Content">
+                                                <Form.Control
+                                                    required
+                                                    as="textarea"
+                                                    rows={6}
+                                                    style={{ height: 'unset' }}
+                                                    name='content'
+                                                    value={editedPost.content}
+                                                    onChange={handlePostChange}
+                                                    maxLength={500}
+                                                />
+                                            </FloatingLabel>
+                                        </Form.Group>
+                                        <MyButton id='user-post-button' title='Update Your Thought!'></MyButton>
+                                    </Form>
+                                )
+                            }
                         </div>
                     ))}
                 </Row>
-            </Row>
+            </Row >
         </>
     )
 }
