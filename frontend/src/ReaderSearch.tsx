@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Form from 'react-bootstrap/Form';
 
 export default function FollowerSearch() {
     const [query, setQuery] = useState('');
@@ -33,7 +35,7 @@ export default function FollowerSearch() {
 
         return () => {
             clearTimeout(debounceSearch);
-             setShowNoResults(false);
+            setShowNoResults(false);
         }
     }, [query, isTyping]);
 
@@ -50,15 +52,23 @@ export default function FollowerSearch() {
     };
 
     return (
-        <div>
-            <input
-                type="text"
-                value={query}
-                onChange={handleInputChange}
-                onKeyPress={handleEnterKey}
-                placeholder="Search Readers"
-            />
-             <ul>
+        <div id='search-bar-container'>
+            <InputGroup className="mb-3">
+                <InputGroup.Text id="basic-addon1">
+                    <span className="material-symbols-outlined" id='magnifying-glass'>
+                        search
+                    </span>
+                </InputGroup.Text>
+                <Form.Control
+                    id='readers-search-input'
+                    type="text"
+                    value={query}
+                    placeholder="Find Other Readers"
+                    onChange={handleInputChange}
+                    onKeyPress={handleEnterKey}
+                />
+            </InputGroup>
+            <ul>
                 {results.length > 0 ? (
                     results.map((result) => (
                         <li key={result._id} onClick={() => window.location.href = `http://localhost:5173/users/user/${result._id}`}>

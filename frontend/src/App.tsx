@@ -7,7 +7,7 @@ import { useState } from 'react';
 import UserProfilePage from './UserProfilePage';
 import UpdateProfile from './UpdateProfile';
 import OtherProfilePage from './OtherProfilePage';
-import FollowerSearch from './FollowerSearch';
+import ReaderSearch from './ReaderSearch';
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -41,7 +41,7 @@ function App() {
           />}></Route>
           <Route path="/UpdateProfile" element={<UpdateProfile />}></Route>
           <Route path="/users/user/:id" element={<OtherProfilePage />}></Route>
-          <Route path="/FollowerSearch" element={<FollowerSearch />}></Route>
+          <Route path="/ReaderSearch" element={<ReaderSearch />}></Route>
         </Routes>
       </div>
     </>

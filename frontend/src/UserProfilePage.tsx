@@ -8,6 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
+import Header from './Header';
 
 export default function UserProfilePage() {
 
@@ -175,6 +176,7 @@ export default function UserProfilePage() {
 
     return (
         <>
+        <Header />
             <Row id='profile-page-container'>
                 <Row id='profile-page-information-container'>
                     <Row >
