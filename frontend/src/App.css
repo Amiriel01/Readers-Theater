@@ -861,6 +861,7 @@ input.form-control {
 #search-bar-container {
     margin-top: 1rem;
 }
+
 #magnifying-glass {
     font-size: 2rem;
 }
@@ -873,8 +874,10 @@ ul {
     padding-bottom: 1rem;
     padding-left: 1rem !important;
     cursor: pointer;
-    left: 15%;
-} 
+    top: 78.5%;
+    left: 11.3%;
+    width: 19.5rem;
+}
 
 ul:empty {
     background-color: transparent;
@@ -915,7 +918,7 @@ li {
 }
 
 .dropdown-toggle::after {
-  display: none !important; 
+    display: none !important;
 }
 
 .dropdown {
@@ -924,4 +927,24 @@ li {
 
 #basic-addon1 {
     border-radius: 0;
+}
+
+/*Newsfeed Page*/
+#newsfeed-page-container {
+    background-image: url(images/bookpages1.png);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#newsfeed-form-contaner,
+#all-posts-container {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: rgb(235, 236, 240);
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    padding: 2rem;
+    margin-top: 3rem;
 }

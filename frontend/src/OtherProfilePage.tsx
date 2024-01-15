@@ -5,11 +5,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
+import Header from './Header';
+import { useLocation } from 'react-router-dom';
 
 export default function OtherProfilePage() {
 
     const navigate = useNavigate();
     const { id } = useParams();
+    const { pathname } = useLocation();
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname]);
 
     const [profile, setProfile] = useState({
         username: "",
@@ -113,6 +120,7 @@ export default function OtherProfilePage() {
 
     return (
         <>
+        <Header />
             <Row id='profile-page-container'>
                 <Row id='profile-page-information-container'>
                     <Row id='profile-information-container'>

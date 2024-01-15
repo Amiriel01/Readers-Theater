@@ -8,6 +8,7 @@ import UserProfilePage from './UserProfilePage';
 import UpdateProfile from './UpdateProfile';
 import OtherProfilePage from './OtherProfilePage';
 import ReaderSearch from './ReaderSearch';
+import NewsFeed from './Newsfeed';
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -42,6 +43,7 @@ function App() {
           <Route path="/UpdateProfile" element={<UpdateProfile />}></Route>
           <Route path="/users/user/:id" element={<OtherProfilePage />}></Route>
           <Route path="/ReaderSearch" element={<ReaderSearch />}></Route>
+          <Route path="/Newsfeed" element={<NewsFeed />}></Route>
         </Routes>
       </div>
     </>

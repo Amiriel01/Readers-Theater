@@ -128,15 +128,6 @@ export default function UserProfilePage() {
         }));
     };
 
-
-    // const handlePostChange = (event: FormEvent) => {
-    //     const { name, value } = event.target as any;
-    //     setEditedPost({
-    //         ...editedPost,
-    //         [name]: value
-    //     })
-    // };
-
     async function handlePostEdit(event: FormEvent, postId) {
         event.preventDefault();
 

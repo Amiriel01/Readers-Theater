@@ -22,7 +22,7 @@ export default function Header() {
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/UserProfilePage">My Profile </Dropdown.Item>
                                 <Dropdown.Item href="/Newsfeed">Newsfeed </Dropdown.Item>
-                                <Dropdown.Item href="/FindReaders">Find Readers</Dropdown.Item>
+                                <Dropdown.Item href="/FindReaders">Suggested Readers</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
