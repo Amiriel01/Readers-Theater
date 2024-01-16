@@ -12,11 +12,13 @@ import passport from 'passport';
 import {Strategy as JwtStrategy, ExtractJwt, StrategyOptions} from 'passport-jwt';
 import bcrypt from 'bcrypt';
 import User from './models/userModel.ts';
+import Comment from './models/commentModel.ts';
 // import passportLocalMongoose from 'passport-local-mongoose';
 
 import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';
 import postsRouter from './routes/posts.ts';
+import commentsRouter from './routes/comments.ts';
 
 const app = express();
 
@@ -44,6 +46,7 @@ app.use(passport.initialize());
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
+app.use('/comments', commentsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

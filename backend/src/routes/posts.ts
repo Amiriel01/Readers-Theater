@@ -2,7 +2,7 @@ import {Router} from "express";
 const router = Router();
 import { posts_list, post_details, post_create, post_edit, post_delete } from "../controllers/postController.ts";
 
-//GET user list
+//GET posts list
 router.get("/postsList", posts_list());
 
 //GET single post details
