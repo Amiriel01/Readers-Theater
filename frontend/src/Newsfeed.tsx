@@ -41,6 +41,13 @@ export default function NewsFeed() {
         content: '',
     });
 
+    const handleToggleForm = (postId) => {
+        setFormVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [postId]: !prevVisibility[postId],
+        }));
+    };
+
     const handleTogglePosts = () => {
         setShowAllPosts((prevShowAllPosts) => !prevShowAllPosts);
     };
@@ -303,7 +310,7 @@ export default function NewsFeed() {
                                                 />
                                             </FloatingLabel>
                                         </Form.Group>
-                                        <MyButton id='user-post-button' title='Update Your Thought!'></MyButton>
+                                        <MyButton id='newsfeed-edit-post-button' title='Update Your Thought!'></MyButton>
                                     </Form>
                                 )
                             }
