@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState, FormEvent } from 'react';
+import { Link } from 'react-router-dom';
 import Header from './Header';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -45,6 +46,7 @@ export default function NewsFeed() {
     };
 
     const filteredPosts = showAllPosts
+        //.some() is an array method, it tests whether at least one element in the array passes the test. It returns a boolean value.
         ? allPosts
         : allPosts.filter((userPost) => user.friends.some(friend => friend._id === userPost.user._id) || user._id === userPost.user._id);
 
@@ -232,10 +234,18 @@ export default function NewsFeed() {
                         < div key={userPost._id} >
                             <Card id='posts-card'>
                                 <Card.Body>
-                                    <Card.Title>{userPost.title}</Card.Title>
-                                    <Card.Text>
-                                        {userPost.content}
-                                    </Card.Text>
+                                    <div id='post-flex-container'>
+                                        <Link id='post-name-link' to={"/users/user/" + userPost.user._id}>
+                                            <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
+                                        </Link>
+                                        <div>
+                                            <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>
+                                            <Card.Title id='post-title'>{userPost.title}</Card.Title>
+                                            <Card.Text>
+                                                {userPost.content}
+                                            </Card.Text>
+                                        </div>
+                                    </div>
                                 </Card.Body>
                                 <div id='post-buttons-container'>
                                     {userPost.user._id === user._id && (

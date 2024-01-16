@@ -956,3 +956,34 @@ li {
 #posts-toggle {
     margin-bottom: 1rem;
 }
+
+#post-image-thumbnail {
+    width: 5rem;
+    height: 7rem;
+    margin-right: 1rem;
+}
+
+#post-flex-container {
+    display: flex;
+    align-items: center;
+}
+
+#post-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+#post-profile-name {
+    margin-bottom: .5rem;
+    margin-top: .5rem;
+}
+
+#post-name-link {
+    text-decoration: none;
+    color: #424141;
+}
+
+#post-name-link:hover {
+    color: #f4ad96;
+}
+
