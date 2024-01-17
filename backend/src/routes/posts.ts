@@ -1,6 +1,10 @@
 import {Router} from "express";
 const router = Router();
 import { posts_list, post_details, post_create, post_edit, post_delete } from "../controllers/postController.ts";
+import { like_post } from "../controllers/likeController.ts";
+
+//Post Like posts
+router.post('/posts/:id/like', like_post);
 
 //GET posts list
 router.get("/postsList", posts_list());

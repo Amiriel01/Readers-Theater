@@ -15,7 +15,11 @@ const PostSchema = new Schema({
         type: String,
         minLength: 1,
         maxLength: 250,
-    }
+    },
+    like_count: {
+        type: Number,
+        default: 0,
+    },
 });
 
 export default mongoose.model("Post", PostSchema);

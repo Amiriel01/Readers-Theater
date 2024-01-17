@@ -11,6 +11,7 @@ import ReaderSearch from './ReaderSearch';
 import NewsFeed from './Newsfeed';
 import Comment from './Comment';
 import axios from 'axios';
+import Likes from './Likes';
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -71,11 +72,8 @@ function App() {
           <Route path="*" element={<StartPage />}></Route>
           <Route path="/Login" element={<Login />}></Route>
           <Route path="/SignUp" element={<SignUp
-          // setLoggedIn={setLoggedIn}
-          // setUser={setUser}
           />}></Route>
           <Route path="/UserProfilePage" element={<UserProfilePage
-            // loggedIn={loggedIn}
             user={user}
           />}></Route>
           <Route path="/UpdateProfile" element={<UpdateProfile />}></Route>
@@ -90,6 +88,9 @@ function App() {
             user={user}
           />}></Route>
           <Route path="/Comment" element={<Comment
+            user={user}
+          />}></Route>
+           <Route path="/Likes" element={<Likes
             user={user}
           />}></Route>
         </Routes>
