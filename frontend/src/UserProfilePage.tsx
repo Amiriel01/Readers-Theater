@@ -18,13 +18,6 @@ export default function UserProfilePage({ user }) {
     const [formVisibility, setFormVisibility] = useState({});
     const [commentVisibility, setCommentVisibility] = useState({});
 
-    const handleToggleCommentForm = (postId) => {
-        setCommentVisibility((prevVisibility) => ({
-            ...prevVisibility,
-            [postId]: !prevVisibility[postId],
-        }));
-    };
-
     const [newPost, setNewPost] = useState({
         user: {},
         title: '',
@@ -45,6 +38,13 @@ export default function UserProfilePage({ user }) {
 
     const handleTogglePostForm = (postId) => {
         setFormVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [postId]: !prevVisibility[postId],
+        }));
+    };
+
+    const handleToggleCommentForm = (postId) => {
+        setCommentVisibility((prevVisibility) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
@@ -303,7 +303,6 @@ export default function UserProfilePage({ user }) {
                                                     title='Comments'
                                                     onClick={() => handleToggleCommentForm(userPost._id)}
                                                 ></MyButton>
-
                                             </div>
                                         </Card>
                                         {formVisibility[userPost._id] && (

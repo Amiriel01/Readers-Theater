@@ -9,21 +9,12 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 import Card from 'react-bootstrap/Card';
 import Comment from './Comment';
-import App from './App';
 
 export default function NewsFeed({ user }) {
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
     const [showAllPosts, setShowAllPosts] = useState(true);
-
-    // const [user, setUser] = useState({
-    //     username: "",
-    //     password: "",
-    //     profile_name: '',
-    //     about_section: '',
-    //     imageURL: '',
-    //     friends: [],
-    // });
+    const [commentVisibility, setCommentVisibility] = useState({});
 
     const [newPost, setNewPost] = useState({
         user: {},
@@ -45,6 +36,13 @@ export default function NewsFeed({ user }) {
 
     const handleToggleForm = (postId) => {
         setFormVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [postId]: !prevVisibility[postId],
+        }));
+    };
+
+    const handleToggleCommentForm = (postId) => {
+        setCommentVisibility((prevVisibility) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
@@ -221,81 +219,101 @@ export default function NewsFeed({ user }) {
                     </Row>
                     {filteredPosts.map((userPost) => (
                         < div key={userPost._id} >
-                            <Card id='posts-card'>
-                                <Card.Body>
-                                    <div id='post-flex-container'>
-                                        <Link id='post-name-link' to={"/users/user/" + userPost.user._id}>
-                                            <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
-                                        </Link>
-                                        <div>
-                                            <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>
-                                            <Card.Title id='post-title'>{userPost.title}</Card.Title>
-                                            <Card.Text>
-                                                {userPost.content}
-                                            </Card.Text>
+                            <div id='post-comment-container'>
+                                <Card id='posts-card'>
+                                    <Card.Body>
+                                        <div id='post-flex-container'>
+                                            <Link id='post-name-link' to={"/users/user/" + userPost.user._id}>
+                                                <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
+                                            </Link>
+                                            <div>
+                                                <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>
+                                                <Card.Title id='post-title'>{userPost.title}</Card.Title>
+                                                <Card.Text>
+                                                    {userPost.content}
+                                                </Card.Text>
+                                            </div>
                                         </div>
+                                    </Card.Body>
+                                    <div id='post-buttons-container'>
+                                        {userPost.user._id !== user._id && (
+                                            <>
+                                                <MyButton
+                                                    id='comment-button'
+                                                    title='Comments'
+                                                    onClick={() => handleToggleCommentForm(userPost._id)}
+                                                ></MyButton>
+                                            </>
+                                        )}
                                     </div>
-                                </Card.Body>
-                                <div id='post-buttons-container'>
-                                    {userPost.user._id === user._id && (
-                                        <>
-                                            <MyButton
-                                                id='edit-post-button'
-                                                title='Edit'
-                                                onClick={(event) => {
-                                                    setPostId(userPost._id);
-                                                    setEditedPost({
-                                                        user: userPost.user,
-                                                        title: userPost.title,
-                                                        content: userPost.content,
-                                                    });
-                                                    handleToggleForm(userPost._id);
-                                                }}
-                                            ></MyButton>
-                                            <MyButton id='delete-post-button' title='Delete'
-                                                onClick={(event) => {
-                                                    setPostId(userPost._id);
-                                                    handleDeletePost(event, userPost._id);
-                                                }}></MyButton>
-                                        </>
+                                    <div id='post-buttons-container'>
+                                        {userPost.user._id === user._id && (
+                                            <>
+                                                <MyButton
+                                                    id='edit-post-button'
+                                                    title='Edit'
+                                                    onClick={(event) => {
+                                                        setPostId(userPost._id);
+                                                        setEditedPost({
+                                                            user: userPost.user,
+                                                            title: userPost.title,
+                                                            content: userPost.content,
+                                                        });
+                                                        handleToggleForm(userPost._id);
+                                                    }}
+                                                ></MyButton>
+                                                <MyButton id='delete-post-button' title='Delete'
+                                                    onClick={(event) => {
+                                                        setPostId(userPost._id);
+                                                        handleDeletePost(event, userPost._id);
+                                                    }}></MyButton>
+                                                <MyButton
+                                                    id='comment-button'
+                                                    title='Comments'
+                                                    onClick={() => handleToggleCommentForm(userPost._id)}
+                                                ></MyButton>
+                                            </>
+                                        )}
+                                    </div>
+                                </Card>
+                                {
+                                    formVisibility[userPost._id] && (
+                                        <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
+                                            <Form.Group className="mb-3" id='first-input'>
+                                                <FloatingLabel
+                                                    label="Post Title">
+                                                    <Form.Control
+                                                        required
+                                                        maxLength={25}
+                                                        type="text"
+                                                        name='title'
+                                                        value={editedPost.title}
+                                                        onChange={handlePostChange}
+                                                    />
+                                                </FloatingLabel>
+                                            </Form.Group>
+                                            <Form.Group className="mb-3">
+                                                <FloatingLabel
+                                                    label="Post Content">
+                                                    <Form.Control
+                                                        required
+                                                        as="textarea"
+                                                        rows={6}
+                                                        style={{ height: 'unset' }}
+                                                        name='content'
+                                                        value={editedPost.content}
+                                                        onChange={handlePostChange}
+                                                        maxLength={500}
+                                                    />
+                                                </FloatingLabel>
+                                            </Form.Group>
+                                            <MyButton id='newsfeed-edit-post-button' title='Update Your Thought!'></MyButton>
+                                        </Form>
                                     )}
-                                </div>
-                            </Card>
-                            {
-                                formVisibility[userPost._id] && (
-                                    <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
-                                        <Form.Group className="mb-3" id='first-input'>
-                                            <FloatingLabel
-                                                label="Post Title">
-                                                <Form.Control
-                                                    required
-                                                    maxLength={25}
-                                                    type="text"
-                                                    name='title'
-                                                    value={editedPost.title}
-                                                    onChange={handlePostChange}
-                                                />
-                                            </FloatingLabel>
-                                        </Form.Group>
-                                        <Form.Group className="mb-3">
-                                            <FloatingLabel
-                                                label="Post Content">
-                                                <Form.Control
-                                                    required
-                                                    as="textarea"
-                                                    rows={6}
-                                                    style={{ height: 'unset' }}
-                                                    name='content'
-                                                    value={editedPost.content}
-                                                    onChange={handlePostChange}
-                                                    maxLength={500}
-                                                />
-                                            </FloatingLabel>
-                                        </Form.Group>
-                                        <MyButton id='newsfeed-edit-post-button' title='Update Your Thought!'></MyButton>
-                                    </Form>
-                                )
-                            }
+                                {commentVisibility[userPost._id] && (
+                                    <Comment user={user} post={userPost} />
+                                )}
+                            </div>
                         </div>
                     ))}
                 </Row>
