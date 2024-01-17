@@ -8,20 +8,22 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 import Card from 'react-bootstrap/Card';
+import Comment from './Comment';
+import App from './App';
 
-export default function NewsFeed() {
+export default function NewsFeed({ user }) {
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
     const [showAllPosts, setShowAllPosts] = useState(true);
 
-    const [user, setUser] = useState({
-        username: "",
-        password: "",
-        profile_name: '',
-        about_section: '',
-        imageURL: '',
-        friends: [],
-    });
+    // const [user, setUser] = useState({
+    //     username: "",
+    //     password: "",
+    //     profile_name: '',
+    //     about_section: '',
+    //     imageURL: '',
+    //     friends: [],
+    // });
 
     const [newPost, setNewPost] = useState({
         user: {},
@@ -73,25 +75,25 @@ export default function NewsFeed() {
         getAllPosts();
     }, [newPost, editedPost]);
 
-    async function getUser() {
-        try {
-            const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
-            // console.log(response.status, response.data)
-            setUser(response.data);
-            // setUserId(response.data._id)
-            // console.log(response.data)
-            // Check if friendId is already in the friends array 
-            // if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1) {
-            //     setIsFriend(true);
-            // }
-        } catch (err) {
-            console.log(err)
-        }
-    };
+    // async function getUser() {
+    //     try {
+    //         const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
+    //         // console.log(response.status, response.data)
+    //         setUser(response.data);
+    //         // setUserId(response.data._id)
+    //         // console.log(response.data)
+    //         // Check if friendId is already in the friends array 
+    //         // if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1) {
+    //         //     setIsFriend(true);
+    //         // }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // };
 
-    useEffect(() => {
-        getUser()
-    }, []);
+    // useEffect(() => {
+    //     getUser()
+    // }, []);
 
     const handleChange = (event: FormEvent) => {
         const { name, value } = event.target as any;

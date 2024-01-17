@@ -9,28 +9,22 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 import Header from './Header';
+import Comment from './Comment';
 
-export default function UserProfilePage() {
+export default function UserProfilePage({ user, userComment }) {
 
     const navigate = useNavigate();
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
+    // const [userComment, setUserComment] = useState(null);
+    const [commentVisibility, setCommentVisibility] = useState({});
 
-    const handleToggleForm = (postId) => {
-        setFormVisibility((prevVisibility) => ({
+    const handleToggleCommentForm = (postId) => {
+        setCommentVisibility((prevVisibility) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
     };
-
-    const [user, setUser] = useState({
-        username: "",
-        password: "",
-        profile_name: '',
-        about_section: '',
-        imageURL: '',
-        friends: [],
-    });
 
     const [newPost, setNewPost] = useState({
         user: {},
@@ -48,21 +42,14 @@ export default function UserProfilePage() {
         user: {},
         title: '',
         content: '',
-    }])
+    }]);
 
-    const getUser = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
-            console.log(response.status, response.data)
-            setUser(response.data);
-        } catch (err) {
-            console.log(err)
-        }
+    const handleTogglePostForm = (postId) => {
+        setFormVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [postId]: !prevVisibility[postId],
+        }));
     };
-
-    useEffect(() => {
-        getUser();
-    }, []);
 
     const getAllPosts = async () => {
         try {
@@ -90,7 +77,7 @@ export default function UserProfilePage() {
         setNewPost({
             ...newPost,
             [name]: value
-        })
+        });
     };
 
     async function handleSubmit(event: FormEvent) {
@@ -148,7 +135,7 @@ export default function UserProfilePage() {
                     title: '',
                     content: '',
                 });
-                handleToggleForm(postId);
+                handleTogglePostForm(postId);
             }
         } catch (ex) {
             console.log(ex);
@@ -167,7 +154,7 @@ export default function UserProfilePage() {
 
     return (
         <>
-        <Header />
+            <Header />
             <Row id='profile-page-container'>
                 <Row id='profile-page-information-container'>
                     <Row >
@@ -280,72 +267,78 @@ export default function UserProfilePage() {
                             </Row>
                             {allPosts.filter(postUser => postUser.user._id === user._id).map((userPost) => (
                                 <div key={userPost._id}>
-                                    <Card id='posts-card'>
-                                        <Card.Body>
-                                            <Card.Title>{userPost.title}</Card.Title>
-                                            <Card.Text>
-                                                {userPost.content}
-                                            </Card.Text>
-                                        </Card.Body>
-                                        <div id='post-buttons-container'>
-                                            {/* <MyButton id='edit-post-button' title='Edit' onClick={(event) => {
-                                                setPostId(userPost._id)
-                                                handleToggleForm(userPost._id)
-                                            }}></MyButton> */}
-                                            <MyButton
-                                                id='edit-post-button'
-                                                title='Edit'
-                                                onClick={(event) => {
-                                                    setPostId(userPost._id);
-                                                    setEditedPost({
-                                                        user: userPost.user,
-                                                        title: userPost.title,
-                                                        content: userPost.content,
-                                                    });
-                                                    handleToggleForm(userPost._id);
-                                                }}
-                                            ></MyButton>
-                                            <MyButton id='delete-post-button' title='Delete'
-                                                onClick={(event) => {
-                                                    setPostId(userPost._id);
-                                                    handleDeletePost(event, userPost._id);
-                                                }}></MyButton>
-                                        </div>
-                                    </Card>
-                                    {formVisibility[userPost._id] && (
-                                        <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
-                                            <Form.Group className="mb-3" id='first-input'>
-                                                <FloatingLabel
-                                                    label="Post Title">
-                                                    <Form.Control
-                                                        required
-                                                        maxLength={25}
-                                                        type="text"
-                                                        name='title'
-                                                        value={editedPost.title}
-                                                        onChange={handlePostChange}
-                                                    />
-                                                </FloatingLabel>
-                                            </Form.Group>
-                                            <Form.Group className="mb-3">
-                                                <FloatingLabel
-                                                    label="Post Content">
-                                                    <Form.Control
-                                                        required
-                                                        as="textarea"
-                                                        rows={6}
-                                                        style={{ height: 'unset' }}
-                                                        name='content'
-                                                        value={editedPost.content}
-                                                        onChange={handlePostChange}
-                                                        maxLength={500}
-                                                    />
-                                                </FloatingLabel>
-                                            </Form.Group>
-                                            <MyButton id='user-post-button' title='Update Your Thought!'></MyButton>
-                                        </Form>
-                                    )}
+                                    <div id='post-comment-container'>
+                                        <Card id='posts-card'>
+                                            <Card.Body>
+                                                <Card.Title>{userPost.title}</Card.Title>
+                                                <Card.Text>
+                                                    {userPost.content}
+                                                </Card.Text>
+                                            </Card.Body>
+                                            <div id='post-buttons-container'>
+                                                <MyButton
+                                                    id='edit-post-button'
+                                                    title='Edit'
+                                                    onClick={(event) => {
+                                                        setPostId(userPost._id);
+                                                        setEditedPost({
+                                                            user: userPost.user,
+                                                            title: userPost.title,
+                                                            content: userPost.content,
+                                                        });
+                                                        handleTogglePostForm(userPost._id);
+                                                    }}
+                                                ></MyButton>
+                                                <MyButton id='delete-post-button' title='Delete'
+                                                    onClick={(event) => {
+                                                        setPostId(userPost._id);
+                                                        handleDeletePost(event, userPost._id);
+                                                    }}></MyButton>
+                                                <MyButton
+                                                    id='comment-button'
+                                                    title='Comments'
+                                                    onClick={() => handleToggleCommentForm(userPost._id)}
+                                                ></MyButton>
 
+                                            </div>
+                                        </Card>
+                                        {formVisibility[userPost._id] && (
+                                            <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
+                                                <Form.Group className="mb-3" id='first-input'>
+                                                    <FloatingLabel
+                                                        label="Post Title">
+                                                        <Form.Control
+                                                            required
+                                                            maxLength={25}
+                                                            type="text"
+                                                            name='title'
+                                                            value={editedPost.title}
+                                                            onChange={handlePostChange}
+                                                        />
+                                                    </FloatingLabel>
+                                                </Form.Group>
+                                                <Form.Group className="mb-3">
+                                                    <FloatingLabel
+                                                        label="Post Content">
+                                                        <Form.Control
+                                                            required
+                                                            as="textarea"
+                                                            rows={6}
+                                                            style={{ height: 'unset' }}
+                                                            name='content'
+                                                            value={editedPost.content}
+                                                            onChange={handlePostChange}
+                                                            maxLength={500}
+                                                        />
+                                                    </FloatingLabel>
+                                                </Form.Group>
+                                                <MyButton id='user-post-button' title='Update Your Thought!'></MyButton>
+                                            </Form>
+                                        )}
+                                        {commentVisibility[userPost._id] && (
+                                            <Comment user={user} post={userPost} />
+                                        )}
+                                    </div>
                                 </div>
                             ))}
                         </div>

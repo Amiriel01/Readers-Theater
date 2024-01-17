@@ -7,8 +7,9 @@ import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
 import Header from './Header';
 import { useLocation } from 'react-router-dom';
+import App from './App';
 
-export default function OtherProfilePage() {
+export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -27,16 +28,16 @@ export default function OtherProfilePage() {
         friends: [],
     });
 
-    const [user, setUser] = useState({
-        username: "",
-        password: "",
-        profile_name: '',
-        about_section: '',
-        imageURL: '',
-        friends: [],
-    });
+    // const [user, setUser] = useState({
+    //     username: "",
+    //     password: "",
+    //     profile_name: '',
+    //     about_section: '',
+    //     imageURL: '',
+    //     friends: [],
+    // });
 
-    const [userId, setUserId] = useState('');
+    // const [userId, setUserId] = useState('');
     const [friendId, setFriendId] = useState();
     const [isFriend, setIsFriend] = useState(false);
 
@@ -62,25 +63,25 @@ export default function OtherProfilePage() {
         getProfile();
     }, []);
 
-    async function getUser() {
-        try {
-            const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
-            // console.log(response.status, response.data)
-            setUser(response.data);
-            setUserId(response.data._id)
-            // console.log(response.data)
-            // Check if friendId is already in the friends array 
-            if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1) {
-                setIsFriend(true);
-            }
-        } catch (err) {
-            console.log(err)
-        }
-    };
+    // async function getUser() {
+    //     try {
+    //         const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
+    //         // console.log(response.status, response.data)
+    //         setUser(response.data);
+    //         setUserId(response.data._id)
+    //         // console.log(response.data)
+    //         // Check if friendId is already in the friends array 
+    //         if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1) {
+    //             setIsFriend(true);
+    //         }
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // };
 
-    useEffect(() => {
-        getUser()
-    }, [profile]);
+    // useEffect(() => {
+    //     getUser()
+    // }, [profile]);
 
     useEffect(() => {
         getProfile();
