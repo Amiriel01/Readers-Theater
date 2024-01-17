@@ -75,26 +75,6 @@ export default function NewsFeed({ user }) {
         getAllPosts();
     }, [newPost, editedPost]);
 
-    // async function getUser() {
-    //     try {
-    //         const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
-    //         // console.log(response.status, response.data)
-    //         setUser(response.data);
-    //         // setUserId(response.data._id)
-    //         // console.log(response.data)
-    //         // Check if friendId is already in the friends array 
-    //         // if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1) {
-    //         //     setIsFriend(true);
-    //         // }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     getUser()
-    // }, []);
-
     const handleChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
         setNewPost({

@@ -157,12 +157,17 @@ export default function Comment({ user, post, openCommentForms, toggleCommentFor
                 <div key={userComment._id}>
                     <Card id='posts-card'>
                         <Card.Body>
-                            <Card.Title>
-                                {userComment.user.profile_name}
-                            </Card.Title>
-                            <Card.Text>
-                                {userComment.comment_text}
-                            </Card.Text>
+                            <div id='post-flex-container'>
+                                <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userComment.user.imageURL}`}></img>
+                                <div>
+                                    <Card.Title>
+                                        {userComment.user.profile_name}
+                                    </Card.Title>
+                                    <Card.Text>
+                                        {userComment.comment_text}
+                                    </Card.Text>
+                                </div>
+                            </div>
                         </Card.Body>
                         <div id='post-buttons-container'>
                             <MyButton

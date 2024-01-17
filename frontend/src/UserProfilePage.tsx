@@ -270,10 +270,15 @@ export default function UserProfilePage({ user, userComment }) {
                                     <div id='post-comment-container'>
                                         <Card id='posts-card'>
                                             <Card.Body>
-                                                <Card.Title>{userPost.title}</Card.Title>
-                                                <Card.Text>
-                                                    {userPost.content}
-                                                </Card.Text>
+                                                <div id='post-flex-container'>
+                                                    <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
+                                                    <div>
+                                                        <Card.Title>{userPost.title}</Card.Title>
+                                                        <Card.Text>
+                                                            {userPost.content}
+                                                        </Card.Text>
+                                                    </div>
+                                                </div>
                                             </Card.Body>
                                             <div id='post-buttons-container'>
                                                 <MyButton
