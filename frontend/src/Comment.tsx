@@ -4,8 +4,6 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
-import App from './App';
-import UserProfilePage from './UserProfilePage';
 
 export default function Comment({ user, post, openCommentForms, toggleCommentForm }) {
 

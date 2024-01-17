@@ -7,17 +7,17 @@ import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
 import Header from './Header';
 import { useLocation } from 'react-router-dom';
-import App from './App';
+import Comment from './Comment';
+import MyButton from './MyButton';
+import Form from 'react-bootstrap/Form';
+import FloatingLabel from 'react-bootstrap/FloatingLabel';
 
 export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 
     const navigate = useNavigate();
     const { id } = useParams();
     const { pathname } = useLocation();
-
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [pathname]);
+    const [commentVisibility, setCommentVisibility] = useState({});
 
     const [profile, setProfile] = useState({
         username: "",
@@ -28,16 +28,6 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
         friends: [],
     });
 
-    // const [user, setUser] = useState({
-    //     username: "",
-    //     password: "",
-    //     profile_name: '',
-    //     about_section: '',
-    //     imageURL: '',
-    //     friends: [],
-    // });
-
-    // const [userId, setUserId] = useState('');
     const [friendId, setFriendId] = useState();
     const [isFriend, setIsFriend] = useState(false);
 
@@ -46,6 +36,17 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
         title: '',
         content: '',
     }]);
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [pathname]);
+
+    const handleToggleCommentForm = (postId) => {
+        setCommentVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [postId]: !prevVisibility[postId],
+        }));
+    };
 
     async function getProfile() {
         try {
@@ -62,26 +63,6 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
     useEffect(() => {
         getProfile();
     }, []);
-
-    // async function getUser() {
-    //     try {
-    //         const response = await axios.get('http://localhost:3000/users/user/659c80cee0f47de5e6b2faff');
-    //         // console.log(response.status, response.data)
-    //         setUser(response.data);
-    //         setUserId(response.data._id)
-    //         // console.log(response.data)
-    //         // Check if friendId is already in the friends array 
-    //         if (response.data.friends.findIndex((friend: any) => friend._id === friendId) > -1) {
-    //             setIsFriend(true);
-    //         }
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     getUser()
-    // }, [profile]);
 
     useEffect(() => {
         getProfile();
@@ -121,7 +102,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 
     return (
         <>
-        <Header />
+            <Header />
             <Row id='profile-page-container'>
                 <Row id='profile-page-information-container'>
                     <Row id='profile-information-container'>
@@ -188,14 +169,31 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
                             </Row>
                             {allPosts.filter(postUser => postUser.user._id === friendId).map((userPost) => (
                                 <div key={userPost._id}>
-                                    <Card id='posts-card'>
-                                        <Card.Body>
-                                            <Card.Title>{userPost.title}</Card.Title>
-                                            <Card.Text>
-                                                {userPost.content}
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
+                                    <div id='post-comment-container'>
+                                        <Card id='posts-card'>
+                                            <Card.Body>
+                                                <div id='post-flex-container'>
+                                                    <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
+                                                    <div>
+                                                        <Card.Title>{userPost.title}</Card.Title>
+                                                        <Card.Text>
+                                                            {userPost.content}
+                                                        </Card.Text>
+                                                    </div>
+                                                </div>
+                                            </Card.Body>
+                                            <div id='post-buttons-container'>
+                                                <MyButton
+                                                    id='comment-button'
+                                                    title='Comments'
+                                                    onClick={() => handleToggleCommentForm(userPost._id)}
+                                                ></MyButton>
+                                            </div>
+                                        </Card>
+                                        {commentVisibility[userPost._id] && (
+                                            <Comment user={user} post={userPost} />
+                                        )}
+                                    </div>
                                 </div>
                             ))}
                         </div>

@@ -11,12 +11,11 @@ import MyButton from './MyButton';
 import Header from './Header';
 import Comment from './Comment';
 
-export default function UserProfilePage({ user, userComment }) {
+export default function UserProfilePage({ user }) {
 
     const navigate = useNavigate();
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
-    // const [userComment, setUserComment] = useState(null);
     const [commentVisibility, setCommentVisibility] = useState({});
 
     const handleToggleCommentForm = (postId) => {
