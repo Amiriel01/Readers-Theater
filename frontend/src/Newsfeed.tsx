@@ -45,7 +45,7 @@ export default function NewsFeed({ user }) {
     // const handlePostCreated = (newPostData) => {
     //     setAllPosts((prevPosts) => [newPostData, ...prevPosts]);
     // };
-    
+
 
     const handleToggleForm = (postId) => {
         setFormVisibility((prevVisibility) => ({
@@ -74,7 +74,11 @@ export default function NewsFeed({ user }) {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
             console.log(response.status, response.data)
-            setAllPosts(response.data);
+
+            // Reverse the order of the posts
+            const reversedPosts = response.data.reverse();
+
+            setAllPosts(reversedPosts);
         } catch (err) {
             console.log(err)
         }
@@ -130,10 +134,26 @@ export default function NewsFeed({ user }) {
         };
     };
 
-    const handlePostCreated = (newPostData) => {
-        setAllPosts((prevPosts) => [newPostData, ...prevPosts]);
+    // const handlePostCreated = (newPostData) => {
+    //     setAllPosts((prevPosts) => [...prevPosts, newPostData]);
+    // };
+
+    const handlePostCreated = async (newPostData) => {
+        try {
+            // Fetch the details of the created post
+            const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
+
+            if (response.status === 200) {
+                // Add the fetched post to the allPosts array
+                setAllPosts((prevPosts) => [...prevPosts, response.data]);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
-    
+
+
+
     return (
         <>
             <Header />
