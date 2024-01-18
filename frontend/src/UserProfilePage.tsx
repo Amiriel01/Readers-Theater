@@ -10,6 +10,7 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 import Header from './Header';
 import Comment from './Comment';
+import PostCreateForm from './PostCreateForm';
 
 export default function UserProfilePage({ user }) {
 
@@ -71,39 +72,39 @@ export default function UserProfilePage({ user }) {
         navigate('/StartPage')
     };
 
-    const handleChange = (event: FormEvent) => {
-        const { name, value } = event.target as any;
-        setNewPost({
-            ...newPost,
-            [name]: value
-        });
-    };
+    // const handleChange = (event: FormEvent) => {
+    //     const { name, value } = event.target as any;
+    //     setNewPost({
+    //         ...newPost,
+    //         [name]: value
+    //     });
+    // };
 
-    async function handleSubmit(event: FormEvent) {
-        event.preventDefault();
+    // async function handleSubmit(event: FormEvent) {
+    //     event.preventDefault();
 
-        const postData = {
-            user: user,
-            title: newPost.title,
-            content: newPost.content,
-        }
+    //     const postData = {
+    //         user: user,
+    //         title: newPost.title,
+    //         content: newPost.content,
+    //     }
 
-        try {
-            const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
-            console.log(response.status, response.data);
-            if (response.status === 200) {
-                // console.log(response.data);
-                setNewPost(response.data)
-                setNewPost({
-                    user: {},
-                    title: '',
-                    content: '',
-                })
-            }
-        } catch (ex) {
-            console.log(ex);
-        }
-    };
+    //     try {
+    //         const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
+    //         console.log(response.status, response.data);
+    //         if (response.status === 200) {
+    //             // console.log(response.data);
+    //             setNewPost(response.data)
+    //             setNewPost({
+    //                 user: {},
+    //                 title: '',
+    //                 content: '',
+    //             })
+    //         }
+    //     } catch (ex) {
+    //         console.log(ex);
+    //     }
+    // };
 
     const handlePostChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
@@ -149,6 +150,20 @@ export default function UserProfilePage({ user }) {
         } catch (error) {
             console.error(error);
         };
+    };
+
+    const handlePostCreated = async (newPostData) => {
+        try {
+            // Fetch the details of the created post
+            const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
+
+            if (response.status === 200) {
+                // Add the fetched post to the allPosts array
+                setAllPosts((prevPosts) => [...prevPosts, response.data]);
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     return (
@@ -224,7 +239,8 @@ export default function UserProfilePage({ user }) {
                                     Write a New Post
                                 </Col>
                             </Row>
-                            <Form onSubmit={handleSubmit}>
+                            <PostCreateForm user={user} onPostCreated={handlePostCreated} />
+                            {/* <Form onSubmit={handleSubmit}>
                                 <Form.Group className="mb-3" id='first-input'>
                                     <FloatingLabel
                                         label="Post Title">
@@ -256,7 +272,7 @@ export default function UserProfilePage({ user }) {
                                     </FloatingLabel>
                                 </Form.Group>
                                 <MyButton id='user-post-button' title='Post Your Thought!'></MyButton>
-                            </Form>
+                            </Form> */}
                         </div>
                         <div id='finished-posts'>
                             <Row>

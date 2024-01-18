@@ -1,14 +1,8 @@
 import axios from 'axios';
-import { useEffect, useState, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import Header from './Header';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import { useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
-import Card from 'react-bootstrap/Card';
-import Comment from './Comment';
 
 export default function PostCreateForm({ user, onPostCreated }) {
 

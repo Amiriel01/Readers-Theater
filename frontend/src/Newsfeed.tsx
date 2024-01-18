@@ -42,11 +42,6 @@ export default function NewsFeed({ user }) {
         content: '',
     });
 
-    // const handlePostCreated = (newPostData) => {
-    //     setAllPosts((prevPosts) => [newPostData, ...prevPosts]);
-    // };
-
-
     const handleToggleForm = (postId) => {
         setFormVisibility((prevVisibility) => ({
             ...prevVisibility,
@@ -133,10 +128,6 @@ export default function NewsFeed({ user }) {
             console.error(error);
         };
     };
-
-    // const handlePostCreated = (newPostData) => {
-    //     setAllPosts((prevPosts) => [...prevPosts, newPostData]);
-    // };
 
     const handlePostCreated = async (newPostData) => {
         try {
