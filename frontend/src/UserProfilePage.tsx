@@ -72,40 +72,6 @@ export default function UserProfilePage({ user }) {
         navigate('/StartPage')
     };
 
-    // const handleChange = (event: FormEvent) => {
-    //     const { name, value } = event.target as any;
-    //     setNewPost({
-    //         ...newPost,
-    //         [name]: value
-    //     });
-    // };
-
-    // async function handleSubmit(event: FormEvent) {
-    //     event.preventDefault();
-
-    //     const postData = {
-    //         user: user,
-    //         title: newPost.title,
-    //         content: newPost.content,
-    //     }
-
-    //     try {
-    //         const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
-    //         console.log(response.status, response.data);
-    //         if (response.status === 200) {
-    //             // console.log(response.data);
-    //             setNewPost(response.data)
-    //             setNewPost({
-    //                 user: {},
-    //                 title: '',
-    //                 content: '',
-    //             })
-    //         }
-    //     } catch (ex) {
-    //         console.log(ex);
-    //     }
-    // };
-
     const handlePostChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
 
@@ -240,39 +206,6 @@ export default function UserProfilePage({ user }) {
                                 </Col>
                             </Row>
                             <PostCreateForm user={user} onPostCreated={handlePostCreated} />
-                            {/* <Form onSubmit={handleSubmit}>
-                                <Form.Group className="mb-3" id='first-input'>
-                                    <FloatingLabel
-                                        label="Post Title">
-                                        <Form.Control
-                                            required
-                                            maxLength={25}
-                                            type="text"
-                                            name='title'
-                                            placeholder='Type Post Title Here'
-                                            value={newPost.title}
-                                            onChange={handleChange}
-                                        />
-                                    </FloatingLabel>
-                                </Form.Group>
-                                <Form.Group className="mb-3">
-                                    <FloatingLabel
-                                        label="Post Content">
-                                        <Form.Control
-                                            required
-                                            as="textarea"
-                                            rows={6}
-                                            style={{ height: 'unset' }}
-                                            name='content'
-                                            placeholder='Type Post Content Here'
-                                            value={newPost.content}
-                                            onChange={handleChange}
-                                            maxLength={500}
-                                        />
-                                    </FloatingLabel>
-                                </Form.Group>
-                                <MyButton id='user-post-button' title='Post Your Thought!'></MyButton>
-                            </Form> */}
                         </div>
                         <div id='finished-posts'>
                             <Row>
