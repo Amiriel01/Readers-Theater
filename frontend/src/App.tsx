@@ -12,6 +12,7 @@ import NewsFeed from './Newsfeed';
 import Comment from './Comment';
 import axios from 'axios';
 import Likes from './Likes';
+import PostCreateForm from './PostCreateForm';
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -43,16 +44,10 @@ function App() {
     friends: [],
   });
 
-  const [allPosts, setAllPosts] = useState([{
-    user: {},
-    title: '',
-    content: '',
-}]);
-
   const getUser = async () => {
     try {
       const response = await axios.get('http://localhost:3000/users/user/659c97f4d0ffbe6e7575d9f2');
-      console.log(response.status, response.data)
+      // console.log(response.status, response.data)
       setUser(response.data);
       setUserId(response.data._id)
     } catch (err) {
@@ -64,7 +59,7 @@ function App() {
     getUser();
   }, []);
 
-  console.log(user)
+  // console.log(user)
   return (
     <>
       <div>
@@ -90,7 +85,7 @@ function App() {
           <Route path="/Comment" element={<Comment
             user={user}
           />}></Route>
-           <Route path="/Likes" element={<Likes
+          <Route path="/PostCreateForm" element={<PostCreateForm
             user={user}
           />}></Route>
         </Routes>

@@ -4,10 +4,9 @@ import Post from '../models/postModel.ts';
 
 // Like a post
 export const like_post = asyncHandler(async (req, res, next) => {
-    const postId = req.params.id;
 
     // Find the post
-    const post = await Post.findById(postId).exec();
+    const post = await Post.findById(req.params.id).exec();
 
     // Check if the post exists
     if (!post) {
@@ -16,25 +15,27 @@ export const like_post = asyncHandler(async (req, res, next) => {
     }
 
     // Check if the user has already liked the post
-    const existingLike = await Like.findOne({ user: req.body.user, post: postId }).exec();
+    const existingLike = await Like.findOne({ user: req.body.user, post: req.params.id }).exec();
+
+    let newLike;
 
     if (existingLike) {
         // User has already liked the post, unlike it
         await Like.findByIdAndDelete(existingLike._id).exec();
-        post.like_count -= 1;
     } else {
         // User has not liked the post, like it
         const newLike = new Like({
             user: req.body.user,
-            post: postId,
-            like: true,
+            post: req.params.id,
         });
         await newLike.save();
-        post.like_count += 1;
-    }
+    };
 
-    // Save the updated post
-    const updatedPost = await post.save();
+    const responseData = {
+        post: post,
+        like: null || newLike,
+        like_count: await Like.countDocuments({ post: req.params.id }),
+    };
 
-    res.json(updatedPost);
+    res.json(responseData);
 });

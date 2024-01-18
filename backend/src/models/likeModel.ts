@@ -10,10 +10,6 @@ const LikeSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Post",
     },
-    like: {
-        type: Boolean,
-        default: false,
-    }
 });
 
 export default mongoose.model("Like", LikeSchema);

@@ -9,23 +9,25 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 import Card from 'react-bootstrap/Card';
 import Comment from './Comment';
+import PostCreateForm from './PostCreateForm';
+import App from './App';
 
 export default function NewsFeed({ user }) {
+    console.log(user)
+
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
     const [showAllPosts, setShowAllPosts] = useState(true);
     const [commentVisibility, setCommentVisibility] = useState({});
-
-    const [newPost, setNewPost] = useState({
-        user: {},
-        title: '',
-        content: '',
-    });
+    const [isLiked, setIsLiked] = useState(false);
+    const [likedPostId, setLikedPostId] = useState(null);
+    const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
 
     const [allPosts, setAllPosts] = useState([{
         user: {},
         title: '',
         content: '',
+        // like_count: '',
     }]);
 
     const [editedPost, setEditedPost] = useState({
@@ -33,6 +35,17 @@ export default function NewsFeed({ user }) {
         title: '',
         content: '',
     });
+
+    const [newPost, setNewPost] = useState({
+        user: {},
+        title: '',
+        content: '',
+    });
+
+    // const handlePostCreated = (newPostData) => {
+    //     setAllPosts((prevPosts) => [newPostData, ...prevPosts]);
+    // };
+    
 
     const handleToggleForm = (postId) => {
         setFormVisibility((prevVisibility) => ({
@@ -57,8 +70,6 @@ export default function NewsFeed({ user }) {
         ? allPosts
         : allPosts.filter((userPost) => user.friends.some(friend => friend._id === userPost.user._id) || user._id === userPost.user._id);
 
-
-
     const getAllPosts = async () => {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
@@ -71,41 +82,7 @@ export default function NewsFeed({ user }) {
 
     useEffect(() => {
         getAllPosts();
-    }, [newPost, editedPost]);
-
-    const handleChange = (event: FormEvent) => {
-        const { name, value } = event.target as any;
-        setNewPost({
-            ...newPost,
-            [name]: value
-        })
-    };
-
-    async function handleSubmit(event: FormEvent) {
-        event.preventDefault();
-
-        const postData = {
-            user: user,
-            title: newPost.title,
-            content: newPost.content,
-        }
-
-        try {
-            const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
-            console.log(response.status, response.data);
-            if (response.status === 200) {
-                // console.log(response.data);
-                setNewPost(response.data)
-                setNewPost({
-                    user: {},
-                    title: '',
-                    content: '',
-                })
-            }
-        } catch (ex) {
-            console.log(ex);
-        }
-    };
+    }, [newPost, editedPost, updatedLikeCount]);
 
     const handlePostChange = (event: FormEvent, userPost) => {
         const { name, value } = event.target as any;
@@ -153,6 +130,10 @@ export default function NewsFeed({ user }) {
         };
     };
 
+    const handlePostCreated = (newPostData) => {
+        setAllPosts((prevPosts) => [newPostData, ...prevPosts]);
+    };
+    
     return (
         <>
             <Header />
@@ -165,39 +146,7 @@ export default function NewsFeed({ user }) {
                             </h1>
                         </Col>
                     </Row>
-                    <Form onSubmit={handleSubmit}>
-                        <Form.Group className="mb-3" id='first-input'>
-                            <FloatingLabel
-                                label="Post Title">
-                                <Form.Control
-                                    required
-                                    maxLength={25}
-                                    type="text"
-                                    name='title'
-                                    placeholder='Type Post Title Here'
-                                    value={newPost.title}
-                                    onChange={handleChange}
-                                />
-                            </FloatingLabel>
-                        </Form.Group>
-                        <Form.Group className="mb-3">
-                            <FloatingLabel
-                                label="Post Content">
-                                <Form.Control
-                                    required
-                                    as="textarea"
-                                    rows={3}
-                                    style={{ height: 'unset' }}
-                                    name='content'
-                                    placeholder='Type Post Content Here'
-                                    value={newPost.content}
-                                    onChange={handleChange}
-                                    maxLength={500}
-                                />
-                            </FloatingLabel>
-                        </Form.Group>
-                        <MyButton id='user-post-button' title='Post Your Thought!'></MyButton>
-                    </Form>
+                    <PostCreateForm user={user} onPostCreated={handlePostCreated} />
                 </Row>
                 <Row id='all-posts-container'>
                     <Row>
@@ -218,7 +167,7 @@ export default function NewsFeed({ user }) {
                         </Col>
                     </Row>
                     {filteredPosts.map((userPost) => (
-                        < div key={userPost._id} >
+                        <div key={userPost._id}>
                             <div id='post-comment-container'>
                                 <Card id='posts-card'>
                                     <Card.Body>
@@ -228,7 +177,15 @@ export default function NewsFeed({ user }) {
                                             </Link>
                                             <div>
                                                 <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>
-                                                <Card.Title id='post-title'>{userPost.title}</Card.Title>
+                                                <div id='title-likes'>
+                                                    <Card.Title id='post-title'>{userPost.title}</Card.Title>
+                                                    <div>
+                                                        <button onClick={() => handleLike(userPost._id)}>
+                                                            {userPost.like ? 'Unlike' : 'Like'}
+                                                        </button>
+                                                    </div>
+                                                    <Card.Text id='like-count'>{userPost.like_count}</Card.Text>
+                                                </div>
                                                 <Card.Text>
                                                     {userPost.content}
                                                 </Card.Text>
@@ -314,6 +271,7 @@ export default function NewsFeed({ user }) {
                                     <Comment user={user} post={userPost} />
                                 )}
                             </div>
+                            {/* )} */}
                         </div>
                     ))}
                 </Row>

@@ -1014,3 +1014,11 @@ li {
     margin-bottom: 1rem;
 }
 
+#title-likes {
+    display: flex;
+}
+
+#like-count {
+    margin-left: 1rem;
+}
+
