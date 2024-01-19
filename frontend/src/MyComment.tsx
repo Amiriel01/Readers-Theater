@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 
-export default function Comment({ user, post, openCommentForms, toggleCommentForm }) {
+export default function MyComment({ user, post, openCommentForms, toggleCommentForm }) {
 
     const [formVisibility, setFormVisibility] = useState({});
     const [commentId, setCommentId] = useState("");

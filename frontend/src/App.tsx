@@ -9,7 +9,7 @@ import UpdateProfile from './UpdateProfile';
 import OtherProfilePage from './OtherProfilePage';
 import ReaderSearch from './ReaderSearch';
 import NewsFeed from './Newsfeed';
-import Comment from './Comment';
+import MyComment from './MyComment';
 import axios from 'axios';
 import Likes from './Likes';
 import PostCreateForm from './PostCreateForm';
@@ -84,7 +84,7 @@ function App() {
           <Route path="/Newsfeed" element={<NewsFeed
             user={user}
           />}></Route>
-          <Route path="/Comment" element={<Comment
+          <Route path="/MyComment" element={<MyComment
             user={user}
           />}></Route>
           <Route path="/PostCreateForm" element={<PostCreateForm

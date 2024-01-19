@@ -9,7 +9,7 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 import Header from './Header';
-import Comment from './Comment';
+import Comment from './MyComment';
 import PostCreateForm from './PostCreateForm';
 
 export default function UserProfilePage({ user }) {

@@ -6,8 +6,9 @@ import MyButton from './MyButton';
 import NewsFeed from './Newsfeed';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
+import MyComment from './MyComment';
 
-export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete }) {
+export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm }) {
 
     const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
 
@@ -186,7 +187,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                             </Form>
                         )}
                     {commentVisibility[userPost._id] && (
-                        <Comment user={user} post={userPost} />
+                        <MyComment user={user} post={userPost} />
                     )}
                 </div>
             )}

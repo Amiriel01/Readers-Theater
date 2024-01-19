@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
 import Card from 'react-bootstrap/Card';
-import Comment from './Comment';
+import MyComment from './MyComment';
 import PostCreateForm from './PostCreateForm';
 import GetAllPosts from './GetAllPosts';
 import App from './App';
@@ -185,6 +185,7 @@ export default function NewsFeed({ user }) {
                                 setPostId={setPostId}
                                 onPostEdit={handlePostEdit}
                                 onPostDelete={handlePostDelete}
+                                handleToggleCommentForm={handleToggleCommentForm}
                             />
                         </div>
                     ))}
