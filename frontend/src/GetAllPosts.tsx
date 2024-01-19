@@ -7,7 +7,7 @@ import NewsFeed from './Newsfeed';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 
-export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit }) {
+export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete }) {
 
     const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
 
@@ -69,6 +69,17 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         } catch (ex) {
             console.log(ex);
         }
+    };
+
+    const handleDeletePost = async (event, postId) => {
+
+        try {
+            const postDeleteResponse = await axios.delete(`http://localhost:3000/posts/postDetails/${postId}`);
+            setAllPosts(postDeleteResponse.data)
+            onPostDelete(postDeleteResponse.data)
+        } catch (error) {
+            console.error(error);
+        };
     };
     
 

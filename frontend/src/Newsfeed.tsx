@@ -14,7 +14,6 @@ import GetAllPosts from './GetAllPosts';
 import App from './App';
 
 export default function NewsFeed({ user }) {
-    // console.log(user)
 
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
@@ -84,16 +83,6 @@ export default function NewsFeed({ user }) {
         ? allPosts
         : allPosts.filter((userPost) => user.friends.some(friend => friend._id === userPost.user._id) || user._id === userPost.user._id);
 
-    const handleDeletePost = async (event, postId) => {
-
-        try {
-            const postDeleteResponse = await axios.delete(`http://localhost:3000/posts/postDetails/${postId}`);
-            setAllPosts(postDeleteResponse.data)
-        } catch (error) {
-            console.error(error);
-        };
-    };
-
     const handlePostCreated = async (newPostData) => {
         try {
             // Fetch the details of the created post
@@ -115,7 +104,6 @@ export default function NewsFeed({ user }) {
         }
     };
 
-    
     const handlePostEdit = async (editedData) => {
         try {
             // Fetch the updated post details after editing
@@ -136,9 +124,20 @@ export default function NewsFeed({ user }) {
             console.error(error);
         }
     };
+
+    const handlePostDelete = async (deletedData) => {
+        try {
+                // Fetch the updated list of posts
+                const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+                
+                // Set the state with the updated list of posts
+                setAllPosts(deletedPostsResponse.data);
+            
+        } catch (error) {
+            console.error(error);
+        }
+    };
     
-
-
     return (
         <>
             <Header />
@@ -185,6 +184,7 @@ export default function NewsFeed({ user }) {
                                 postId={postId}
                                 setPostId={setPostId}
                                 onPostEdit={handlePostEdit}
+                                onPostDelete={handlePostDelete}
                             />
                         </div>
                     ))}
