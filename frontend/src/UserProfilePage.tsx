@@ -11,6 +11,8 @@ import MyButton from './MyButton';
 import Header from './Header';
 import Comment from './MyComment';
 import PostCreateForm from './PostCreateForm';
+import GetAllPosts from './GetAllPosts';
+import MyComment from './MyComment';
 
 export default function UserProfilePage({ user }) {
 
@@ -55,7 +57,11 @@ export default function UserProfilePage({ user }) {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
             console.log(response.status, response.data)
-            setAllPosts(response.data);
+
+            // Reverse the order of the posts
+            const reversedPosts = response.data.reverse();
+
+            setAllPosts(reversedPosts);
         } catch (err) {
             console.log(err)
         }
@@ -64,6 +70,13 @@ export default function UserProfilePage({ user }) {
     useEffect(() => {
         getAllPosts();
     }, [newPost, editedPost]);
+
+    const handleToggleForm = (postId) => {
+        setFormVisibility((prevVisibility) => ({
+            ...prevVisibility,
+            [postId]: !prevVisibility[postId],
+        }));
+    };
 
     const handleDeleteUser = () => {
 
@@ -81,41 +94,38 @@ export default function UserProfilePage({ user }) {
         }));
     };
 
-    async function handlePostEdit(event: FormEvent, postId) {
-        event.preventDefault();
-
-        const postEditData = {
-            user: user,
-            title: editedPost.title,
-            content: editedPost.content,
-        }
-
+    const handlePostEdit = async (editedData) => {
         try {
-            const response = await axios.put(`http://localhost:3000/posts/postDetails/${postId}`, postEditData);
-            console.log(response.status, response.data);
+            // Fetch the updated post details after editing
+            const response = await axios.get(`http://localhost:3000/posts/postDetails/${editedData._id}`);
+            
             if (response.status === 200) {
-                console.log(response.data);
+                // Update the state with the edited post data
                 setEditedPost(response.data);
-                setEditedPost({
-                    user: {},
-                    title: '',
-                    content: '',
+                
+                // Update the state with the updated list of posts
+                setAllPosts((prevPosts) => {
+                    return prevPosts.map((post) =>
+                        post._id === editedData._id ? response.data : post
+                    );
                 });
-                handleTogglePostForm(postId);
             }
-        } catch (ex) {
-            console.log(ex);
+        } catch (error) {
+            console.error(error);
         }
     };
 
-    const handleDeletePost = async (event, postId) => {
-
+    const handlePostDelete = async (deletedData) => {
         try {
-            const postDeleteResponse = await axios.delete(`http://localhost:3000/posts/postDetails/${postId}`);
-            setAllPosts(postDeleteResponse.data)
+                // Fetch the updated list of posts
+                const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+                
+                // Set the state with the updated list of posts
+                setAllPosts(deletedPostsResponse.data);
+            
         } catch (error) {
             console.error(error);
-        };
+        }
     };
 
     const handlePostCreated = async (newPostData) => {
@@ -124,8 +134,15 @@ export default function UserProfilePage({ user }) {
             const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
 
             if (response.status === 200) {
-                // Add the fetched post to the allPosts array
-                setAllPosts((prevPosts) => [...prevPosts, response.data]);
+                // Fetch the updated list of posts
+                const updatedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+                console.log(updatedPostsResponse.status, updatedPostsResponse.data);
+
+                // Reverse the order of the posts
+                const reversedPosts = updatedPostsResponse.data.reverse();
+
+                // Set the state with the updated list of posts
+                setAllPosts(reversedPosts);
             }
         } catch (error) {
             console.error(error);
@@ -215,7 +232,19 @@ export default function UserProfilePage({ user }) {
                             </Row>
                             {allPosts.filter(postUser => postUser.user._id === user._id).map((userPost) => (
                                 <div key={userPost._id}>
-                                    <div id='post-comment-container'>
+                                    <GetAllPosts
+                                        user={user}
+                                        userPost={userPost}
+                                        formVisibility={formVisibility}
+                                        handleToggleForm={handleToggleForm}
+                                        commentVisibility={commentVisibility}
+                                        postId={postId}
+                                        setPostId={setPostId}
+                                        onPostEdit={handlePostEdit}
+                                        onPostDelete={handlePostDelete}
+                                        handleToggleCommentForm={handleToggleCommentForm}
+                                    />
+                                    {/* <div id='post-comment-container'>
                                         <Card id='posts-card'>
                                             <Card.Body>
                                                 <div id='post-flex-container'>
@@ -290,7 +319,7 @@ export default function UserProfilePage({ user }) {
                                         {commentVisibility[userPost._id] && (
                                             <Comment user={user} post={userPost} />
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                             ))}
                         </div>

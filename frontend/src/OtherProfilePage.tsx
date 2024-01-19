@@ -7,10 +7,11 @@ import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
 import Header from './Header';
 import { useLocation } from 'react-router-dom';
-import Comment from './MyComment';
+import MyComment from './MyComment';
 import MyButton from './MyButton';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
+import GetAllPosts from './GetAllPosts';
 
 export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 
