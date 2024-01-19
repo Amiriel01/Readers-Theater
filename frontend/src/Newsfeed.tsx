@@ -10,10 +10,11 @@ import MyButton from './MyButton';
 import Card from 'react-bootstrap/Card';
 import Comment from './Comment';
 import PostCreateForm from './PostCreateForm';
+import GetAllPosts from './GetAllPosts';
 import App from './App';
 
 export default function NewsFeed({ user }) {
-    console.log(user)
+    // console.log(user)
 
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
@@ -42,6 +43,24 @@ export default function NewsFeed({ user }) {
         content: '',
     });
 
+    const getAllPosts = async () => {
+        try {
+            const response = await axios.get('http://localhost:3000/posts/postsList');
+            console.log(response.status, response.data)
+
+            // Reverse the order of the posts
+            const reversedPosts = response.data.reverse();
+
+            setAllPosts(reversedPosts);
+        } catch (err) {
+            console.log(err)
+        }
+    };
+
+    useEffect(() => {
+        getAllPosts();
+    }, [newPost, editedPost, updatedLikeCount]);
+
     const handleToggleForm = (postId) => {
         setFormVisibility((prevVisibility) => ({
             ...prevVisibility,
@@ -65,60 +84,6 @@ export default function NewsFeed({ user }) {
         ? allPosts
         : allPosts.filter((userPost) => user.friends.some(friend => friend._id === userPost.user._id) || user._id === userPost.user._id);
 
-    const getAllPosts = async () => {
-        try {
-            const response = await axios.get('http://localhost:3000/posts/postsList');
-            console.log(response.status, response.data)
-
-            // Reverse the order of the posts
-            const reversedPosts = response.data.reverse();
-
-            setAllPosts(reversedPosts);
-        } catch (err) {
-            console.log(err)
-        }
-    };
-
-    useEffect(() => {
-        getAllPosts();
-    }, [newPost, editedPost, updatedLikeCount]);
-
-    const handlePostChange = (event: FormEvent, userPost) => {
-        const { name, value } = event.target as any;
-
-        setEditedPost((prevEditedPost) => ({
-            ...prevEditedPost,
-            [name]: value === '' ? userPost[name] : value,
-        }));
-    };
-
-    async function handlePostEdit(event: FormEvent, postId) {
-        event.preventDefault();
-
-        const postEditData = {
-            user: user,
-            title: editedPost.title,
-            content: editedPost.content,
-        }
-
-        try {
-            const response = await axios.put(`http://localhost:3000/posts/postDetails/${postId}`, postEditData);
-            console.log(response.status, response.data);
-            if (response.status === 200) {
-                console.log(response.data);
-                setEditedPost(response.data);
-                setEditedPost({
-                    user: {},
-                    title: '',
-                    content: '',
-                });
-                handleToggleForm(postId);
-            }
-        } catch (ex) {
-            console.log(ex);
-        }
-    };
-
     const handleDeletePost = async (event, postId) => {
 
         try {
@@ -135,14 +100,43 @@ export default function NewsFeed({ user }) {
             const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
 
             if (response.status === 200) {
-                // Add the fetched post to the allPosts array
-                setAllPosts((prevPosts) => [...prevPosts, response.data]);
+                // Fetch the updated list of posts
+                const updatedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+                console.log(updatedPostsResponse.status, updatedPostsResponse.data);
+
+                // Reverse the order of the posts
+                const reversedPosts = updatedPostsResponse.data.reverse();
+
+                // Set the state with the updated list of posts
+                setAllPosts(reversedPosts);
             }
         } catch (error) {
             console.error(error);
         }
     };
 
+    
+    const handlePostEdit = async (editedData) => {
+        try {
+            // Fetch the updated post details after editing
+            const response = await axios.get(`http://localhost:3000/posts/postDetails/${editedData._id}`);
+            
+            if (response.status === 200) {
+                // Update the state with the edited post data
+                setEditedPost(response.data);
+                
+                // Update the state with the updated list of posts
+                setAllPosts((prevPosts) => {
+                    return prevPosts.map((post) =>
+                        post._id === editedData._id ? response.data : post
+                    );
+                });
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
+    
 
 
     return (
@@ -157,7 +151,10 @@ export default function NewsFeed({ user }) {
                             </h1>
                         </Col>
                     </Row>
-                    <PostCreateForm user={user} onPostCreated={handlePostCreated} />
+                    <PostCreateForm
+                        user={user}
+                        onPostCreated={handlePostCreated}
+                    />
                 </Row>
                 <Row id='all-posts-container'>
                     <Row>
@@ -179,110 +176,16 @@ export default function NewsFeed({ user }) {
                     </Row>
                     {filteredPosts.map((userPost) => (
                         <div key={userPost._id}>
-                            <div id='post-comment-container'>
-                                <Card id='posts-card'>
-                                    <Card.Body>
-                                        <div id='post-flex-container'>
-                                            <Link id='post-name-link' to={"/users/user/" + userPost.user._id}>
-                                                <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
-                                            </Link>
-                                            <div>
-                                                <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>
-                                                <div id='title-likes'>
-                                                    <Card.Title id='post-title'>{userPost.title}</Card.Title>
-                                                    <div>
-                                                        <button onClick={() => handleLike(userPost._id)}>
-                                                            {userPost.like ? 'Unlike' : 'Like'}
-                                                        </button>
-                                                    </div>
-                                                    <Card.Text id='like-count'>{userPost.like_count}</Card.Text>
-                                                </div>
-                                                <Card.Text>
-                                                    {userPost.content}
-                                                </Card.Text>
-                                            </div>
-                                        </div>
-                                    </Card.Body>
-                                    <div id='post-buttons-container'>
-                                        {userPost.user._id !== user._id && (
-                                            <>
-                                                <MyButton
-                                                    id='comment-button'
-                                                    title='Comments'
-                                                    onClick={() => handleToggleCommentForm(userPost._id)}
-                                                ></MyButton>
-                                            </>
-                                        )}
-                                    </div>
-                                    <div id='post-buttons-container'>
-                                        {userPost.user._id === user._id && (
-                                            <>
-                                                <MyButton
-                                                    id='edit-post-button'
-                                                    title='Edit'
-                                                    onClick={(event) => {
-                                                        setPostId(userPost._id);
-                                                        setEditedPost({
-                                                            user: userPost.user,
-                                                            title: userPost.title,
-                                                            content: userPost.content,
-                                                        });
-                                                        handleToggleForm(userPost._id);
-                                                    }}
-                                                ></MyButton>
-                                                <MyButton id='delete-post-button' title='Delete'
-                                                    onClick={(event) => {
-                                                        setPostId(userPost._id);
-                                                        handleDeletePost(event, userPost._id);
-                                                    }}></MyButton>
-                                                <MyButton
-                                                    id='comment-button'
-                                                    title='Comments'
-                                                    onClick={() => handleToggleCommentForm(userPost._id)}
-                                                ></MyButton>
-                                            </>
-                                        )}
-                                    </div>
-                                </Card>
-                                {
-                                    formVisibility[userPost._id] && (
-                                        <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
-                                            <Form.Group className="mb-3" id='first-input'>
-                                                <FloatingLabel
-                                                    label="Post Title">
-                                                    <Form.Control
-                                                        required
-                                                        maxLength={25}
-                                                        type="text"
-                                                        name='title'
-                                                        value={editedPost.title}
-                                                        onChange={handlePostChange}
-                                                    />
-                                                </FloatingLabel>
-                                            </Form.Group>
-                                            <Form.Group className="mb-3">
-                                                <FloatingLabel
-                                                    label="Post Content">
-                                                    <Form.Control
-                                                        required
-                                                        as="textarea"
-                                                        rows={6}
-                                                        style={{ height: 'unset' }}
-                                                        name='content'
-                                                        value={editedPost.content}
-                                                        onChange={handlePostChange}
-                                                        maxLength={500}
-                                                    />
-                                                </FloatingLabel>
-                                            </Form.Group>
-                                            <MyButton id='newsfeed-edit-post-button' title='Update Your Thought!'></MyButton>
-                                        </Form>
-                                    )}
-                                {commentVisibility[userPost._id] && (
-                                    <Comment user={user} post={userPost} />
-                                )}
-                            </div>
-                            {/* )} */}
+                            <GetAllPosts
+                                user={user}
+                                userPost={userPost}
+                                formVisibility={formVisibility}
+                                handleToggleForm={handleToggleForm}
+                                commentVisibility={commentVisibility}
+                                postId={postId}
+                                setPostId={setPostId}
+                                onPostEdit={handlePostEdit}
+                            />
                         </div>
                     ))}
                 </Row>

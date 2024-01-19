@@ -13,6 +13,8 @@ import Comment from './Comment';
 import axios from 'axios';
 import Likes from './Likes';
 import PostCreateForm from './PostCreateForm';
+import GetAllPosts from './GetAllPosts';
+
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -86,6 +88,9 @@ function App() {
             user={user}
           />}></Route>
           <Route path="/PostCreateForm" element={<PostCreateForm
+            user={user}
+          />}></Route>
+           <Route path="/GetAllPosts" element={<GetAllPosts
             user={user}
           />}></Route>
         </Routes>
