@@ -13,7 +13,8 @@ import MyComment from './MyComment';
 import axios from 'axios';
 import Likes from './Likes';
 import PostCreateForm from './PostCreateForm';
-import GetAllPosts from './GetAllPosts';
+import Posts from './Posts';
+import AllReaders from './AllReaders';
 
 
 export interface SiteLoggedIn {
@@ -48,7 +49,7 @@ function App() {
 
   const getUser = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/users/user/659c97f4d0ffbe6e7575d9f2');
+      const response = await axios.get('http://localhost:3000/users/user/659c9a85d0ffbe6e7575d9f6');
       // console.log(response.status, response.data)
       setUser(response.data);
       setUserId(response.data._id)
@@ -90,7 +91,10 @@ function App() {
           <Route path="/PostCreateForm" element={<PostCreateForm
             user={user}
           />}></Route>
-           <Route path="/GetAllPosts" element={<GetAllPosts
+           <Route path="/Posts" element={<Posts
+            user={user}
+          />}></Route>
+          <Route path="/AllReaders" element={<AllReaders
             user={user}
           />}></Route>
         </Routes>

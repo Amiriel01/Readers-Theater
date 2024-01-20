@@ -10,7 +10,7 @@ import MyButton from './MyButton';
 import Card from 'react-bootstrap/Card';
 import MyComment from './MyComment';
 import PostCreateForm from './PostCreateForm';
-import GetAllPosts from './GetAllPosts';
+import Posts from './Posts';
 import App from './App';
 
 export default function NewsFeed({ user }) {
@@ -175,7 +175,7 @@ export default function NewsFeed({ user }) {
                     </Row>
                     {filteredPosts.map((userPost) => (
                         <div key={userPost._id}>
-                            <GetAllPosts
+                            <Posts
                                 user={user}
                                 userPost={userPost}
                                 formVisibility={formVisibility}

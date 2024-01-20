@@ -3,7 +3,7 @@ import User from "../models/userModel.ts";
 import Post from '../models/postModel.ts';
 import asyncHandler from "express-async-handler";
 
-//GET a list of all posts 
+//GET a list of all posts and likes
 export function posts_list() {
     return asyncHandler(async (req, res, next) => {
         const postsList = await Post.find().populate('user').exec();

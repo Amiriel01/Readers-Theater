@@ -3,7 +3,7 @@ const router = Router();
 import { posts_list, post_details, post_create, post_edit, post_delete } from "../controllers/postController.ts";
 import { like_post } from "../controllers/likeController.ts";
 
-//Post Like posts
+//Post Likes
 router.post('/postDetails/:id/like', like_post);
 
 //GET posts list

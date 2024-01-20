@@ -6,7 +6,7 @@ input.form-control {
     border-radius: 0px;
 }
 
-/*Start Page*/
+/*StartPage*/
 #start-page-container {
     background-image: url(images/bookpages1.png);
     height: 100vh;
@@ -29,7 +29,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 60%;
@@ -56,7 +56,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 60%;
@@ -83,7 +83,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 60%;
@@ -110,7 +110,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 60%;
@@ -136,7 +136,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 70%;
@@ -163,7 +163,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 90%;
@@ -189,7 +189,7 @@ input.form-control {
 
 @media(max-width: 505px) {
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 90%;
@@ -218,7 +218,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 90%;
@@ -240,7 +240,7 @@ input.form-control {
     }
 
     #start-page-info-section {
-        background-color: rgb(250, 218, 221);
+        background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
         height: 90%;
@@ -268,7 +268,7 @@ input.form-control {
 #start-page-button2 {
     width: 10rem;
     height: 3rem;
-    background-color: rgb(254, 249, 245);
+    background-color: #f4ad96;
     font-weight: bold;
 }
 
@@ -381,7 +381,7 @@ input.form-control {
 #signup-page-button2 {
     width: 15rem;
     height: 3rem;
-    background-color: rgb(254, 249, 245);
+    background-color: #f4ad96;
     font-weight: bold;
 }
 
@@ -405,7 +405,7 @@ input.form-control {
 }
 
 #login-page-info-container {
-    background-color: #f4ad96;
+    background-color: #faece0;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
     padding: 5rem;
 }
@@ -428,7 +428,7 @@ input.form-control {
 #login-page-button2 {
     width: 15rem;
     height: 3rem;
-    background-color: rgb(254, 249, 245);
+    background-color: #f4ad96;
     font-weight: bold;
 }
 
@@ -479,7 +479,7 @@ input.form-control {
 #create-profile-page-button2 {
     width: 10rem;
     height: 3rem;
-    background-color: rgb(254, 249, 245);
+    background-color: #f4ad96;
     font-weight: bold;
 }
 
@@ -1014,11 +1014,100 @@ li {
     margin-bottom: 1rem;
 }
 
-#title-likes {
+#post-text {
+    margin-bottom: 0px;
+}
+
+#likes-container {
     display: flex;
+    align-items: center;
 }
 
 #like-count {
-    margin-left: 1rem;
+    font-size: 1.1rem;
 }
 
+#like-button-all {
+    border: none;
+    background-color: white;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#like-button-off {
+    font-size: 1.25rem;
+}
+
+#like-button-on {
+    color: #ec663b;
+    font-size: 1.25rem;
+}
+
+/*AllReaders*/
+#all-readers-page-container {
+    background-image: url(images/bookpages1.png);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#all-readers-container {
+    background-color: rgb(235, 236, 240);
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    width: 60%;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+#suggested-readers-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    align-items: start;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+#readers-card-container {
+    margin-right: 2rem;
+    margin-bottom: 2rem;
+}
+
+#readers-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15rem;
+    flex-direction: column;
+    padding-top: 1rem;
+    text-align: center;
+}
+
+.readers-image {
+    width: 10rem;
+    height: 10rem;
+}
+
+#suggested-readers-title {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#update-followed-title {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+#following-link {
+    color: black;
+    text-decoration: underline;
+}
+
+#following-link:hover {
+    color: #f4ad96;
+    text-decoration: underline;
+}

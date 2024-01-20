@@ -11,12 +11,14 @@ import MyComment from './MyComment';
 export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm }) {
 
     const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
+    const [isLiked, setIsLiked] = useState(false);
+    const [likeCount, setLikeCount] = useState(0);
 
     const [allPosts, setAllPosts] = useState([{
         user: {},
         title: '',
         content: '',
-        // like_count: '',
+        like_count: '',
     }]);
 
     const [newPost, setNewPost] = useState({
@@ -30,6 +32,25 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         title: '',
         content: '',
     });
+
+    useEffect(() => {
+        setIsLiked(userPost.like ? true : false);
+    }, [userPost.like]);
+
+    const handleLike = async (postId) => {
+        // Make a request to the backend to like/unlike the post
+        try {
+            const response = await axios.post(`http://localhost:3000/posts/postDetails/${postId}/like`, {
+                user: user._id,
+            });
+
+            // Update the state based on the response
+            setIsLiked(response.data.like ? true : false);
+            setLikeCount(response.data.like_count);
+        } catch (ex) {
+            console.log(ex);
+        }
+    };
 
     const handlePostChange = (event: FormEvent, userPost) => {
         const { name, value } = event.target as any;
@@ -82,7 +103,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
             console.error(error);
         };
     };
-    
+
 
     return (
         <>
@@ -96,18 +117,24 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                                 </Link>
                                 <div>
                                     <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>
-                                    <div id='title-likes'>
-                                        <Card.Title id='post-title'>{userPost.title}</Card.Title>
-                                        <div>
-                                            <button onClick={() => handleLike(userPost._id)}>
-                                                {userPost.like ? 'Unlike' : 'Like'}
-                                            </button>
-                                        </div>
-                                        <Card.Text id='like-count'>{userPost.like_count}</Card.Text>
-                                    </div>
-                                    <Card.Text>
+                                    <Card.Title id='post-profile-title'>{userPost.title}</Card.Title>
+                                    <Card.Text id='post-text'>
                                         {userPost.content}
                                     </Card.Text>
+                                    <div id='likes-container'>
+                                        <button onClick={() => handleLike(userPost._id)} id='like-button-all'>
+                                            {isLiked ?
+                                                <span className="material-symbols-outlined" id='like-button-off'>
+                                                    favorite
+                                                </span>
+                                                :
+                                                <span className="material-symbols-outlined" id='like-button-on'>
+                                                    favorite
+                                                </span>
+                                            }
+                                        </button>
+                                        <Card.Text id='like-count'>{likeCount}</Card.Text>
+                                    </div>
                                 </div>
                             </div>
                         </Card.Body>
@@ -189,8 +216,9 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                     {commentVisibility[userPost._id] && (
                         <MyComment user={user} post={userPost} />
                     )}
-                </div>
-            )}
+                </div >
+            )
+            }
         </>
     )
 }

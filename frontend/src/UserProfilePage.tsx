@@ -11,7 +11,7 @@ import MyButton from './MyButton';
 import Header from './Header';
 import Comment from './MyComment';
 import PostCreateForm from './PostCreateForm';
-import GetAllPosts from './GetAllPosts';
+import Posts from './Posts';
 import MyComment from './MyComment';
 
 export default function UserProfilePage({ user }) {
@@ -232,7 +232,7 @@ export default function UserProfilePage({ user }) {
                             </Row>
                             {allPosts.filter(postUser => postUser.user._id === user._id).map((userPost) => (
                                 <div key={userPost._id}>
-                                    <GetAllPosts
+                                    <Posts
                                         user={user}
                                         userPost={userPost}
                                         formVisibility={formVisibility}

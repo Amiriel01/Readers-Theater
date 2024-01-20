@@ -2,6 +2,15 @@ import Like from "../models/likeModel.ts";
 import asyncHandler from "express-async-handler";
 import Post from '../models/postModel.ts';
 
+// //GET a list of all posts 
+// export function likes_list() {
+//     return asyncHandler(async (req, res, next) => {
+//         const likesList = await Like.find().populate('user').populate('post').exec();
+//         console.log(likesList);
+//         res.json(likesList);
+//     });
+// };
+
 // Like a post
 export const like_post = asyncHandler(async (req, res, next) => {
 

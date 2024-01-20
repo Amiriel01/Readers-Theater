@@ -11,7 +11,7 @@ import MyComment from './MyComment';
 import MyButton from './MyButton';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import GetAllPosts from './GetAllPosts';
+import GetAllPosts from './Posts';
 
 export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 

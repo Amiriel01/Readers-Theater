@@ -18,11 +18,10 @@ export default function Header() {
                                     menu
                                 </span>
                             </Dropdown.Toggle>
-
                             <Dropdown.Menu>
                                 <Dropdown.Item href="/UserProfilePage">My Profile </Dropdown.Item>
                                 <Dropdown.Item href="/Newsfeed">Newsfeed </Dropdown.Item>
-                                <Dropdown.Item href="/FindReaders">Suggested Readers</Dropdown.Item>
+                                <Dropdown.Item href="/AllReaders">All Readers</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
