@@ -12,6 +12,7 @@ import MyButton from './MyButton';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import GetAllPosts from './Posts';
+import Posts from './Posts';
 
 export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 
@@ -170,7 +171,14 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
                             </Row>
                             {allPosts.filter(postUser => postUser.user._id === friendId).map((userPost) => (
                                 <div key={userPost._id}>
-                                    <div id='post-comment-container'>
+                                    <Posts 
+                                    user={user}
+                                    friendId={friendId}
+                                    userPost={userPost}
+                                    commentVisibility={commentVisibility}
+                                    handleToggleCommentForm={handleToggleCommentForm}
+                                    />
+                                    {/* <div id='post-comment-container'>
                                         <Card id='posts-card'>
                                             <Card.Body>
                                                 <div id='post-flex-container'>
@@ -194,7 +202,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
                                         {commentVisibility[userPost._id] && (
                                             <Comment user={user} post={userPost} />
                                         )}
-                                    </div>
+                                    </div> */}
                                 </div>
                             ))}
                         </div>

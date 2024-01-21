@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import MyComment from './MyComment';
 
-export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm }) {
+export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }) {
 
     const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
@@ -43,10 +43,10 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
             const response = await axios.post(`http://localhost:3000/posts/postDetails/${postId}/like`, {
                 user: user._id,
             });
-
+            console.log(response.data.like)
             // Update the state based on the response
             setIsLiked(response.data.like ? true : false);
-            setLikeCount(response.data.like_count);
+            // setLikeCount(response.data.like_count);
         } catch (ex) {
             console.log(ex);
         }
@@ -133,7 +133,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                                                 </span>
                                             }
                                         </button>
-                                        <Card.Text id='like-count'>{likeCount}</Card.Text>
+                                        {/* <Card.Text id='like-count'>{likeCount}</Card.Text> */}
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                         </div>
                     </Card>
                     {
-                        formVisibility[userPost._id] && (
+                       formVisibility && formVisibility[userPost._id] && (
                             <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
                                 <Form.Group className="mb-3" id='first-input'>
                                     <FloatingLabel

@@ -86,13 +86,10 @@ function App() {
             user={user}
           />}></Route>
           <Route path="/MyComment" element={<MyComment
-            user={user}
           />}></Route>
           <Route path="/PostCreateForm" element={<PostCreateForm
-            user={user}
           />}></Route>
            <Route path="/Posts" element={<Posts
-            user={user}
           />}></Route>
           <Route path="/AllReaders" element={<AllReaders
             user={user}
