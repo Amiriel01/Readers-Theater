@@ -133,7 +133,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                                                 </span>
                                             }
                                         </button>
-                                        {/* <Card.Text id='like-count'>{likeCount}</Card.Text> */}
+                                        <Card.Text id='like-count'>{likeCount}</Card.Text>
                                     </div>
                                 </div>
                             </div>

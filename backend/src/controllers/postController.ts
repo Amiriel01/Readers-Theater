@@ -2,11 +2,21 @@ import { body, validationResult } from 'express-validator';
 import User from "../models/userModel.ts";
 import Post from '../models/postModel.ts';
 import asyncHandler from "express-async-handler";
+import PostDTO from '../dataTranserObjects/postDTO.ts';
+import Like from '../models/likeModel.ts';
 
 //GET a list of all posts and likes
 export function posts_list() {
     return asyncHandler(async (req, res, next) => {
         const postsList = await Post.find().populate('user').exec();
+        //bad code below, don't do this. Makes lots of database queries. 
+        // const PostDTOList = postsList.map(async (post) => {
+        //     return new PostDTO(
+        //         post, 
+        //         await Like.countDocuments({ post: post }),
+        //         await Like.exists({ user: req.user, post: post }).exec() != null,
+        //     )
+        // });
         console.log(postsList);
         res.json(postsList);
     });
