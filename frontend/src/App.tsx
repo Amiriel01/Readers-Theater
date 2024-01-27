@@ -15,7 +15,7 @@ import Likes from './Likes';
 import PostCreateForm from './PostCreateForm';
 import Posts from './Posts';
 import AllReaders from './AllReaders';
-
+import PostCard from './PostCard';
 
 export interface SiteLoggedIn {
   loggedIn: string,
@@ -90,6 +90,8 @@ function App() {
           <Route path="/PostCreateForm" element={<PostCreateForm
           />}></Route>
            <Route path="/Posts" element={<Posts
+          />}></Route>
+            <Route path="/PostCard" element={<PostCard
           />}></Route>
           <Route path="/AllReaders" element={<AllReaders
             user={user}

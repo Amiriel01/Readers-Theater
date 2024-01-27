@@ -7,6 +7,7 @@ import NewsFeed from './Newsfeed';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import MyComment from './MyComment';
+import PostCard from './PostCard';
 
 export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }) {
 
@@ -104,12 +105,23 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         };
     };
 
-
     return (
         <>
             {userPost.user && (
                 <div id='post-comment-container'>
-                    <Card id='posts-card'>
+                    <PostCard 
+                    user={user}
+                    userPost={userPost}
+                    isLiked={isLiked}
+                    likeCount={likeCount}
+                    handleToggleCommentForm={handleToggleCommentForm}
+                    handleLike={handleLike}
+                    setPostId={setPostId}
+                    setEditedPost={setEditedPost}
+                    handleToggleForm={handleToggleForm}
+                    handleDeletePost={handleDeletePost}
+                    />
+                    {/* <Card id='posts-card'>
                         <Card.Body>
                             <div id='post-flex-container'>
                                 <Link id='post-name-link' to={"/users/user/" + userPost.user._id}>
@@ -178,7 +190,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                                 </>
                             )}
                         </div>
-                    </Card>
+                    </Card> */}
                     {
                        formVisibility && formVisibility[userPost._id] && (
                             <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
