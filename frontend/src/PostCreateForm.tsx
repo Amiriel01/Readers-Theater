@@ -27,11 +27,12 @@ export default function PostCreateForm({ user, onPostCreated }) {
             user: user,
             title: newPost.title,
             content: newPost.content,
-        }
+        };
 
         try {
             const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
             console.log(response.status, response.data);
+
             if (response.status === 200) {
                 console.log(response.data);
                 setNewPost(response.data)
@@ -58,7 +59,7 @@ export default function PostCreateForm({ user, onPostCreated }) {
                             maxLength={25}
                             type="text"
                             name='title'
-                            placeholder='Type Post Title Here'
+                            placeholder='Type Post Title Here' 
                             value={newPost.title}
                             onChange={handleChange}
                         />

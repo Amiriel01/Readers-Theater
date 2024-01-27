@@ -1,6 +1,7 @@
 import { body, validationResult } from 'express-validator';
 import Comment from '../models/commentModel.ts';
 import asyncHandler from "express-async-handler";
+import he from 'he';
 
 //GET a list of all comments 
 export function comment_list() {
@@ -38,7 +39,7 @@ export function comment_create() {
             const comment = new Comment({
                 user: req.body.user,
                 post: req.body.post,
-                comment_text: req.body.comment_text,
+                comment_text: he.decode(req.body.comment_text),
             });
 
             //check for errors
@@ -81,7 +82,7 @@ export function comment_edit() {
                 const commentUpdate = await Comment.findByIdAndUpdate(req.params.id, {
                     user: req.body.user,
                     post: req.body.post,
-                    comment_text: req.body.comment_text,
+                    comment_text: he.decode(req.body.comment_text),
                 }, { new: true }).exec()
                 //save profile update
                 console.log(commentUpdate);

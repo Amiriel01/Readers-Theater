@@ -4,6 +4,7 @@ import Post from '../models/postModel.ts';
 import asyncHandler from "express-async-handler";
 import PostDTO from '../dataTranserObjects/postDTO.ts';
 import Like from '../models/likeModel.ts';
+import he from 'he';
 
 //GET a list of all posts and likes
 export function posts_list() {
@@ -52,8 +53,8 @@ export function post_create() {
 
             //create user object with escaped and trimmed info
             const post = new Post({
-                title: req.body.title,
-                content: req.body.content,
+                title: he.decode(req.body.title),
+                content: he.decode(req.body.content),
                 user: req.body.user,
             });
 
@@ -100,8 +101,8 @@ export function post_edit() {
             } else {
                 //find the staff member and update
                 const postUpdate = await Post.findByIdAndUpdate(req.params.id, {
-                    title: req.body.title,
-                    content: req.body.content,
+                    title: he.decode(req.body.title),
+                    content: he.decode(req.body.content),
                     user: req.body.user
                 }, { new: true }).exec()
                 //save profile update
