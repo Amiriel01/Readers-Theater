@@ -7,7 +7,7 @@ import logger from "morgan";
 import cors from 'cors';
 import Session from 'express-session';
 import passport from 'passport';
-// import LocalStrategy from 'passport-local';
+import {Strategy as LocalStrategy} from 'passport-local';
 // import JwtStrategy from 'passport-jwt';
 import {Strategy as JwtStrategy, ExtractJwt, StrategyOptions} from 'passport-jwt';
 import bcrypt from 'bcrypt';
@@ -64,15 +64,9 @@ app.use(function(err, req, res, next) {
   console.log(err)
 });
 
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
-const options: StrategyOptions = {
-  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), 
-  secretOrKey: process.env.JWT_KEY,
-}
-
 passport.use(
-  new JwtStrategy(options, async (username, password, done) => {
+  new LocalStrategy({usernameField: 'username', passwordField: 'password'}, async (username, password, done) => {
+    console.log('try local')
     try {
       console.log('random')
       console.log(username, password)
@@ -85,11 +79,22 @@ passport.use(
       };
       return done(null, user);
     } catch(err) {
-      console.log('some error')
+      console.log(err)
       return done(err);
     };
   })
 );
+
+// passport.serializeUser(User.serializeUser());
+// passport.deserializeUser(User.deserializeUser());
+const options: StrategyOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), 
+  secretOrKey: process.env.JWT_KEY,
+}
+
+passport.use(new JwtStrategy(options, (user, done) => {
+done(null, user, {})
+}))
 
 passport.serializeUser((user, done) => {
   done(null, (user as any)._id);
@@ -107,5 +112,3 @@ passport.deserializeUser(async (id, done) => {
 app.listen(3000, "localhost", () => {
   console.log("listening")
 })
-
-// module.exports = app;

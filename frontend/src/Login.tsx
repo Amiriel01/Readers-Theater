@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import MyButton from './MyButton';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import axios from 'axios';
+import axios, {updateWithKey} from './utility/axios.ts';
 import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
@@ -47,6 +47,8 @@ export default function Login() {
 
         await axios.post("http://localhost:3000/users/login", signUpData).then((response) => {
             console.log(response.status, response.data);
+            const token = response.data.token;
+            updateWithKey(token);
             if (response.status === 200) {
                 navigate('/UserProfilePage')
             } else {

@@ -18,7 +18,7 @@ export function posts_list() {
         //         await Like.exists({ user: req.user, post: post }).exec() != null,
         //     )
         // });
-        console.log(postsList);
+        console.log(req.user)
         res.json(postsList);
     });
 };
@@ -55,7 +55,7 @@ export function post_create() {
             const post = new Post({
                 title: he.decode(req.body.title),
                 content: he.decode(req.body.content),
-                user: req.body.user,
+                user: req.user,
             });
 
             //check for errors
@@ -103,7 +103,7 @@ export function post_edit() {
                 const postUpdate = await Post.findByIdAndUpdate(req.params.id, {
                     title: he.decode(req.body.title),
                     content: he.decode(req.body.content),
-                    user: req.body.user
+                    user: req.user
                 }, { new: true }).exec()
                 //save profile update
                 console.log(postUpdate)

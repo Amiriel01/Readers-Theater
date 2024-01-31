@@ -34,7 +34,7 @@ export const like_post = asyncHandler(async (req, res, next) => {
     } else {
         // User has not liked the post, like it
         const newLike = new Like({
-            user: req.body.user,
+            user: req.user,
             post: req.params.id,
         });
         await newLike.save();
