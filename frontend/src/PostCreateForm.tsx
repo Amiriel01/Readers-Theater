@@ -24,7 +24,8 @@ export default function PostCreateForm({ user, onPostCreated }) {
         event.preventDefault();
 
         const postData = {
-            user: user,
+            // user: user,
+            userId: user._id,
             title: newPost.title,
             content: newPost.content,
         };
@@ -59,7 +60,7 @@ export default function PostCreateForm({ user, onPostCreated }) {
                             maxLength={25}
                             type="text"
                             name='title'
-                            placeholder='Type Post Title Here' 
+                            placeholder='Type Post Title Here'
                             value={newPost.title}
                             onChange={handleChange}
                         />

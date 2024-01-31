@@ -55,7 +55,8 @@ export function post_create() {
             const post = new Post({
                 title: he.decode(req.body.title),
                 content: he.decode(req.body.content),
-                user: req.user,
+                // user: req.user,
+                user: req.body.userId,
             });
 
             //check for errors
@@ -103,7 +104,7 @@ export function post_edit() {
                 const postUpdate = await Post.findByIdAndUpdate(req.params.id, {
                     title: he.decode(req.body.title),
                     content: he.decode(req.body.content),
-                    user: req.user
+                    user: req.body.userId,
                 }, { new: true }).exec()
                 //save profile update
                 console.log(postUpdate)

@@ -28,6 +28,7 @@ function App() {
   const [userId, setUserId] = useState('');
 
   const [user, setUser] = useState({
+    _id: '',
     username: "",
     // password: "",
     profile_name: '',

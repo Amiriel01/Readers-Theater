@@ -66,7 +66,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         event.preventDefault();
 
         const postEditData = {
-            user: user,
+            userId: user._id,
             title: editedPost.title,
             content: editedPost.content,
         };
@@ -109,90 +109,20 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         <>
             {userPost.user && (
                 <div id='post-comment-container'>
-                    <PostCard 
-                    user={user}
-                    userPost={userPost}
-                    isLiked={isLiked}
-                    likeCount={likeCount}
-                    handleToggleCommentForm={handleToggleCommentForm}
-                    handleLike={handleLike}
-                    setPostId={setPostId}
-                    setEditedPost={setEditedPost}
-                    handleToggleForm={handleToggleForm}
-                    handleDeletePost={handleDeletePost}
+                    <PostCard
+                        user={user}
+                        userPost={userPost}
+                        isLiked={isLiked}
+                        likeCount={likeCount}
+                        handleToggleCommentForm={handleToggleCommentForm}
+                        handleLike={handleLike}
+                        setPostId={setPostId}
+                        setEditedPost={setEditedPost}
+                        handleToggleForm={handleToggleForm}
+                        handleDeletePost={handleDeletePost}
                     />
-                    {/* <Card id='posts-card'>
-                        <Card.Body>
-                            <div id='post-flex-container'>
-                                <Link id='post-name-link' to={"/users/user/" + userPost.user._id}>
-                                    <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
-                                </Link>
-                                <div>
-                                    <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>
-                                    <Card.Title id='post-profile-title'>{userPost.title}</Card.Title>
-                                    <Card.Text id='post-text'>
-                                        {userPost.content}
-                                    </Card.Text>
-                                    <div id='likes-container'>
-                                        <button onClick={() => handleLike(userPost._id)} id='like-button-all'>
-                                            {isLiked ?
-                                                <span className="material-symbols-outlined" id='like-button-off'>
-                                                    favorite
-                                                </span>
-                                                :
-                                                <span className="material-symbols-outlined" id='like-button-on'>
-                                                    favorite
-                                                </span>
-                                            }
-                                        </button>
-                                        <Card.Text id='like-count'>{likeCount}</Card.Text>
-                                    </div>
-                                </div>
-                            </div>
-                        </Card.Body>
-                        <div id='post-buttons-container'>
-                            {userPost.user._id !== user._id && (
-                                <>
-                                    <MyButton
-                                        id='comment-button'
-                                        title='Comments'
-                                        onClick={() => handleToggleCommentForm(userPost._id)}
-                                    ></MyButton>
-                                </>
-                            )}
-                        </div>
-                        <div id='post-buttons-container'>
-                            {userPost.user._id === user._id && (
-                                <>
-                                    <MyButton
-                                        id='edit-post-button'
-                                        title='Edit'
-                                        onClick={(event) => {
-                                            setPostId(userPost._id);
-                                            setEditedPost({
-                                                user: userPost.user,
-                                                title: userPost.title,
-                                                content: userPost.content,
-                                            });
-                                            handleToggleForm(userPost._id);
-                                        }}
-                                    ></MyButton>
-                                    <MyButton id='delete-post-button' title='Delete'
-                                        onClick={(event) => {
-                                            setPostId(userPost._id);
-                                            handleDeletePost(event, userPost._id);
-                                        }}></MyButton>
-                                    <MyButton
-                                        id='comment-button'
-                                        title='Comments'
-                                        onClick={() => handleToggleCommentForm(userPost._id)}
-                                    ></MyButton>
-                                </>
-                            )}
-                        </div>
-                    </Card> */}
                     {
-                       formVisibility && formVisibility[userPost._id] && (
+                        formVisibility && formVisibility[userPost._id] && (
                             <Form onSubmit={(event) => handlePostEdit(event, userPost._id)}>
                                 <Form.Group className="mb-3" id='first-input'>
                                     <FloatingLabel
