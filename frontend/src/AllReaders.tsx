@@ -22,7 +22,11 @@ export default function AllReaders({ user }) {
         try {
             const response = await axios.get('http://localhost:3000/users/userList');
             console.log(response.data, response.status);
-            setAllReaders(response.data);
+
+             // Exclude the current user from allReaders
+             const filteredReaders = response.data.filter(reader => reader._id !== user._id);
+
+            setAllReaders(filteredReaders);
             console.log(allReaders);
 
         } catch (err) {

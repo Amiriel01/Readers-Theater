@@ -74,12 +74,12 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
         try {
             if (isFriend) {
                 // Delete friend
-                const followerDeleteResponse = await axios.delete("http://localhost:3000/users/deleteFriend", { data: { userId, friendId } });
+                const followerDeleteResponse = await axios.delete("http://localhost:3000/users/deleteFriend", { data: { userId: user._id, friendId } });
                 setIsFriend(false);
                 setUser(followerDeleteResponse.data);
             } else {
                 // Add friend
-                const followerAddData = await axios.put('http://localhost:3000/users/addFriend', { userId, friendId });
+                const followerAddData = await axios.put('http://localhost:3000/users/addFriend', { userId: user._id, friendId });
                 setIsFriend(true);
                 setUser(followerAddData.data);
             }
@@ -178,31 +178,6 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
                                     commentVisibility={commentVisibility}
                                     handleToggleCommentForm={handleToggleCommentForm}
                                     />
-                                    {/* <div id='post-comment-container'>
-                                        <Card id='posts-card'>
-                                            <Card.Body>
-                                                <div id='post-flex-container'>
-                                                    <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
-                                                    <div>
-                                                        <Card.Title>{userPost.title}</Card.Title>
-                                                        <Card.Text>
-                                                            {userPost.content}
-                                                        </Card.Text>
-                                                    </div>
-                                                </div>
-                                            </Card.Body>
-                                            <div id='post-buttons-container'>
-                                                <MyButton
-                                                    id='comment-button'
-                                                    title='Comments'
-                                                    onClick={() => handleToggleCommentForm(userPost._id)}
-                                                ></MyButton>
-                                            </div>
-                                        </Card>
-                                        {commentVisibility[userPost._id] && (
-                                            <Comment user={user} post={userPost} />
-                                        )}
-                                    </div> */}
                                 </div>
                             ))}
                         </div>

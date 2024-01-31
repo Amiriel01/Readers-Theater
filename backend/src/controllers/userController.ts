@@ -150,7 +150,8 @@ export function add_friend() {
     return asyncHandler(async (req, res, next) => {
 
         try {
-            const { userId, friendId } = req.body;
+            const userId = req.body.userId;
+            const { friendId } = req.body;
             const friendExists = await User.findById(friendId);
 
             // Check if the friendId is valid
