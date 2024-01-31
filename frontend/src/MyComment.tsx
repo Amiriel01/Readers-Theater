@@ -60,7 +60,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
         event.preventDefault();
 
         const commentData = {
-            user: user,
+            userId: user._id,
             post: post,
             comment_text: newComment.comment_text,
         }
@@ -95,7 +95,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
         event.preventDefault();
 
         const commentEditData = {
-            user: user,
+            userId: user._id,
             post: post,
             comment_text: editedComment.comment_text,
         }
