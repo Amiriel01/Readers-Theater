@@ -45,7 +45,7 @@ export default function NewsFeed({ user }) {
     const getAllPosts = async () => {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
-            console.log(response.status, response.data)
+            // console.log(response.status, response.data)
 
             // Reverse the order of the posts
             const reversedPosts = response.data.reverse();

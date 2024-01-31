@@ -42,12 +42,15 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         // Make a request to the backend to like/unlike the post
         try {
             const response = await axios.post(`http://localhost:3000/posts/postDetails/${postId}/like`, {
-                user: user._id,
+                userId: user._id
             });
+            // console.log(response.data.like_count);
+            setLikeCount(response.data.like_count);
+
+            // Check if the user has liked the post and update the isLiked state
+            console.log(response.data)
             console.log(response.data.like)
-            // Update the state based on the response
-            setIsLiked(response.data.like ? true : false);
-            // setLikeCount(response.data.like_count);
+            setIsLiked(response.data.like !== null);
         } catch (ex) {
             console.log(ex);
         }

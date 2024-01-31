@@ -98,11 +98,11 @@ export default function UserProfilePage({ user }) {
         try {
             // Fetch the updated post details after editing
             const response = await axios.get(`http://localhost:3000/posts/postDetails/${editedData._id}`);
-            
+
             if (response.status === 200) {
                 // Update the state with the edited post data
                 setEditedPost(response.data);
-                
+
                 // Update the state with the updated list of posts
                 setAllPosts((prevPosts) => {
                     return prevPosts.map((post) =>
@@ -117,12 +117,12 @@ export default function UserProfilePage({ user }) {
 
     const handlePostDelete = async (deletedData) => {
         try {
-                // Fetch the updated list of posts
-                const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
-                
-                // Set the state with the updated list of posts
-                setAllPosts(deletedPostsResponse.data);
-            
+            // Fetch the updated list of posts
+            const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+
+            // Set the state with the updated list of posts
+            setAllPosts(deletedPostsResponse.data);
+
         } catch (error) {
             console.error(error);
         }
@@ -203,7 +203,10 @@ export default function UserProfilePage({ user }) {
                             </Col>
                         </Row>
                         <div id='following-cards-container'>
+                            {console.log(user.friends)}
                             {user.friends.map((friend) => {
+                                {console.log(friend.imageURL)}
+                                {console.log(friend._id)}
                                 return <Link to={"/users/user/" + friend._id} key={friend._id} id='following-link'>
                                     <Card id='following-card'>
                                         <img className='following-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>

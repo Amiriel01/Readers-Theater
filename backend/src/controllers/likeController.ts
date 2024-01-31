@@ -2,15 +2,6 @@ import Like from "../models/likeModel.ts";
 import asyncHandler from "express-async-handler";
 import Post from '../models/postModel.ts';
 
-// //GET a list of all posts 
-// export function likes_list() {
-//     return asyncHandler(async (req, res, next) => {
-//         const likesList = await Like.find().populate('user').populate('post').exec();
-//         console.log(likesList);
-//         res.json(likesList);
-//     });
-// };
-
 // Like a post
 export const like_post = asyncHandler(async (req, res, next) => {
 
@@ -24,27 +15,55 @@ export const like_post = asyncHandler(async (req, res, next) => {
     }
 
     // Check if the user has already liked the post
-    const existingLike = await Like.findOne({ user: req.body.user, post: req.params.id }).exec();
+    const existingLikes = await Like.find({ user: req.body.userId, post: req.params.id }).exec();
 
-    let newLike;
+    console.log("User ID from request body:", req.body.userId);
+    console.log("Post ID from request params:", req.params.id);
 
-    if (existingLike) {
-        // User has already liked the post, unlike it
-        await Like.findByIdAndDelete(existingLike._id).exec();
+    // let newLike;
+
+    if (existingLikes.length > 0) {
+        // Assuming there's only one matching like, use findOneAndDelete
+        const existingLike = existingLikes[0];
+
+        console.log("Deleting existing like:", existingLike);
+        await Like.findOneAndDelete({ _id: existingLike._id }).exec();
+
+        // Remove the like from the post's likes array
+        post.likes = post.likes.filter(likeId => likeId.toString() !== existingLike._id.toString());
     } else {
         // User has not liked the post, like it
         const newLike = new Like({
-            user: req.user,
+            user: req.body.userId,
             post: req.params.id,
         });
+        console.log("Creating new like:", newLike);
         await newLike.save();
-    };
+        post.likes.push(newLike._id);
+    }
+
+    // if (existingLike) {
+    //     // User has already liked the post, unlike it
+    //     console.log("Deleting existing like:", existingLike);
+    //     await Like.findOneAndDelete({ _id: existingLike._id }).exec();
+    //     // Remove the like from the post's likes array
+    //     post.likes = post.likes.filter(likeId => likeId.toString() !== existingLike._id.toString());
+    // } else {
+    //     // User has not liked the post, like it
+    //     const newLike = new Like({
+    //         user: req.body.userId,
+    //         post: req.params.id,
+    //     });
+    //     console.log("Creating new like:", newLike);
+    //     await newLike.save();
+    //     post.likes.push(newLike._id);
+    // };
 
     const responseData = {
         post: post,
-        like: null || newLike,
-        like_count: await Like.countDocuments({ post: req.params.id }),
+        // like_count: await Like.countDocuments({ post: req.params.id }),
+        like_count: post.likes.length,
     };
-
+    // console.log(responseData)
     res.json(responseData);
 });

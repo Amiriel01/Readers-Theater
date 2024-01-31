@@ -16,6 +16,10 @@ const PostSchema = new Schema({
         minLength: 1,
         maxLength: 250,
     },
+    likes: [{
+        type: Schema.Types.ObjectId,
+        ref: "Like",
+    }]
 });
 
 export default mongoose.model("Post", PostSchema);
