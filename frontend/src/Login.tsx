@@ -16,7 +16,7 @@ interface Login {
     password: string,
 }
 
-export default function Login() {
+export default function Login({setUser}) {
 
     const [login, setLogin] = useState({
         username: '',
@@ -49,6 +49,7 @@ export default function Login() {
             console.log(response.status, response.data);
             const token = response.data.token;
             updateWithKey(token);
+            setUser(response.data.user)
             if (response.status === 200) {
                 navigate('/UserProfilePage')
             } else {

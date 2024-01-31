@@ -2,6 +2,7 @@ import ReaderSearch from "./ReaderSearch";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from 'react-router-dom';
 
 export default function Header() {
     return (
@@ -14,19 +15,23 @@ export default function Header() {
                     <Col>
                         <Dropdown>
                             <Dropdown.Toggle variant="success" id="dropdown-basic" className="e-caret-hide">
-                                <span className="material-symbols-outlined">
-                                    menu
-                                </span>
+                                <span className="material-symbols-outlined">menu</span>
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                <Dropdown.Item href="/UserProfilePage">My Profile </Dropdown.Item>
-                                <Dropdown.Item href="/Newsfeed">Newsfeed </Dropdown.Item>
-                                <Dropdown.Item href="/AllReaders">All Readers</Dropdown.Item>
+                                <Dropdown.Item as={Link} to="/UserProfilePage">
+                                    My Profile
+                                </Dropdown.Item>
+                                <Dropdown.Item as={Link} to="/Newsfeed">
+                                    Newsfeed
+                                </Dropdown.Item>
+                                <Dropdown.Item as={Link} to="/AllReaders">
+                                    All Readers
+                                </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
                     </Col>
                 </Row>
-            </Row>
+            </Row >
         </>
     )
 }
