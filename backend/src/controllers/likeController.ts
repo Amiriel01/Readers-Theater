@@ -20,10 +20,8 @@ export const like_post = asyncHandler(async (req, res, next) => {
     console.log("User ID from request body:", req.body.userId);
     console.log("Post ID from request params:", req.params.id);
 
-    // let newLike;
-
     if (existingLikes.length > 0) {
-        // Assuming there's only one matching like, use findOneAndDelete
+        // if only one match use findOneAndDelete
         const existingLike = existingLikes[0];
 
         console.log("Deleting existing like:", existingLike);
@@ -32,7 +30,7 @@ export const like_post = asyncHandler(async (req, res, next) => {
         // Remove the like from the post's likes array
         post.likes = post.likes.filter(likeId => likeId.toString() !== existingLike._id.toString());
     } else {
-        // User has not liked the post, like it
+        // User has not liked the post yet, this will create a new like
         const newLike = new Like({
             user: req.body.userId,
             post: req.params.id,
@@ -42,28 +40,13 @@ export const like_post = asyncHandler(async (req, res, next) => {
         post.likes.push(newLike._id);
     }
 
-    // if (existingLike) {
-    //     // User has already liked the post, unlike it
-    //     console.log("Deleting existing like:", existingLike);
-    //     await Like.findOneAndDelete({ _id: existingLike._id }).exec();
-    //     // Remove the like from the post's likes array
-    //     post.likes = post.likes.filter(likeId => likeId.toString() !== existingLike._id.toString());
-    // } else {
-    //     // User has not liked the post, like it
-    //     const newLike = new Like({
-    //         user: req.body.userId,
-    //         post: req.params.id,
-    //     });
-    //     console.log("Creating new like:", newLike);
-    //     await newLike.save();
-    //     post.likes.push(newLike._id);
-    // };
+     // Save the updated post back to the database
+     await post.save();
 
     const responseData = {
         post: post,
-        // like_count: await Like.countDocuments({ post: req.params.id }),
         like_count: post.likes.length,
     };
-    // console.log(responseData)
+
     res.json(responseData);
 });

@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './utility/axios';
 import { useEffect, useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -49,8 +49,9 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
 
             // Check if the user has liked the post and update the isLiked state
             console.log(response.data)
-            console.log(response.data.like)
-            setIsLiked(response.data.like !== null);
+            console.log(response.data.likes)
+            // setIsLiked(response.data.like_count > 0);
+            // setIsLiked(response.data.like !== null);
         } catch (ex) {
             console.log(ex);
         }
@@ -115,7 +116,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                     <PostCard
                         user={user}
                         userPost={userPost}
-                        isLiked={isLiked}
+                        // isLiked={isLiked}
                         likeCount={likeCount}
                         handleToggleCommentForm={handleToggleCommentForm}
                         handleLike={handleLike}

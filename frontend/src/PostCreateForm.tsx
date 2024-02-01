@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from './utility/axios';
 import { useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
@@ -25,7 +25,7 @@ export default function PostCreateForm({ user, onPostCreated }) {
 
         const postData = {
             // user: user,
-            userId: user._id,
+            // userId: user._id,
             title: newPost.title,
             content: newPost.content,
         };

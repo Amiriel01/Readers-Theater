@@ -13,6 +13,7 @@ import {Strategy as JwtStrategy, ExtractJwt, StrategyOptions} from 'passport-jwt
 import bcrypt from 'bcrypt';
 import User from './models/userModel.ts';
 // import passportLocalMongoose from 'passport-local-mongoose';
+import PassportAuth from './utility/authentication.ts';
 
 import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';

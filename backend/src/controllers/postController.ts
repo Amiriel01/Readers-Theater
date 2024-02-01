@@ -11,16 +11,16 @@ export function posts_list() {
     return asyncHandler(async (req, res, next) => {
         const postsList = await Post.find().populate('user').populate('likes').exec();
         //bad code below, don't do this. Makes lots of database queries. 
-        // const PostDTOList = postsList.map(async (post) => {
-        //     return new PostDTO(
-        //         post, 
-        //         await Like.countDocuments({ post: post }),
-        //         await Like.exists({ user: req.user, post: post }).exec() != null,
-        //     )
-        // });
-        console.log(postsList)
-        console.log(req.user)
-        res.json(postsList);
+        const PostDTOList = await Promise.all( postsList.map(async (post) => {
+            return new PostDTO(
+                post, 
+                await Like.countDocuments({ post: post }).exec(),
+                await Like.exists({ user: req.user, post: post }).exec() != null,
+            )
+        }));
+        console.log(PostDTOList);
+        // console.log(req.user)
+        res.json(PostDTOList);
     });
 };
 
@@ -57,7 +57,7 @@ export function post_create() {
                 title: he.decode(req.body.title),
                 content: he.decode(req.body.content),
                 // user: req.user,
-                user: req.body.userId,
+                user: (req.user as any)._id,
             });
 
             //check for errors

@@ -2,23 +2,9 @@ import {Router} from "express";
 const router = Router();
 import multer from 'multer';
 import passport from "passport";
+// import PassportAuth from '../utility/authentication.ts';
 
-// router.use((req, res, next) => {
-//   passport.authenticate('jwt', { session: false }, (err, user, info) => {
-//       if (err) {
-//           // Forward any passport-related errors to the error handler
-//           return next(err); 
-//       }
-
-//       if (!user) {
-//           // If there is no user, return an error
-//           return res.status(401).json({ error: 'Unauthorized' });
-//       }
-
-//       // If there is a user, proceed to the next middleware
-//       return next();
-//   })(req, res, next);
-// });
+// router.use(PassportAuth);
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -37,7 +23,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-router.post("/upload-image", upload.single("image"), async (req, res) => {
+router.post("/upload-image", passport.authenticate('jwt', {session: false}), upload.single("image"), async (req, res) => {
   console.log(req.body);
   const imageName = req.file.filename;
   res.json(imageName)
