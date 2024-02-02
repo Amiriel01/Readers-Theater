@@ -3,8 +3,29 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import axios from '../../utility/axios.js';
 
 export default function Header() {
+
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            const response = await axios.get('/logout');
+
+            if (response.status === 200) {
+                // Redirect to the start page
+                navigate('/');
+            } else {
+                // Handle logout error
+                console.error('Logout failed');
+            }
+        } catch (error) {
+            console.error('Error during logout:', error);
+        }
+    };
+
     return (
         <>
             <Row id="header-page-container">
@@ -26,6 +47,9 @@ export default function Header() {
                                 </Dropdown.Item>
                                 <Dropdown.Item as={Link} to="/AllReaders">
                                     All Readers
+                                </Dropdown.Item>
+                                <Dropdown.Item onClick={handleLogout}>
+                                    Log Out
                                 </Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>

@@ -40,7 +40,7 @@ router.post(
   }),
   async function (req, res) {
     try {
-      // Populating the friends array with the actual friend objects
+      //populating the friends array with the friend objects not just the ids
       await User.populate(req.user, { path: "friends" });
 
       const token = jwt.sign(JSON.parse(JSON.stringify(req.user)), process.env.JWT_KEY);
@@ -53,15 +53,14 @@ router.post(
   }
 );
 
-
-//Passport Logout
-// router.get("/logout", (req, res, next) => {
-//   req.logout((err) => {
-//     if (err) {
-//       return next(err);
-//     }
-//     res.json("User Logged Out")
-//   });
-// });
+// Passport Logout
+router.get("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.json("User Logged Out")
+  });
+});
 
 export default router;
