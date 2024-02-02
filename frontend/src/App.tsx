@@ -48,29 +48,32 @@ function App() {
   // console.log(user)
   return (
     <div>
-    <Routes>
-      <Route path="/" element={<StartPage />} />
-      <Route path="/Login" element={<Login setUser={setUser} />} />
-      <Route path="/SignUp" element={<SignUp />} />
-      {user.username && (
-        <>
-          <Route path="/UserProfilePage" element={<UserProfilePage user={user} />} />
-          <Route path="/UpdateProfile" element={<UpdateProfile />} />
-          <Route
-            path="/users/user/:id"
-            element={<OtherProfilePage user={user} setUser={setUser} />}
-          />
-          <Route path="/ReaderSearch" element={<ReaderSearch />} />
-          <Route path="/Newsfeed" element={<NewsFeed user={user} />} />
-          <Route path="/MyComment" element={<MyComment />} />
-          <Route path="/PostCreateForm" element={<PostCreateForm />} />
-          <Route path="/Posts" element={<Posts />} />
-          <Route path="/PostCard" element={<PostCard />} />
-          <Route path="/AllReaders" element={<AllReaders user={user} />} />
-        </>
-      )}
-    </Routes>
-  </div>
+      <Routes>
+        <Route path="/" element={<StartPage />} />
+        <Route path="/Login" element={<Login setUser={setUser} />} />
+        <Route path="/SignUp" element={<SignUp />} />
+        {user.username && (
+          <>
+            <Route path="/UserProfilePage" element={<UserProfilePage user={user} />} />
+            <Route path="/UpdateProfile" element={<UpdateProfile
+              user={user}
+              setUser={setUser}
+            />} />
+            <Route
+              path="/users/user/:id"
+              element={<OtherProfilePage user={user} setUser={setUser} />}
+            />
+            <Route path="/ReaderSearch" element={<ReaderSearch />} />
+            <Route path="/Newsfeed" element={<NewsFeed user={user} />} />
+            <Route path="/MyComment" element={<MyComment />} />
+            <Route path="/PostCreateForm" element={<PostCreateForm />} />
+            <Route path="/Posts" element={<Posts />} />
+            <Route path="/PostCard" element={<PostCard />} />
+            <Route path="/AllReaders" element={<AllReaders user={user} />} />
+          </>
+        )}
+      </Routes>
+    </div>
     // <>
     //   <div>
     //     <Routes>

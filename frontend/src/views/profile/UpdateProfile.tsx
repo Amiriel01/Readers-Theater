@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../utility/axios.js';
 import { useEffect, useState, FormEvent, ChangeEvent } from 'react';
 import { useParams, useLocation, Link } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
@@ -8,23 +8,22 @@ import MyButton from "../../components/MyButton";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from "react-router";
 
-export default function UpdateProfile() {
+export default function UpdateProfile({user, setUser}) {
 
+    const navigate = useNavigate();
     const { pathname } = useLocation();
 
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [pathname]);
 
-    const [user, setUser] = useState({
-        username: "",
-        password: "",
-        profile_name: '',
-        about_section: '',
-        imageURL: '',
-    });
-
-    const navigate = useNavigate();
+    // const [user, setUser] = useState({
+    //     username: "",
+    //     password: "",
+    //     profile_name: '',
+    //     about_section: '',
+    //     imageURL: '',
+    // });
 
     const [userUpdate, setUserUpdate] = useState({
         username: "",
@@ -37,20 +36,20 @@ export default function UpdateProfile() {
     const [image, setImage] = useState<File | null>(null);
     const [imageURL, setImageURL] = useState(null);
 
-    async function getUser() {
-        try {
-            const response = await axios.get('http://localhost:3000/users/user/6591f5e018252d4fa589528c');
-            console.log(response.status, response.data)
-            setUser(response.data);
-            // console.log(response.data._id)
-        } catch (err) {
-            console.log(err)
-        }
-    };
+    // async function getUser() {
+    //     try {
+    //         const response = await axios.get(`http://localhost:3000/users/user/${user._id}`);
+    //         console.log(response.status, response.data)
+    //         setUser(response.data);
+    //         // console.log(response.data._id)
+    //     } catch (err) {
+    //         console.log(err)
+    //     }
+    // };
 
-    useEffect(() => {
-        getUser()
-    }, []);
+    // useEffect(() => {
+    //     getUser()
+    // }, []);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -107,9 +106,15 @@ export default function UpdateProfile() {
             // user: user._id,
         }
 
-        axios.put('http://localhost:3000/users/user/6591f5e018252d4fa589528c', profileDataUpdate).then((response) => {
+        axios.put(`http://localhost:3000/users/user/${user._id}`, profileDataUpdate).then((response) => {
             console.log(response.status, response.data)
             if (response.status === 200) {
+                setUser({
+                    ...user,
+                    profile_name: userUpdate.profile_name,
+                    about_section: userUpdate.about_section,
+                    imageURL: imageURL,
+                 });
                 console.log(response.data)
                 navigate('/UserProfilePage')
             }

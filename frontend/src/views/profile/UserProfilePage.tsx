@@ -10,7 +10,7 @@ import PostCreateForm from '../../components/post/PostCreateForm.js';
 import Posts from '../../components/post/Post.js';
 
 export default function UserProfilePage({ user }) {
-
+    // console.log(user)
     const navigate = useNavigate();
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
@@ -199,7 +199,6 @@ export default function UserProfilePage({ user }) {
                         </Row>
                         <div id='following-cards-container'>
                             {user.friends.map((friend) => {
-                                {console.log(user)}
                                 return <Link to={"/users/user/" + friend._id} key={friend._id} id='following-link'>
                                     <Card id='following-card'>
                                         <img className='following-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
