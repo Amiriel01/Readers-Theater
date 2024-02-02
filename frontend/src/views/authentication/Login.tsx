@@ -1,9 +1,9 @@
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import MyButton from './MyButton';
+import MyButton from '../../components/MyButton.js';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import axios, {updateWithKey} from './utility/axios.ts';
+import axios, {updateWithKey} from '../../utility/axios.js';
 import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router";

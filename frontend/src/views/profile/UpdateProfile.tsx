@@ -4,7 +4,7 @@ import { useParams, useLocation, Link } from "react-router-dom";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import MyButton from "./MyButton";
+import MyButton from "../../components/MyButton";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from "react-router";
 

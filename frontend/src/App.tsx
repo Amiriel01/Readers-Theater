@@ -1,22 +1,20 @@
-import './App.css';
+import '../src/assets/App.css';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import StartPage from './StartPage';
-import Login from './Login';
-import SignUp from './SignUp';
-import UserProfilePage from './UserProfilePage';
-import UpdateProfile from './UpdateProfile';
-import OtherProfilePage from './OtherProfilePage';
-import ReaderSearch from './ReaderSearch';
-import NewsFeed from './Newsfeed';
-import MyComment from './MyComment';
-import axios from 'axios';
-import Likes from './Likes';
-import PostCreateForm from './PostCreateForm';
-import Posts from './Posts';
-import AllReaders from './AllReaders';
-import PostCard from './PostCard';
+import StartPage from './views/StartPage';
+import Login from './views/authentication/Login';
+import SignUp from './views/authentication/SignUp';
+import UserProfilePage from './views/profile/UserProfilePage';
+import UpdateProfile from './views/profile/UpdateProfile';
+import OtherProfilePage from './views/profile/OtherProfilePage';
+import ReaderSearch from './components/SiteLayout/ReaderSearch';
+import NewsFeed from './views/profile/Newsfeed';
+import MyComment from './components/MyComment';
+import PostCreateForm from './components/post/PostCreateForm';
+import Posts from './components/post/Post';
+import AllReaders from './views/AllReaders';
+import PostCard from './components/post/PostView';
 
 export interface SiteLoggedIn {
   loggedIn: string,

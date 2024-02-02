@@ -1,6 +1,6 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import MyButton from './MyButton';
+import MyButton from '../components/MyButton';
 import { Link } from 'react-router-dom';
 
 export default function StartPage() {

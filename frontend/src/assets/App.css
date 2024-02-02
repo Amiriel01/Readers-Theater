@@ -8,7 +8,7 @@ input.form-control {
 
 /*StartPage*/
 #start-page-container {
-    background-image: url(images/bookpages1.png);
+    background-image: url(../images/bookpages1.png);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -362,7 +362,7 @@ input.form-control {
 }
 
 #signup-page-container {
-    background-image: url(images/bookpages1.png);
+    background-image: url(../images/bookpages1.png);
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -396,7 +396,7 @@ input.form-control {
 
 /*Profile Page*/
 #login-page-container {
-    background-image: url(images/bookpages1.png);
+    background-image: url(../images/bookpages1.png);
     height: 100vh;
     width: 100vw;
     display: flex;
@@ -455,7 +455,7 @@ input.form-control {
 
 /*Create Profile Page*/
 #create-profile-page-container {
-    background-image: url(images/bookpages1.png);
+    background-image: url(../images/bookpages1.png);
     height: 100vh;
     display: flex;
     justify-content: center;
@@ -494,7 +494,7 @@ input.form-control {
 
 /*Profile Pages*/
 #profile-page-container {
-    background-image: url(images/bookpages1.png);
+    background-image: url(../images/bookpages1.png);
     padding-bottom: 5rem;
 }
 
@@ -934,7 +934,7 @@ li {
 
 /*Newsfeed Page*/
 #newsfeed-page-container {
-    background-image: url(images/bookpages1.png);
+    background-image: url(../images/bookpages1.png);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1046,7 +1046,7 @@ li {
 
 /*AllReaders*/
 #all-readers-page-container {
-    background-image: url(images/bookpages1.png);
+    background-image: url(../images/bookpages1.png);
     display: flex;
     justify-content: center;
     align-items: center;

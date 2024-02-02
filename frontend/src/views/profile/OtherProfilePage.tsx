@@ -5,14 +5,14 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
-import Header from './Header';
+import Header from '../../components/SiteLayout/Header';
 import { useLocation } from 'react-router-dom';
-import MyComment from './MyComment';
-import MyButton from './MyButton';
+import MyComment from '../../components/MyComment';
+import MyButton from '../../components/MyButton';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import GetAllPosts from './Posts';
-import Posts from './Posts';
+import GetAllPosts from '../../components/post/Post';
+import Posts from '../../components/post/Post';
 
 export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 

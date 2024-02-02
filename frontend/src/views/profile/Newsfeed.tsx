@@ -1,17 +1,11 @@
-import axios from 'axios';
+import axios from '../../utility/axios';
 import { useEffect, useState, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
-import Header from './Header';
+import Header from '../../components/SiteLayout/Header';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import MyButton from './MyButton';
-import Card from 'react-bootstrap/Card';
-import MyComment from './MyComment';
-import PostCreateForm from './PostCreateForm';
-import Posts from './Posts';
-import App from './App';
+import PostCreateForm from '../../components/post/PostCreateForm';
+import Posts from '../../components/post/Post';
 
 export default function NewsFeed({ user }) {
 

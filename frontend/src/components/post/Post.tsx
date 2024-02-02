@@ -1,13 +1,13 @@
-import axios from './utility/axios';
+import axios from '../../utility/axios';
 import { useEffect, useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import MyButton from './MyButton';
-import NewsFeed from './Newsfeed';
+import MyButton from '../MyButton';
+import NewsFeed from '../../views/profile/Newsfeed';
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import MyComment from './MyComment';
-import PostCard from './PostCard';
+import MyComment from '../MyComment';
+import PostCard from './PostView';
 
 export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }) {
 
@@ -70,7 +70,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         event.preventDefault();
 
         const postEditData = {
-            userId: user._id,
+            // userId: user._id,
             title: editedPost.title,
             content: editedPost.content,
         };

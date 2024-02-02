@@ -1,8 +1,8 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
-import MyButton from './MyButton';
+import MyButton from '../MyButton';
 import { useState, useEffect } from 'react';
-import axios from './utility/axios';
+import axios from '../../utility/axios';
 
 export default function PostCard({ user, userPost, likeCount, handleToggleCommentForm, handleLike, setPostId, setEditedPost, handleToggleForm, handleDeletePost }) {user, userPost, likeCount, handleToggleCommentForm, handleLike, setPostId, setEditedPost, handleToggleForm, handleDeletePost 
 

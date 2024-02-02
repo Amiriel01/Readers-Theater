@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../utility/axios';
 import { useEffect, useState, FormEvent } from 'react';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -60,7 +60,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
         event.preventDefault();
 
         const commentData = {
-            userId: user._id,
+            // userId: user._id,
             post: post,
             comment_text: newComment.comment_text,
         }
@@ -151,7 +151,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
                     <MyButton id='user-post-button' title='Post Your Comment'></MyButton>
                 </div>
             </Form>
-            {allComments.filter(commentUser => commentUser.user._id === user._id && commentUser.post._id === post._id).map((userComment) => (
+            {allComments.filter(commentUser => commentUser.user && commentUser.user._id === user._id && commentUser.post && commentUser.post._id === post._id).map((userComment) => (
                 <div key={userComment._id}>
                     <Card id='posts-card'>
                         <Card.Body>

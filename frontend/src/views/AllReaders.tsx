@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
-import Header from './Header';
+import Header from '../components/SiteLayout/Header';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

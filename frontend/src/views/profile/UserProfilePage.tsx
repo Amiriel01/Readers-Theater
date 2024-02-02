@@ -1,4 +1,4 @@
-import axios from './utility/axios.ts';
+import axios from '../../utility/axios.js';
 import { useEffect, useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import Row from 'react-bootstrap/Row';
@@ -7,12 +7,12 @@ import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import MyButton from './MyButton';
-import Header from './Header';
-import Comment from './MyComment';
-import PostCreateForm from './PostCreateForm';
-import Posts from './Posts';
-import MyComment from './MyComment';
+import MyButton from '../../components/MyButton.js';
+import Header from '../../components/SiteLayout/Header.js';
+import Comment from '../../components/MyComment.js';
+import PostCreateForm from '../../components/post/PostCreateForm.js';
+import Posts from '../../components/post/Post.js';
+import MyComment from '../../components/MyComment.js';
 
 export default function UserProfilePage({ user }) {
 

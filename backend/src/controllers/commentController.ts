@@ -37,7 +37,8 @@ export function comment_create() {
 
             //create user object with escaped and trimmed info
             const comment = new Comment({
-                user: req.body.userId,
+                user: (req.user as any)._id,
+                // user: req.body.userId,
                 post: req.body.post,
                 comment_text: he.decode(req.body.comment_text),
             });
@@ -80,7 +81,8 @@ export function comment_edit() {
             } else {
                 //find the staff member and update
                 const commentUpdate = await Comment.findByIdAndUpdate(req.params.id, {
-                    user: req.body.userId,
+                    // user: req.body.userId,
+                    user: (req.user as any)._id,
                     post: req.body.post,
                     comment_text: he.decode(req.body.comment_text),
                 }, { new: true }).exec()

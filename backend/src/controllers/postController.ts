@@ -105,7 +105,8 @@ export function post_edit() {
                 const postUpdate = await Post.findByIdAndUpdate(req.params.id, {
                     title: he.decode(req.body.title),
                     content: he.decode(req.body.content),
-                    user: req.body.userId,
+                    // 
+                    user: (req.user as any)._id,
                 }, { new: true }).exec()
                 //save profile update
                 console.log(postUpdate)

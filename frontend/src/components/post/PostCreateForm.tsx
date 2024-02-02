@@ -1,8 +1,8 @@
-import axios from './utility/axios';
+import axios from '../../utility/axios';
 import { useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import MyButton from './MyButton';
+import MyButton from '../MyButton';
 
 export default function PostCreateForm({ user, onPostCreated }) {
 
