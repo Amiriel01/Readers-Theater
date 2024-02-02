@@ -890,6 +890,11 @@ li {
     list-style-type: none;
 }
 
+#search-results-link {
+    text-decoration: none;
+    color: black;
+}
+
 /*Header*/
 #header-page-container {
     background-color: #f4ad96;

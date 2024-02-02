@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
+import { Link } from 'react-router-dom';
 
 export default function FollowerSearch() {
     const [query, setQuery] = useState('');
@@ -71,9 +72,11 @@ export default function FollowerSearch() {
             <ul>
                 {results.length > 0 ? (
                     results.map((result) => (
-                        <li key={result._id} onClick={() => window.location.href = `http://localhost:5173/users/user/${result._id}`}>
-                            {result.profile_name}
-                        </li>
+                        <li key={result._id}>
+                                <Link id='search-results-link' to={`/users/user/${result._id}`}>
+                                    {result.profile_name}
+                                </Link>
+                            </li>
                     ))
                 ) : isTyping && showNoResults ? (
                     <li>No Results Match</li>
