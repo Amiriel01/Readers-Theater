@@ -4,6 +4,8 @@ import passport from 'passport';
 import { user_list, user_get, user_create, user_details_edit, user_delete, add_friend, delete_friend } from "../controllers/userController.ts";
 // import {sign} from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
+import mongoose from "mongoose";
+import User from '../models/userModel.ts';
 
 /* GET users listing. */
 // router.get('/', function(req, res, next) {
@@ -31,35 +33,26 @@ router.put("/addFriend", add_friend());
 //DELETE Delete Friend
 router.delete("/deleteFriend", delete_friend());
 
-//Passport Login
-// router.post(
-//   "/login",
-//   passport.authenticate("jwt", {
-//     session: false,
-//   },(arg1, arg2) => {
-//     console.log('38')
-//     console.log(arg1)
-//     console.log(arg2)
-//   }),
-//   function (req, res) {
-//     console.log('something random')
-//     res.json(req.user)
-//   }
-// );
-
 router.post(
   "/login",
   passport.authenticate("local", {
     session: false,
   }),
-  function (req, res) {
-    console.log('something random')
-    console.log((req as any).token)
-    const token = jwt.sign(JSON.parse(JSON.stringify(req.user)), process.env.JWT_KEY);
-    console.log(token)
-    res.json({user: req.user, token: token })
+  async function (req, res) {
+    try {
+      // Populating the friends array with the actual friend objects
+      await User.populate(req.user, { path: "friends" });
+
+      const token = jwt.sign(JSON.parse(JSON.stringify(req.user)), process.env.JWT_KEY);
+
+      res.json({ user: req.user, token: token });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 );
+
 
 //Passport Logout
 // router.get("/logout", (req, res, next) => {

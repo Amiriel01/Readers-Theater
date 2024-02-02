@@ -18,7 +18,7 @@ export function posts_list() {
                 await Like.exists({ user: req.user, post: post }).exec() != null,
             )
         }));
-        console.log(PostDTOList);
+        // console.log(PostDTOList);
         // console.log(req.user)
         res.json(PostDTOList);
     });
@@ -28,7 +28,7 @@ export function posts_list() {
 export function post_details() {
     return asyncHandler(async (req, res, next) => {
         const postDetails = await Post.findById(req.params.id).populate('user').exec();
-        console.log(postDetails);
+        // console.log(postDetails);
         res.json(postDetails);
     });
 };
@@ -68,7 +68,7 @@ export function post_create() {
                 res.json(post);
             } else {
                 //form data is valid, save the staff member
-                console.log(post);
+                // console.log(post);
                 res.json(await post.save());
             };
         })
@@ -109,7 +109,7 @@ export function post_edit() {
                     user: (req.user as any)._id,
                 }, { new: true }).exec()
                 //save profile update
-                console.log(postUpdate)
+                // console.log(postUpdate)
                 res.json(postUpdate)
             }
         })
@@ -120,7 +120,7 @@ export function post_edit() {
 export function post_delete() {
     return asyncHandler(async (req, res, next) => {
         const postDelete = await Post.findByIdAndDelete(req.params.id).exec();
-        console.log("item deleted");
+        // console.log("item deleted");
         res.status(200).json(await Post.find().populate('user').exec());
     })
 };

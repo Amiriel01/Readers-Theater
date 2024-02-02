@@ -13,7 +13,7 @@ export default function (req, res, next) {
         }
 
         // If there is a user, proceed to the next middleware
-        console.log('passport check');
+        // console.log('passport check');
         req.user = user;
         return next();
     })(req, res, next);

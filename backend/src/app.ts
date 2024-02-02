@@ -67,10 +67,10 @@ app.use(function(err, req, res, next) {
 
 passport.use(
   new LocalStrategy({usernameField: 'username', passwordField: 'password'}, async (username, password, done) => {
-    console.log('try local')
+    // console.log('try local')
     try {
-      console.log('random')
-      console.log(username, password)
+      // console.log('random')
+      // console.log(username, password)
       const user = await User.findOne({ username: username });
       if (!user) {
         return done(null, false, { message: "Incorrect username" });

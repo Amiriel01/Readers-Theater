@@ -13,7 +13,7 @@ export default function PostCard({ user, userPost, likeCount, handleToggleCommen
             try {
                 const response = await axios.get(`http://localhost:3000/posts/postDetails/${userPost._id}`);
                 setIsLiked(response.data.like !== null);
-                console.log(response.data)
+                // console.log(response.data)
             } catch (ex) {
                 console.log(ex);
             }

@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt';
 export function user_list() {
     return asyncHandler(async (req, res, next) => {
         const userList = await User.find().exec();
-        console.log(userList);
+        // console.log(userList);
         res.json(userList);
     });
 };
@@ -39,9 +39,9 @@ export function user_create() {
             .isLength({ min: 5 })
             .isLength({ max: 25 })
             .custom(async (confirmPassword, { req }) => {
-                console.log(confirmPassword)
+                // console.log(confirmPassword)
                 const password = req.body.password
-                console.log(password)
+                // console.log(password)
                 if (password !== confirmPassword) {
                     throw new Error('Passwords must match.')
                 }
@@ -84,7 +84,7 @@ export function user_create() {
                 res.json(user);
             } else {
                 //form data is valid, save the staff member
-                console.log(user);
+                // console.log(user);
                 res.json(await user.save());
             };
         })
@@ -129,7 +129,7 @@ export function user_details_edit() {
                     friends: req.body.friends
                 }, { new: true }).exec()
                 //save profile update
-                console.log(userDetailsUpdate)
+                // console.log(userDetailsUpdate)
                 res.json(userDetailsUpdate)
             }
         })
@@ -140,7 +140,7 @@ export function user_details_edit() {
 export function user_delete() {
     return asyncHandler(async (req, res, next) => {
         const userDelete = await User.findByIdAndDelete(req.params.id).exec();
-        console.log("item deleted");
+        // console.log("item deleted");
         res.json("item deleted");
     })
 };

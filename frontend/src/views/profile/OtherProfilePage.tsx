@@ -56,6 +56,8 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
             // console.log(response.status, response.data)
             setProfile(response.data);
             setFriendId(response.data._id);
+            console.log(response.data)
+            console.log(response.data._id)
 
         } catch (err) {
             console.log(err)

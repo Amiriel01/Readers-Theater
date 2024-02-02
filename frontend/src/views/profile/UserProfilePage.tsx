@@ -5,14 +5,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
-import Form from 'react-bootstrap/Form';
-import FloatingLabel from 'react-bootstrap/FloatingLabel';
-import MyButton from '../../components/MyButton.js';
 import Header from '../../components/SiteLayout/Header.js';
-import Comment from '../../components/MyComment.js';
 import PostCreateForm from '../../components/post/PostCreateForm.js';
 import Posts from '../../components/post/Post.js';
-import MyComment from '../../components/MyComment.js';
 
 export default function UserProfilePage({ user }) {
 
@@ -56,7 +51,7 @@ export default function UserProfilePage({ user }) {
     const getAllPosts = async () => {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
-            console.log(response.status, response.data)
+            // console.log(response.status, response.data)
 
             // Reverse the order of the posts
             const reversedPosts = response.data.reverse();
@@ -136,7 +131,7 @@ export default function UserProfilePage({ user }) {
             if (response.status === 200) {
                 // Fetch the updated list of posts
                 const updatedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
-                console.log(updatedPostsResponse.status, updatedPostsResponse.data);
+                // console.log(updatedPostsResponse.status, updatedPostsResponse.data);
 
                 // Reverse the order of the posts
                 const reversedPosts = updatedPostsResponse.data.reverse();
@@ -203,10 +198,8 @@ export default function UserProfilePage({ user }) {
                             </Col>
                         </Row>
                         <div id='following-cards-container'>
-                            {console.log(user.friends)}
                             {user.friends.map((friend) => {
-                                {console.log(friend.imageURL)}
-                                {console.log(friend._id)}
+                                {console.log(user)}
                                 return <Link to={"/users/user/" + friend._id} key={friend._id} id='following-link'>
                                     <Card id='following-card'>
                                         <img className='following-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>

@@ -7,7 +7,7 @@ import he from 'he';
 export function comment_list() {
     return asyncHandler(async (req, res, next) => {
         const commentsList = await Comment.find().populate('user').populate('post').exec();
-        console.log(commentsList);
+        // console.log(commentsList);
         res.json(commentsList);
     });
 };
@@ -16,7 +16,7 @@ export function comment_list() {
 export function comment_details() {
     return asyncHandler(async (req, res, next) => {
         const commentDetails = await Comment.findById(req.params.id).populate('user').populate('post').exec();
-        console.log(commentDetails);
+        // console.log(commentDetails);
         res.json(commentDetails);
     });
 };
@@ -51,7 +51,7 @@ export function comment_create() {
                 res.json(comment);
             } else {
                 //form data is valid, save the staff member
-                console.log(comment);
+                // console.log(comment);
                 res.json(await comment.save());
             };
         })
@@ -87,7 +87,7 @@ export function comment_edit() {
                     comment_text: he.decode(req.body.comment_text),
                 }, { new: true }).exec()
                 //save profile update
-                console.log(commentUpdate);
+                // console.log(commentUpdate);
                 res.json(commentUpdate);
             }
         })
@@ -98,7 +98,7 @@ export function comment_edit() {
 export function comment_delete() {
     return asyncHandler(async (req, res, next) => {
         const commentDelete = await Comment.findByIdAndDelete(req.params.id).exec();
-        console.log("item deleted");
+        // console.log("item deleted");
         res.status(200).json(await Comment.find().populate('user').populate('post').exec());
     })
 };
