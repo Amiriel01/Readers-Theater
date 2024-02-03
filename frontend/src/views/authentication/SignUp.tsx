@@ -1,11 +1,10 @@
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import MyButton from '../../components/MyButton';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ProgressBar } from 'react-bootstrap';
-import axios from 'axios';
+import axios, { updateWithKey } from '../../utility/axios.js';
 import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from "react-router";
@@ -66,18 +65,18 @@ export default function SignUp() {
     };
 
     useEffect(() => {
-        submitImage()
+        submitImage();
     }, [image]);
 
     const submitImage = () => {
-        console.log(image);
+  
         if (image !== null) {
             const formData = new FormData();
             formData.append("image", image as Blob)
 
-            axios.post("http://localhost:3000/upload-image", formData, {
+            axios.post("http://localhost:3000/upload-image-sign-up", formData, {
                 headers: {
-                    'Content-Type': 'multipart/form-data'
+                    'Content-Type': 'multipart/form-data',
                 }
             }).then((response) => {
                 console.log(response.status, response.data);
@@ -93,6 +92,8 @@ export default function SignUp() {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
+        // submitImage();
+
         if (signUp.password === signUp.confirm_password) {
             const signUpData = {
                 username: signUp.username,
@@ -102,7 +103,7 @@ export default function SignUp() {
                 imageURL: imageURL,
                 about_section: signUp.about_section,
             }
-            setSignUp(signUpData)
+            // setSignUp(signUpData)
 
             // axios.post("http://localhost:3000/users/userCreate", signUpData).then((response) => {
             //     console.log(response.status, response.data);
@@ -124,9 +125,10 @@ export default function SignUp() {
                 console.log(response.status, response.data);
                 if (response.status === 200) {
                     console.log(response.data)
+                    setSignUp(response.data)
                     // setUser(response.data.username);
                     // setLoggedIn(true)
-                    // navigate('/UserProfilePage')
+                    navigate('/Login')
                 }
             } catch (ex) {
                 console.log(signUpData)

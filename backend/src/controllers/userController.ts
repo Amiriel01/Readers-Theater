@@ -2,6 +2,7 @@ import { body, validationResult } from 'express-validator';
 import User from "../models/userModel.ts";
 import asyncHandler from "express-async-handler";
 import bcrypt from 'bcrypt';
+import he from 'he';
 
 //GET a list of all users with details
 export function user_list() {
@@ -68,10 +69,10 @@ export function user_create() {
 
             //create user object with escaped and trimmed info
             const user = new User({
-                username: req.body.username,
+                username: he.decode(req.body.username),
                 password: hashPassword,
-                profile_name: req.body.profile_name,
-                about_section: req.body.about_section,
+                profile_name: he.decode(req.body.profile_name),
+                about_section: he.decode(req.body.about_section),
                 imageURL: req.body.imageURL,
                 friends: req.body.friends,
             });
@@ -121,12 +122,12 @@ export function user_details_edit() {
             } else {
                 //find the staff member and update
                 const userDetailsUpdate = await User.findByIdAndUpdate(req.params.id, {
-                    username: req.body.username,
+                    username: he.decode(req.body.username),
                     password: req.body.password,
-                    profile_name: req.body.profile_name,
-                    about_section: req.body.about_section,
+                    profile_name: he.decode(req.body.profile_name),
+                    about_section: he.decode(req.body.about_section),
                     imageURL: req.body.imageURL,
-                    friends: req.body.friends
+                    friends: req.body.friends,
                 }, { new: true }).exec()
                 //save profile update
                 // console.log(userDetailsUpdate)

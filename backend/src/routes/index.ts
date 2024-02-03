@@ -23,7 +23,14 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-router.post("/upload-image", passport.authenticate('jwt', {session: false}), upload.single("image"), async (req, res) => {
+router.post("/upload-image-profile", passport.authenticate('jwt', {session: false}), upload.single("image"), async (req, res) => {
+  console.log(req.body);
+  const imageName = req.file.filename;
+  res.json(imageName)
+  console.log(imageName)
+});
+
+router.post("/upload-image-sign-up", upload.single("image"), async (req, res) => {
   console.log(req.body);
   const imageName = req.file.filename;
   res.json(imageName)

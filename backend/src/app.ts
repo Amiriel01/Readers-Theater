@@ -19,6 +19,7 @@ import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';
 import postsRouter from './routes/posts.ts';
 import commentsRouter from './routes/comments.ts';
+// import imageUploadRouter from './routes/imageUpload.ts';
 
 const app = express();
 
@@ -47,6 +48,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
+// app.use('/imageUpload', imageUploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

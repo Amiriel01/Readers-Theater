@@ -17,14 +17,6 @@ export default function UpdateProfile({user, setUser}) {
         window.scrollTo(0, 0)
     }, [pathname]);
 
-    // const [user, setUser] = useState({
-    //     username: "",
-    //     password: "",
-    //     profile_name: '',
-    //     about_section: '',
-    //     imageURL: '',
-    // });
-
     const [userUpdate, setUserUpdate] = useState({
         username: "",
         password: "",
@@ -35,21 +27,6 @@ export default function UpdateProfile({user, setUser}) {
 
     const [image, setImage] = useState<File | null>(null);
     const [imageURL, setImageURL] = useState(null);
-
-    // async function getUser() {
-    //     try {
-    //         const response = await axios.get(`http://localhost:3000/users/user/${user._id}`);
-    //         console.log(response.status, response.data)
-    //         setUser(response.data);
-    //         // console.log(response.data._id)
-    //     } catch (err) {
-    //         console.log(err)
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     getUser()
-    // }, []);
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
@@ -65,7 +42,7 @@ export default function UpdateProfile({user, setUser}) {
         formData.append("image", image as Blob)
 
         try {
-            const result = await axios.post("http://localhost:3000/upload-image", formData, {
+            const result = await axios.post("http://localhost:3000/upload-image-profile", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

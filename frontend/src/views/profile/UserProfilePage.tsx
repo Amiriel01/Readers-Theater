@@ -75,9 +75,9 @@ export default function UserProfilePage({ user }) {
 
     const handleDeleteUser = () => {
 
-        axios.delete('http://localhost:3000/users/user/6591f5e018252d4fa589528c');
+        axios.delete(`http://localhost:3000/users/user/${user._id}`);
 
-        navigate('/StartPage')
+        // navigate('/StartPage')
     };
 
     const handlePostChange = (event: FormEvent) => {
