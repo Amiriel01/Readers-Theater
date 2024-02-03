@@ -77,7 +77,7 @@ export default function UserProfilePage({ user }) {
 
         axios.delete(`http://localhost:3000/users/user/${user._id}`);
 
-        // navigate('/StartPage')
+        navigate('/')
     };
 
     const handlePostChange = (event: FormEvent) => {
