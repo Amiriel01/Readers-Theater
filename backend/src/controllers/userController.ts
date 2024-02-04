@@ -3,6 +3,8 @@ import User from "../models/userModel.ts";
 import asyncHandler from "express-async-handler";
 import bcrypt from 'bcrypt';
 import he from 'he';
+import Post from '../models/postModel.ts';
+import Comment from '../models/commentModel.ts';
 
 //GET a list of all users with details
 export function user_list() {
@@ -137,11 +139,29 @@ export function user_details_edit() {
     ]
 }
 
-//delete contact form submission
+//delete user
 export function user_delete() {
     return asyncHandler(async (req, res, next) => {
-        const userDelete = await User.findByIdAndDelete(req.params.id).exec();
-        // console.log("item deleted");
+
+        try {
+                console.log('Deleting user with associations...');
+                // Remove posts and comments
+                const postDeletionResult = await Post.deleteMany({ user: req.params.id });
+                const commentDeletionResult = await Comment.deleteMany({ user: req.params.id });
+            
+                console.log('Post deletion result:', postDeletionResult);
+                console.log('Comment deletion result:', commentDeletionResult);
+            
+                // Remove user
+                const user = await User.findByIdAndDelete(req.params.id);
+            
+                console.log('User deletion result:', user);
+            
+                // return user;
+              } catch (error) {
+                console.error('Error deleting user with associations:', error);
+                throw error;
+              }
         res.json("item deleted");
     })
 };
