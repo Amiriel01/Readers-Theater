@@ -11,7 +11,7 @@ import PostCard from './PostView';
 
 export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }) {
 
-    const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
+    // const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
     const [likeCount, setLikeCount] = useState(0);
 
@@ -35,8 +35,10 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
     });
 
     useEffect(() => {
-        setIsLiked(userPost.like ? true : false);
-    }, [userPost.like]);
+        setIsLiked(userPost.isLiked);
+        console.log(userPost);
+        setLikeCount(userPost.likes);
+    }, [userPost.isLiked]);
 
     const handleLike = async (postId) => {
         // Make a request to the backend to like/unlike the post
@@ -46,9 +48,11 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
             });
             // console.log(response.data.like_count);
             setLikeCount(response.data.like_count);
+            setIsLiked(!isLiked);
+            console.log(response.data);
 
             // Check if the user has liked the post and update the isLiked state
-            console.log(response.data)
+            // console.log(response.data)
             console.log(response.data.likes)
             // setIsLiked(response.data.like_count > 0);
             // setIsLiked(response.data.like !== null);
@@ -116,7 +120,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                     <PostCard
                         user={user}
                         userPost={userPost}
-                        // isLiked={isLiked}
+                        isLiked={isLiked}
                         likeCount={likeCount}
                         handleToggleCommentForm={handleToggleCommentForm}
                         handleLike={handleLike}

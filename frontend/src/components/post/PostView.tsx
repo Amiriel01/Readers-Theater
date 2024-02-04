@@ -1,26 +1,8 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import MyButton from '../MyButton';
-import { useState, useEffect } from 'react';
-import axios from '../../utility/axios';
 
-export default function PostCard({ user, userPost, likeCount, handleToggleCommentForm, handleLike, setPostId, setEditedPost, handleToggleForm, handleDeletePost }) {user, userPost, likeCount, handleToggleCommentForm, handleLike, setPostId, setEditedPost, handleToggleForm, handleDeletePost 
-
-    const [isLiked, setIsLiked] = useState(userPost.isLiked); 
-
-    useEffect(() => {
-        const fetchPostData = async () => {
-            try {
-                const response = await axios.get(`http://localhost:3000/posts/postDetails/${userPost._id}`);
-                setIsLiked(response.data.like !== null);
-                // console.log(response.data)
-            } catch (ex) {
-                console.log(ex);
-            }
-        };
-
-        fetchPostData();
-    }, [userPost._id]); 
+export default function PostCard({ user, userPost, likeCount, handleToggleCommentForm, handleLike, setPostId, setEditedPost, handleToggleForm, handleDeletePost, isLiked }) {
 
     return (
         <Card id='posts-card'>
@@ -38,11 +20,11 @@ export default function PostCard({ user, userPost, likeCount, handleToggleCommen
                         <div id='likes-container'>
                             <button onClick={() => handleLike(userPost._id)} id='like-button-all'>
                                 {isLiked ?
-                                    <span className="material-symbols-outlined" id='like-button-off'>
+                                    <span className="material-symbols-outlined" id='like-button-on'>
                                         favorite
                                     </span>
                                     :
-                                    <span className="material-symbols-outlined" id='like-button-on'>
+                                    <span className="material-symbols-outlined" id='like-button-off'>
                                         favorite
                                     </span>
                                 }
