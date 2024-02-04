@@ -92,8 +92,6 @@ export default function SignUp() {
     async function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
-        // submitImage();
-
         if (signUp.password === signUp.confirm_password) {
             const signUpData = {
                 username: signUp.username,
@@ -103,22 +101,6 @@ export default function SignUp() {
                 imageURL: imageURL,
                 about_section: signUp.about_section,
             }
-            // setSignUp(signUpData)
-
-            // axios.post("http://localhost:3000/users/userCreate", signUpData).then((response) => {
-            //     console.log(response.status, response.data);
-            //     if (response.status === 200) {
-            //         setUser(response.data.username);
-            //         setLoggedIn(true)
-            //         navigate('/ProfilePage')
-            //     }
-            // }).catch((ex) => {
-            //     console.log(ex);
-            //     if (ex.response.status) {
-            //         setUsernameAlertShow(true)
-            //         console.log(usernameAlertShow)
-            //     }
-            // })
 
             try {
                 const response = await axios.post("http://localhost:3000/users/userCreate", signUpData);
@@ -126,8 +108,6 @@ export default function SignUp() {
                 if (response.status === 200) {
                     console.log(response.data)
                     setSignUp(response.data)
-                    // setUser(response.data.username);
-                    // setLoggedIn(true)
                     navigate('/Login')
                 }
             } catch (ex) {

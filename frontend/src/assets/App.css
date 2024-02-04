@@ -12,6 +12,13 @@ input.form-control {
     color: black !important;
 }
 
+.btn-secondary {
+    background-color: #f4ad96 !important;
+    border: black 2px solid !important;
+    color: black !important;
+    border-radius: 0px !important;
+}
+
 /*StartPage*/
 #start-page-container {
     background-image: url(../images/bookpages1.png);
