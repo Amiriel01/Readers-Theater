@@ -146,7 +146,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
                                 Followed Readers
                             </Col>
                         </Row>
-                        <div id='following-card-container'>
+                        <div id='following-cards-container'>
                             {profile.friends.map((friend, index) => {
                                 return <Link to={"/users/user/" + friend._id} key={index} id='following-link'>
                                     <Card id='following-card'>
