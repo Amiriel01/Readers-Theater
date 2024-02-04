@@ -125,7 +125,7 @@ export default function NewsFeed({ user }) {
                 const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
                 
                 // Set the state with the updated list of posts
-                setAllPosts(deletedPostsResponse.data);
+                setAllPosts(deletedPostsResponse.data.reverse());
             
         } catch (error) {
             console.error(error);

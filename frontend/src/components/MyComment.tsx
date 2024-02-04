@@ -38,7 +38,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
         try {
             const response = await axios.get('http://localhost:3000/comments/commentList');
             console.log(response.status, response.data)
-            setAllComments(response.data);
+            setAllComments(response.data.reverse());
         } catch (err) {
             console.log(err)
         }
@@ -122,7 +122,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
 
         try {
             const commentDeleteResponse = await axios.delete(`http://localhost:3000/comments/commentDetails/${commentId}`);
-            setAllComments(commentDeleteResponse.data)
+            setAllComments(commentDeleteResponse.data.reverse())
         } catch (error) {
             console.error(error);
         };
