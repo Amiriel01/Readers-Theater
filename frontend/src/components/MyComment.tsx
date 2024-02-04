@@ -46,7 +46,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
 
     useEffect(() => {
         getAllComments();
-    }, [newComment, editedComment]);
+    }, [newComment, editedComment, post]);
 
     const handleChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
@@ -151,65 +151,71 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
                     <MyButton id='user-post-button' title='Post Your Comment'></MyButton>
                 </div>
             </Form>
-            {allComments.filter(commentUser => commentUser.user && commentUser.user._id === user._id && commentUser.post && commentUser.post._id === post._id).map((userComment) => (
-                <div key={userComment._id}>
-                    <Card id='posts-card'>
-                        <Card.Body>
-                            <div id='post-flex-container'>
-                                <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userComment.user.imageURL}`}></img>
-                                <div>
-                                    <Card.Title>
-                                        {userComment.user.profile_name}
-                                    </Card.Title>
-                                    <Card.Text>
-                                        {userComment.comment_text}
-                                    </Card.Text>
+            {allComments
+                .filter(commentUser => commentUser.post && commentUser.post._id === post._id)
+                .map((userComment) => (
+                    <div key={userComment._id}>
+                        <Card id='posts-card'>
+                            <Card.Body>
+                                <div id='post-flex-container'>
+                                    <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userComment.user.imageURL}`}></img>
+                                    <div>
+                                        <Card.Title>
+                                            {userComment.user.profile_name}
+                                        </Card.Title>
+                                        <Card.Text>
+                                            {userComment.comment_text}
+                                        </Card.Text>
+                                    </div>
                                 </div>
+                            </Card.Body>
+                            <div id='post-buttons-container'>
+                                {userComment.user._id === user._id && (
+                                    <>
+                                        <MyButton
+                                            id='edit-post-button'
+                                            title='Edit'
+                                            onClick={(event) => {
+                                                setCommentId(userComment._id);
+                                                setEditedComment({
+                                                    user: userComment.user,
+                                                    post: userComment.post,
+                                                    comment_text: userComment.comment_text,
+                                                });
+                                                handleToggleCommentForm(userComment._id);
+                                            }}
+                                        ></MyButton>
+                                        <MyButton id='delete-post-button' title='Delete'
+                                            onClick={(event) => {
+                                                setCommentId(userComment._id);
+                                                handleDeleteComment(event, userComment._id);
+                                            }}></MyButton>
+                                    </>
+                                )}
                             </div>
-                        </Card.Body>
-                        <div id='post-buttons-container'>
-                            <MyButton
-                                id='edit-post-button'
-                                title='Edit'
-                                onClick={(event) => {
-                                    setCommentId(userComment._id);
-                                    setEditedComment({
-                                        user: userComment.user,
-                                        post: userComment.post,
-                                        comment_text: userComment.comment_text,
-                                    });
-                                    handleToggleCommentForm(userComment._id);
-                                }}
-                            ></MyButton>
-                            <MyButton id='delete-post-button' title='Delete'
-                                onClick={(event) => {
-                                    setCommentId(userComment._id);
-                                    handleDeleteComment(event, userComment._id);
-                                }}></MyButton>
-                        </div>
-                    </Card>
-                    {formVisibility[commentId] && (
-                        <Form onSubmit={(event) => handleCommentEdit(event, userComment._id)}>
-                            <Form.Group className="mb-3">
-                                <FloatingLabel
-                                    label="Comment Text">
-                                    <Form.Control
-                                        required
-                                        as="textarea"
-                                        rows={3}
-                                        style={{ height: 'unset' }}
-                                        name='comment_text'
-                                        value={editedComment.comment_text}
-                                        onChange={handleCommentChange}
-                                        maxLength={250}
-                                    />
-                                </FloatingLabel>
-                            </Form.Group>
-                            <MyButton id='user-post-button' title='Update Your Comment'></MyButton>
-                        </Form>
-                    )}
-                </div>
-            ))}
+                        </Card>
+                        {formVisibility[commentId] && (
+                            <Form onSubmit={(event) => handleCommentEdit(event, userComment._id)}>
+                                <Form.Group className="mb-3">
+                                    <FloatingLabel
+                                        label="Comment Text">
+                                        <Form.Control
+                                            required
+                                            as="textarea"
+                                            rows={3}
+                                            style={{ height: 'unset' }}
+                                            name='comment_text'
+                                            value={editedComment.comment_text}
+                                            onChange={handleCommentChange}
+                                            maxLength={250}
+                                        />
+                                    </FloatingLabel>
+                                </Form.Group>
+                                <MyButton id='user-post-button' title='Update Your Comment'></MyButton>
+                            </Form>
+                        )}
+                    </div>
+                ))}
         </>
     )
 }
