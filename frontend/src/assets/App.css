@@ -6,6 +6,12 @@ input.form-control {
     border-radius: 0px;
 }
 
+.btn-primary {
+    background-color: #f4ad96 !important;
+    border: black 2px solid !important;
+    color: black !important;
+}
+
 /*StartPage*/
 #start-page-container {
     background-image: url(../images/bookpages1.png);
@@ -139,7 +145,7 @@ input.form-control {
         background-color: #faece0;
         box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
         width: 60%;
-        height: 70%;
+        height: 60%;
         text-align: center;
         padding: 1rem;
     }
@@ -392,6 +398,10 @@ input.form-control {
 
 .form-floating {
     display: flex;
+}
+
+.progress-bar {
+    background-color: #f4ad96 !important;
 }
 
 /*Profile Page*/
