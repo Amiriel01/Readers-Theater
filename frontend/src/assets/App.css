@@ -880,6 +880,7 @@ input.form-control {
 /*ReaderSearch*/
 #search-bar-container {
     margin-top: 1rem;
+    position: relative;
 }
 
 #magnifying-glass {
@@ -894,17 +895,23 @@ ul {
     padding-bottom: 1rem;
     padding-left: 1rem !important;
     cursor: pointer;
-    top: 78.5%;
-    left: 11.3%;
-    width: 19.5rem;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid black;
 }
 
 ul:empty {
     background-color: transparent;
+    border: none;
 }
 
 li {
     list-style-type: none;
+}
+
+li:hover {
+    text-decoration: underline;
 }
 
 #search-results-link {
@@ -952,6 +959,12 @@ li {
 
 #basic-addon1 {
     border-radius: 0;
+}
+
+.dropdown-menu {
+    border-radius: 0px !important;
+    border: 1px solid black;
+    margin-left: 1rem;
 }
 
 /*Newsfeed Page*/

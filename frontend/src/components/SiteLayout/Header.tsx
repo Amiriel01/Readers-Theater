@@ -30,7 +30,7 @@ export default function Header() {
         <>
             <Row id="header-page-container">
                 <Row id="header-container">
-                    <Col id="reader-search-input">
+                    <Col id="reader-search-input" className="search-bar">
                         <ReaderSearch />
                     </Col>
                     <Col>
