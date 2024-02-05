@@ -87,7 +87,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
 
         setEditedComment((prevEditedComment) => ({
             ...prevEditedComment,
-            [name]: value === '' ? userComment[name] : value,
+            [name]: value
         }));
     };
 

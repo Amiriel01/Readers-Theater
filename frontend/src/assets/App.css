@@ -814,9 +814,74 @@ input.form-control {
         margin-bottom: 1rem;
     }
 
-    #edit-post-button {
-        /* margin-right: .5rem; */
+    /* #edit-post-button {
         width: 4rem;
+    } */
+}
+
+@media(max-width: 500px) {
+    #following-posts-container {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 2rem;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    #following-container {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+        background-color: rgb(235, 236, 240);
+        box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+        padding: 0px;
+        margin-bottom: 2rem;
+    }
+
+    #following-cards-container {
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #following-card {
+        width: 15rem;
+        display: flex;
+        align-items: center;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        margin-right: 1rem;
+        padding-top: 2rem;
+    }
+
+    #posts-container {
+        background-color: rgb(235, 236, 240);
+        box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    }
+
+    #posts-card {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    #post-buttons-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-right: 1rem;
+        margin-bottom: 1rem;
+        margin-left: 1rem;
     }
 }
 
@@ -1001,10 +1066,34 @@ li:hover {
     margin-right: 1rem;
 }
 
-#post-flex-container {
-    display: flex;
-    align-items: center;
+@media(min-width: 500px) {
+    #post-flex-container {
+        display: flex;
+        align-items: center;
+    }
+
+    #likes-container {
+        display: flex;
+        align-items: center;
+    }
 }
+
+@media(max-width: 499px) {
+    #post-flex-container {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    #likes-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+
 
 #post-title {
     font-size: 1.25rem;
@@ -1051,11 +1140,6 @@ li:hover {
 
 #post-text {
     margin-bottom: 0px;
-}
-
-#likes-container {
-    display: flex;
-    align-items: center;
 }
 
 #like-count {

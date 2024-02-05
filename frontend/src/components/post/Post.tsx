@@ -66,7 +66,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
 
         setEditedPost((prevEditedPost) => ({
             ...prevEditedPost,
-            [name]: value === '' ? userPost[name] : value,
+            [name]: value
         }));
     };
 
