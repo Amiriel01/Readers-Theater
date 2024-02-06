@@ -3,13 +3,35 @@ import { useEffect, useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from '../MyButton';
-import NewsFeed from '../../views/profile/Newsfeed';
-import Card from 'react-bootstrap/Card';
-import { Link } from 'react-router-dom';
 import MyComment from '../MyComment';
-import PostCard from './PostView';
+import PostView from './PostView';
+import { Post } from '../../interfaces/post.interface.js';
+import { User } from '../../interfaces/user.interface.js';
 
-export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }) {
+// Define interface for Post page
+interface PostPageProps {
+    user: User;
+    userPost: {
+        user: User;
+        _id: string;
+        title: string;
+        content: string;
+        isLiked: boolean;
+        likes: number;
+    };
+    formVisibility?: { [postId: string]: boolean };
+    handleToggleForm?: ((postId?: string | undefined) => void) | undefined;
+    commentVisibility?: { [postId: string]: boolean };
+    postId?: string;
+    setPostId?: React.Dispatch<React.SetStateAction<string>> | undefined;
+    onPostEdit?: (editedPost: Post) => void;
+    onPostDelete?: (deletedPost: Post) => void;
+    handleToggleCommentForm?: (postId: string) => void;
+    friendId?: string;
+    setEditedPost?: React.Dispatch<React.SetStateAction<{ user: User; title: string; content: string }>> | undefined;
+}
+
+export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }: PostPageProps) {
 
     // const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
@@ -35,12 +57,14 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
     });
 
     useEffect(() => {
-        setIsLiked(userPost.isLiked);
-        console.log(userPost);
-        setLikeCount(userPost.likes);
-    }, [userPost.isLiked]);
+        if (userPost) {
+            setIsLiked(userPost.isLiked);
+            // console.log(userPost);
+            setLikeCount(userPost.likes);
+        }
+    }, [userPost]);
 
-    const handleLike = async (postId) => {
+    const handleLike = async (postId: string) => {
         // Make a request to the backend to like/unlike the post
         try {
             const response = await axios.post(`http://localhost:3000/posts/postDetails/${postId}/like`, {
@@ -49,11 +73,11 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
             // console.log(response.data.like_count);
             setLikeCount(response.data.like_count);
             setIsLiked(!isLiked);
-            console.log(response.data);
+            // console.log(response.data);
 
             // Check if the user has liked the post and update the isLiked state
             // console.log(response.data)
-            console.log(response.data.likes)
+            // console.log(response.data.likes)
             // setIsLiked(response.data.like_count > 0);
             // setIsLiked(response.data.like !== null);
         } catch (ex) {
@@ -61,7 +85,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         }
     };
 
-    const handlePostChange = (event: FormEvent, userPost) => {
+    const handlePostChange = (event: FormEvent) => {
         const { name, value } = event.target as any;
 
         setEditedPost((prevEditedPost) => ({
@@ -70,7 +94,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
         }));
     };
 
-    const handlePostEdit = async (event: FormEvent, postId) => {
+    const handlePostEdit = async (event: FormEvent, postId: string) => {
         event.preventDefault();
 
         const postEditData = {
@@ -84,8 +108,10 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
             console.log(response.status, response.data);
 
             if (response.status === 200) {
-                // Pass the edited post data to the callback function
-                onPostEdit(response.data);
+                if (onPostEdit) {
+                    // Pass the edited post data to the callback function
+                    onPostEdit(response.data);
+                }
 
                 // Reset the editedPost state
                 setEditedPost({
@@ -94,20 +120,25 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                     content: '',
                 });
 
-                // Close the edit form
-                handleToggleForm(postId);
+                // Close the edit form if the function exists
+                if (handleToggleForm) {
+                    handleToggleForm(postId);
+                }
             }
         } catch (ex) {
             console.log(ex);
         }
     };
 
-    const handleDeletePost = async (event, postId) => {
+    const handleDeletePost = async (event: FormEvent, postId: string) => {
 
         try {
             const postDeleteResponse = await axios.delete(`http://localhost:3000/posts/postDetails/${postId}`);
             setAllPosts(postDeleteResponse.data)
-            onPostDelete(postDeleteResponse.data)
+
+            if (onPostDelete) {
+                onPostDelete(postDeleteResponse.data)
+            }
         } catch (error) {
             console.error(error);
         };
@@ -115,9 +146,9 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
 
     return (
         <>
-            {userPost.user && (
+            {userPost && userPost.user && (
                 <div id='post-comment-container'>
-                    <PostCard
+                    <PostView
                         user={user}
                         userPost={userPost}
                         isLiked={isLiked}
@@ -163,7 +194,7 @@ export default function GetAllPosts({ user, userPost, formVisibility, handleTogg
                                 <MyButton id='newsfeed-edit-post-button' title='Update Your Thought!'></MyButton>
                             </Form>
                         )}
-                    {commentVisibility[userPost._id] && (
+                    {commentVisibility && commentVisibility[userPost._id] && (
                         <MyComment user={user} post={userPost} />
                     )}
                 </div >

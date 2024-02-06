@@ -1,5 +1,5 @@
 import '../src/assets/App.css';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import StartPage from './views/StartPage';
@@ -14,21 +14,14 @@ import MyComment from './components/MyComment';
 import PostCreateForm from './components/post/PostCreateForm';
 import Posts from './components/post/Post';
 import AllReaders from './views/AllReaders';
-import PostCard from './components/post/PostView';
-
-export interface SiteLoggedIn {
-  loggedIn: string,
-  setLoggedIn: () => void,
-}
+import PostView from './components/post/PostView';
 
 function App() {
 
-  const [userId, setUserId] = useState('');
-
+  const [userId, setUserId] = useState('')
   const [user, setUser] = useState({
     _id: '',
     username: "",
-    // password: "",
     profile_name: '',
     about_section: '',
     imageURL: '',
@@ -45,7 +38,6 @@ function App() {
     }
   }, [user.username, navigate]);
 
-  // console.log(user)
   return (
     <div>
       <Routes>
@@ -61,56 +53,24 @@ function App() {
             />} />
             <Route
               path="/users/user/:id"
-              element={<OtherProfilePage user={user} setUser={setUser} />}
+              element={<OtherProfilePage 
+                user={user} 
+                setUser={setUser} 
+                userId={userId}
+                setUserId={setUserId}
+                />}
             />
             <Route path="/ReaderSearch" element={<ReaderSearch />} />
             <Route path="/Newsfeed" element={<NewsFeed user={user} />} />
             <Route path="/MyComment" element={<MyComment />} />
             <Route path="/PostCreateForm" element={<PostCreateForm />} />
             <Route path="/Posts" element={<Posts />} />
-            <Route path="/PostCard" element={<PostCard />} />
+            <Route path="/PostView" element={<PostView />} />
             <Route path="/AllReaders" element={<AllReaders user={user} />} />
           </>
         )}
       </Routes>
     </div>
-    // <>
-    //   <div>
-    //     <Routes>
-    //       <Route path="*" element={<StartPage />}></Route>
-    //       <Route path="/Login" element={<Login
-    //         setUser={setUser}
-    //       />}></Route>
-    //       <Route path="/SignUp" element={<SignUp
-    //       />}></Route>
-    //       <Route path="/UserProfilePage" element={<UserProfilePage
-    //         user={user}
-    //       />}></Route>
-    //       <Route path="/UpdateProfile" element={<UpdateProfile />}></Route>
-    //       <Route path="/users/user/:id" element={<OtherProfilePage
-    //         user={user}
-    //         setUser={setUser}
-    //         userId={userId}
-    //         setUserId={setUserId}
-    //       />}></Route>
-    //       <Route path="/ReaderSearch" element={<ReaderSearch />}></Route>
-    //       <Route path="/Newsfeed" element={<NewsFeed
-    //         user={user}
-    //       />}></Route>
-    //       <Route path="/MyComment" element={<MyComment
-    //       />}></Route>
-    //       <Route path="/PostCreateForm" element={<PostCreateForm
-    //       />}></Route>
-    //       <Route path="/Posts" element={<Posts
-    //       />}></Route>
-    //       <Route path="/PostCard" element={<PostCard
-    //       />}></Route>
-    //       <Route path="/AllReaders" element={<AllReaders
-    //         user={user}
-    //       />}></Route>
-    //     </Routes>
-    //   </div>
-    // </>
   )
 }
 

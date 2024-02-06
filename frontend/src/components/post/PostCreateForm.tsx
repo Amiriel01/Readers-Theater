@@ -3,8 +3,15 @@ import { useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from '../MyButton';
+import { User } from '../../interfaces/user.interface.js';
+import { Post } from '../../interfaces/post.interface.js';
 
-export default function PostCreateForm({ user, onPostCreated }) {
+interface PostCreateProps {
+    user: User;
+    onPostCreated?: (onPostCreated: Post) => void;
+}
+
+export default function PostCreateForm({ user, onPostCreated }: PostCreateProps) {
 
     const [newPost, setNewPost] = useState({
         user: {},
@@ -24,8 +31,6 @@ export default function PostCreateForm({ user, onPostCreated }) {
         event.preventDefault();
 
         const postData = {
-            // user: user,
-            // userId: user._id,
             title: newPost.title,
             content: newPost.content,
         };
@@ -42,7 +47,12 @@ export default function PostCreateForm({ user, onPostCreated }) {
                     title: '',
                     content: '',
                 })
-                onPostCreated(response.data);
+
+                if (onPostCreated) {
+                    // Pass the edited post data to the callback function
+                    onPostCreated(response.data);
+                }
+                
             }
         } catch (ex) {
             console.log(ex);

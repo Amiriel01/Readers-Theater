@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import PostCreateForm from '../../components/post/PostCreateForm';
 import Posts from '../../components/post/Post';
+import { User } from '../../interfaces/user.interface.js';
 
 export default function NewsFeed({ user }) {
 

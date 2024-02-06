@@ -1,8 +1,30 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import MyButton from '../MyButton';
+import { User } from '../../interfaces/user.interface.js';
 
-export default function PostCard({ user, userPost, likeCount, handleToggleCommentForm, handleLike, setPostId, setEditedPost, handleToggleForm, handleDeletePost, isLiked }) {
+// Define interface for Post page
+interface PostViewProps {
+    user: User;
+    userPost: {
+        user: User;
+        _id: string;
+        title: string;
+        content: string;
+        isLiked: boolean;
+        likes: number;
+    };
+    likeCount: number;
+    handleLike: (postId: string) => void;
+    isLiked: boolean;
+    setEditedPost: React.Dispatch<React.SetStateAction<{ user: User; title: string; content: string }>>;
+    handleToggleForm: (postId: string) => void;
+    setPostId: React.Dispatch<React.SetStateAction<string>>;
+    handleToggleCommentForm: (postId: string) => void;
+    handleDeletePost: (event: React.MouseEvent, postId: string) => void;
+}
+
+export default function PostView({ user, userPost, likeCount, handleToggleCommentForm, handleLike, setPostId, setEditedPost, handleToggleForm, handleDeletePost, isLiked }: PostViewProps) {
 
     return (
         <Card id='posts-card'>
@@ -51,7 +73,7 @@ export default function PostCard({ user, userPost, likeCount, handleToggleCommen
                         <MyButton
                             id='edit-post-button'
                             title='Edit'
-                            onClick={(event) => {
+                            onClick={() => {
                                 setPostId(userPost._id);
                                 setEditedPost({
                                     user: userPost.user,

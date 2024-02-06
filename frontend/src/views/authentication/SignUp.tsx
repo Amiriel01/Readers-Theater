@@ -110,7 +110,7 @@ export default function SignUp() {
                     setSignUp(response.data)
                     navigate('/Login')
                 }
-            } catch (ex) {
+            } catch (ex: any) {
                 console.log(signUpData)
                 console.log(ex);
                 console.log(imageURL)

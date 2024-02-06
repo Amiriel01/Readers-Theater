@@ -7,9 +7,18 @@ import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header';
 import { useLocation } from 'react-router-dom';
-import Posts from '../../components/post/Post';
+import Post from '../../components/post/Post';
+import { User } from '../../interfaces/user.interface.js';
 
-export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
+//Define interface for OtherProfilePage
+interface OtherProfilePageProps {
+    user: User;
+    setUser: React.Dispatch<React.SetStateAction<User>>;
+    userId: string;
+    setUserId: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export default function OtherProfilePage({ user, setUser, userId, setUserId }: OtherProfilePageProps) {
 
     const navigate = useNavigate();
     const { id } = useParams();
@@ -22,24 +31,32 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
         profile_name: '',
         about_section: '',
         imageURL: '',
-        friends: [],
+        friends: [{
+            _id: '',
+            profile_name: '',
+            imageURL: '',
+        }],
     });
 
-    const [friendId, setFriendId] = useState();
+    const [friendId, setFriendId] = useState("");
     const [isFriend, setIsFriend] = useState(false);
 
-    const [allPosts, setAllPosts] = useState([{
-        user: {},
-        title: '',
-        content: '',
-    }]);
+    const [allPosts, setAllPosts] = useState<Array<{
+        user: {
+            _id: string;
+        };
+        _id: string;
+        title: string;
+        content: string;
+    }>>([]);
 
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [pathname]);
 
-    const handleToggleCommentForm = (postId) => {
-        setCommentVisibility((prevVisibility) => ({
+    const handleToggleCommentForm = (postId: string) => {
+        //preVisibility's keys are strings, and values are boolean.Record is a utility type that represents this.
+        setCommentVisibility((prevVisibility: Record<string, boolean>) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
@@ -48,11 +65,13 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
     async function getProfile() {
         try {
             const response = await axios.get(`http://localhost:3000/users/user/${id}`);
-            // console.log(response.status, response.data)
             setProfile(response.data);
             setFriendId(response.data._id);
-            console.log(response.data)
-            console.log(response.data._id)
+
+            // Check if the logged-in user is a friend of the profile user
+            //define they type of the friend parameter as an object with an _id property type of string.
+            const isFriend = response.data.friends.some((friend: { _id: string }) => friend._id === user._id);
+            setIsFriend(isFriend);
 
         } catch (err) {
             console.log(err)
@@ -61,13 +80,9 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
 
     useEffect(() => {
         getProfile();
-    }, []);
-
-    useEffect(() => {
-        getProfile();
     }, [id]);
 
-    const handleFriendButtonClick = async (event, userId, friendId, isFriend) => {
+    const handleFriendButtonClick = async (event: React.MouseEvent<HTMLButtonElement>, userId: string, friendId: string, isFriend: boolean) => {
         try {
             if (isFriend) {
                 // Delete friend
@@ -88,7 +103,6 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
     const getAllPosts = async () => {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
-            console.log(response.status, response.data)
             setAllPosts(response.data);
         } catch (err) {
             console.log(err)
@@ -106,7 +120,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
                 <Row id='profile-page-information-container'>
                     <Row id='profile-information-container'>
                         <Col lg={4} id='profile-image-container'>
-                            <img id='profile-image' src={`http://localhost:3000/public/${profile.imageURL}`}></img>
+                            <img id='profile-image' src={`http://localhost:3000/public/${profile.imageURL}`} alt='user profile image'></img>
                             <button id='delete-user-button' onClick={(event) => handleFriendButtonClick(event, userId, friendId, isFriend)}>
                                 {isFriend ? 'Unfollow' : 'Follow'}
                             </button>
@@ -168,12 +182,12 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }) {
                             </Row>
                             {allPosts.filter(postUser => postUser.user._id === friendId).map((userPost) => (
                                 <div key={userPost._id}>
-                                    <Posts 
-                                    user={user}
-                                    friendId={friendId}
-                                    userPost={userPost}
-                                    commentVisibility={commentVisibility}
-                                    handleToggleCommentForm={handleToggleCommentForm}
+                                    <Post
+                                        user={user}
+                                        friendId={friendId}
+                                        userPost={userPost}
+                                        commentVisibility={commentVisibility}
+                                        handleToggleCommentForm={handleToggleCommentForm}
                                     />
                                 </div>
                             ))}

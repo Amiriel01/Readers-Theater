@@ -77,7 +77,7 @@ export default function AllReaders({ user }) {
                         </Row>
                         <div id='suggested-readers-card-container'>
                             {allReaders.filter((reader) => user.friends.some(friend => friend._id === reader._id)).map((readerDetails, index) => {
-                                return <div key={index}>
+                                return <div key={index} id='readers-card-container'>
                                     <Card id='readers-card'>
                                         <img className='readers-image' src={`http://localhost:3000/public/${readerDetails.imageURL}`} alt={readerDetails.profile_name}></img>
                                         <Card.Body>
