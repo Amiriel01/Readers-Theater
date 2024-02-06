@@ -5,14 +5,14 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from '../MyButton';
 import MyComment from '../MyComment';
 import PostView from './PostView';
-import { Post } from '../../interfaces/post.interface.js';
-import { User } from '../../interfaces/user.interface.js';
+import { PostInterface } from '../../interfaces/post.interface.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
 
 // Define interface for Post page
 interface PostPageProps {
-    user: User;
+    user: UserInterface;
     userPost: {
-        user: User;
+        user: UserInterface;
         _id: string;
         title: string;
         content: string;
@@ -24,11 +24,11 @@ interface PostPageProps {
     commentVisibility?: { [postId: string]: boolean };
     postId?: string;
     setPostId?: React.Dispatch<React.SetStateAction<string>> | undefined;
-    onPostEdit?: (editedPost: Post) => void;
-    onPostDelete?: (deletedPost: Post) => void;
+    onPostEdit?: (editedPost: PostInterface) => void;
+    onPostDelete?: (deletedPost: PostInterface) => void;
     handleToggleCommentForm?: (postId: string) => void;
     friendId?: string;
-    setEditedPost?: React.Dispatch<React.SetStateAction<{ user: User; title: string; content: string }>> | undefined;
+    setEditedPost?: React.Dispatch<React.SetStateAction<{ user: UserInterface; title: string; content: string }>> | undefined;
 }
 
 export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }: PostPageProps) {

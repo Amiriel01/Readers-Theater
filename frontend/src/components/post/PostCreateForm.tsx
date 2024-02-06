@@ -3,15 +3,13 @@ import { useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from '../MyButton';
-import { User } from '../../interfaces/user.interface.js';
-import { Post } from '../../interfaces/post.interface.js';
+import { PostInterface } from '../../interfaces/post.interface.js';
 
 interface PostCreateProps {
-    user: User;
-    onPostCreated?: (onPostCreated: Post) => void;
+    onPostCreated?: (onPostCreated: PostInterface) => void;
 }
 
-export default function PostCreateForm({ user, onPostCreated }: PostCreateProps) {
+export default function PostCreateForm({  onPostCreated }: PostCreateProps) {
 
     const [newPost, setNewPost] = useState({
         user: {},

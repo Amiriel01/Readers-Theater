@@ -8,12 +8,12 @@ import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header';
 import { useLocation } from 'react-router-dom';
 import Post from '../../components/post/Post';
-import { User } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
 
 //Define interface for OtherProfilePage
 interface OtherProfilePageProps {
-    user: User;
-    setUser: React.Dispatch<React.SetStateAction<User>>;
+    user: UserInterface;
+    setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
     userId: string;
     setUserId: React.Dispatch<React.SetStateAction<string>>;
 }

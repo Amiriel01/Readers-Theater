@@ -5,11 +5,22 @@ import Header from '../components/SiteLayout/Header';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { UserInterface } from '../interfaces/user.interface.js';
+import { PostInterface } from '../interfaces/post.interface.js';
 
-export default function AllReaders({ user }) {
-    console.log(user);
+//Define interface for AllReaders
+interface AllReadersProps {
+    user: UserInterface;
+}
+
+interface Reader {
+    _id: string;
+}
+
+export default function AllReaders({ user }: AllReadersProps) {
 
     const [allReaders, setAllReaders] = useState([{
+        _id: '',
         username: "",
         password: "",
         profile_name: '',
@@ -24,7 +35,7 @@ export default function AllReaders({ user }) {
             console.log(response.data, response.status);
 
              // Exclude the current user from allReaders
-             const filteredReaders = response.data.filter(reader => reader._id !== user._id);
+             const filteredReaders = response.data.filter((reader:  Reader) => reader._id !== user._id);
 
             setAllReaders(filteredReaders);
             console.log(allReaders);

@@ -6,9 +6,16 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import PostCreateForm from '../../components/post/PostCreateForm';
 import Posts from '../../components/post/Post';
-import { User } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
+import { PostInterface } from '../../interfaces/post.interface.js';
 
-export default function NewsFeed({ user }) {
+// Define interface for Newsfeed page
+interface NewsfeedProps {
+    user: UserInterface;
+    handleToggleForm?: ((postId?: string | undefined) => void) | undefined;
+}
+
+export default function NewsFeed({ user }: NewsfeedProps) {
 
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
@@ -19,10 +26,12 @@ export default function NewsFeed({ user }) {
     const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
 
     const [allPosts, setAllPosts] = useState([{
-        user: {},
+        _id: '',
+        user: {
+            _id: ''
+        },
         title: '',
         content: '',
-        // like_count: '',
     }]);
 
     const [editedPost, setEditedPost] = useState({
@@ -55,15 +64,15 @@ export default function NewsFeed({ user }) {
         getAllPosts();
     }, [newPost, editedPost, updatedLikeCount]);
 
-    const handleToggleForm = (postId) => {
-        setFormVisibility((prevVisibility) => ({
+    const handleToggleForm = (postId: string) => {
+        setFormVisibility((prevVisibility: Record<string, boolean>) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
     };
 
-    const handleToggleCommentForm = (postId) => {
-        setCommentVisibility((prevVisibility) => ({
+    const handleToggleCommentForm = (postId: string) => {
+        setCommentVisibility((prevVisibility: Record<string, boolean>) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
@@ -78,7 +87,7 @@ export default function NewsFeed({ user }) {
         ? allPosts
         : allPosts.filter((userPost) => user.friends.some(friend => friend._id === userPost.user._id) || user._id === userPost.user._id);
 
-    const handlePostCreated = async (newPostData) => {
+    const handlePostCreated = async (newPostData: PostInterface) => {
         try {
             // Fetch the details of the created post
             const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
@@ -99,15 +108,15 @@ export default function NewsFeed({ user }) {
         }
     };
 
-    const handlePostEdit = async (editedData) => {
+    const handlePostEdit = async (editedData: PostInterface) => {
         try {
             // Fetch the updated post details after editing
             const response = await axios.get(`http://localhost:3000/posts/postDetails/${editedData._id}`);
-            
+
             if (response.status === 200) {
                 // Update the state with the edited post data
                 setEditedPost(response.data);
-                
+
                 // Update the state with the updated list of posts
                 setAllPosts((prevPosts) => {
                     return prevPosts.map((post) =>
@@ -120,19 +129,19 @@ export default function NewsFeed({ user }) {
         }
     };
 
-    const handlePostDelete = async (deletedData) => {
+    const handlePostDelete = async (deletedData: PostInterface) => {
         try {
-                // Fetch the updated list of posts
-                const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
-                
-                // Set the state with the updated list of posts
-                setAllPosts(deletedPostsResponse.data.reverse());
-            
+            // Fetch the updated list of posts
+            const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+
+            // Set the state with the updated list of posts
+            setAllPosts(deletedPostsResponse.data.reverse());
+
         } catch (error) {
             console.error(error);
         }
     };
-    
+
     return (
         <>
             <Header />
@@ -146,7 +155,6 @@ export default function NewsFeed({ user }) {
                         </Col>
                     </Row>
                     <PostCreateForm
-                        user={user}
                         onPostCreated={handlePostCreated}
                     />
                 </Row>

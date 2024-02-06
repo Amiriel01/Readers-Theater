@@ -1,13 +1,13 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import MyButton from '../MyButton';
-import { User } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
 
 // Define interface for Post page
 interface PostViewProps {
-    user: User;
+    user: UserInterface;
     userPost: {
-        user: User;
+        user: UserInterface;
         _id: string;
         title: string;
         content: string;
@@ -17,7 +17,7 @@ interface PostViewProps {
     likeCount: number;
     handleLike: (postId: string) => void;
     isLiked: boolean;
-    setEditedPost: React.Dispatch<React.SetStateAction<{ user: User; title: string; content: string }>>;
+    setEditedPost: React.Dispatch<React.SetStateAction<{ user: UserInterface; title: string; content: string }>>;
     handleToggleForm: (postId: string) => void;
     setPostId: React.Dispatch<React.SetStateAction<string>>;
     handleToggleCommentForm: (postId: string) => void;

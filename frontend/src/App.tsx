@@ -46,19 +46,21 @@ function App() {
         <Route path="/SignUp" element={<SignUp />} />
         {user.username && (
           <>
-            <Route path="/UserProfilePage" element={<UserProfilePage user={user} />} />
+            <Route path="/UserProfilePage" element={<UserProfilePage
+              user={user}
+            />} />
             <Route path="/UpdateProfile" element={<UpdateProfile
               user={user}
               setUser={setUser}
             />} />
             <Route
               path="/users/user/:id"
-              element={<OtherProfilePage 
-                user={user} 
-                setUser={setUser} 
+              element={<OtherProfilePage
+                user={user}
+                setUser={setUser}
                 userId={userId}
                 setUserId={setUserId}
-                />}
+              />}
             />
             <Route path="/ReaderSearch" element={<ReaderSearch />} />
             <Route path="/Newsfeed" element={<NewsFeed user={user} />} />

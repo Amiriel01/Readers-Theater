@@ -7,8 +7,15 @@ import Form from 'react-bootstrap/Form';
 import MyButton from "../../components/MyButton";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from "react-router";
+import { UserInterface } from '../../interfaces/user.interface.js';
 
-export default function UpdateProfile({user, setUser}) {
+//Define interface for Updaterofile
+interface UpdateProfileProps {
+    user: UserInterface;
+    setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
+}
+
+export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
 
     const navigate = useNavigate();
     const { pathname } = useLocation();
@@ -60,7 +67,7 @@ export default function UpdateProfile({user, setUser}) {
             profile_name: user?.profile_name ?? "",
             about_section: user?.about_section ?? "",
         }
-        setUserUpdate(profileTestInitialValues);
+        setUserUpdate(profileTestInitialValues as any);
     }, [user]);
 
     const handleChange = (event: FormEvent) => {
@@ -76,11 +83,10 @@ export default function UpdateProfile({user, setUser}) {
 
         const profileDataUpdate = {
             username: user.username,
-            password: user.password,
+            // password: user.password,
             profile_name: userUpdate.profile_name,
             about_section: userUpdate.about_section,
             imageURL: imageURL,
-            // user: user._id,
         }
 
         axios.put(`http://localhost:3000/users/user/${user._id}`, profileDataUpdate).then((response) => {

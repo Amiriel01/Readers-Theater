@@ -1,5 +1,5 @@
 //Define the post interface
-export interface Post {
+export interface PostInterface {
     user: {
         _id: string,
     }

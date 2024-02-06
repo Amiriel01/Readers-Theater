@@ -8,8 +8,15 @@ import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header.js';
 import PostCreateForm from '../../components/post/PostCreateForm.js';
 import Posts from '../../components/post/Post.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
+import { PostInterface } from '../../interfaces/post.interface.js';
 
-export default function UserProfilePage({ user }) {
+//Define interface for Updaterofile
+interface UserProfileProps {
+    user: UserInterface;
+}
+
+export default function UserProfilePage({ user }: UserProfileProps) {
     // console.log(user)
     const navigate = useNavigate();
     const [postId, setPostId] = useState("");
@@ -20,6 +27,7 @@ export default function UserProfilePage({ user }) {
         user: {},
         title: '',
         content: '',
+        _id: '',
     });
 
     const [editedPost, setEditedPost] = useState({
@@ -29,20 +37,23 @@ export default function UserProfilePage({ user }) {
     });
 
     const [allPosts, setAllPosts] = useState([{
-        user: {},
+        _id: '',
+        user: {
+            _id: ''
+        },
         title: '',
         content: '',
     }]);
 
-    const handleTogglePostForm = (postId) => {
-        setFormVisibility((prevVisibility) => ({
+    const handleTogglePostForm = (postId: string) => {
+        setFormVisibility((prevVisibility: Record<string, boolean>) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
     };
 
-    const handleToggleCommentForm = (postId) => {
-        setCommentVisibility((prevVisibility) => ({
+    const handleToggleCommentForm = (postId: string) => {
+        setCommentVisibility((prevVisibility: Record<string, boolean>) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
@@ -66,8 +77,8 @@ export default function UserProfilePage({ user }) {
         getAllPosts();
     }, [newPost, editedPost]);
 
-    const handleToggleForm = (postId) => {
-        setFormVisibility((prevVisibility) => ({
+    const handleToggleForm = (postId: string) => {
+        setFormVisibility((prevVisibility: Record<string, boolean>) => ({
             ...prevVisibility,
             [postId]: !prevVisibility[postId],
         }));
@@ -80,16 +91,16 @@ export default function UserProfilePage({ user }) {
         navigate('/')
     };
 
-    const handlePostChange = (event: FormEvent) => {
-        const { name, value } = event.target as any;
+    // const handlePostChange = (event: FormEvent) => {
+    //     const { name, value } = event.target as any;
 
-        setEditedPost((prevEditedPost) => ({
-            ...prevEditedPost,
-            [name]: value === '' ? userPost[name] : value,
-        }));
-    };
+    //     setEditedPost((prevEditedPost) => ({
+    //         ...prevEditedPost,
+    //         [name]: value === '' ? userPost[name] : value,
+    //     }));
+    // };
 
-    const handlePostEdit = async (editedData) => {
+    const handlePostEdit = async (editedData: PostInterface) => {
         try {
             // Fetch the updated post details after editing
             const response = await axios.get(`http://localhost:3000/posts/postDetails/${editedData._id}`);
@@ -110,7 +121,7 @@ export default function UserProfilePage({ user }) {
         }
     };
 
-    const handlePostDelete = async (deletedData) => {
+    const handlePostDelete = async (deletedData: PostInterface) => {
         try {
             // Fetch the updated list of posts
             const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
@@ -123,7 +134,7 @@ export default function UserProfilePage({ user }) {
         }
     };
 
-    const handlePostCreated = async (newPostData) => {
+    const handlePostCreated = async (newPostData: PostInterface) => {
         try {
             // Fetch the details of the created post
             const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
@@ -217,7 +228,8 @@ export default function UserProfilePage({ user }) {
                                     Write a New Post
                                 </Col>
                             </Row>
-                            <PostCreateForm user={user} onPostCreated={handlePostCreated} />
+                            <PostCreateForm
+                                onPostCreated={handlePostCreated} />
                         </div>
                         <div id='finished-posts'>
                             <Row>
