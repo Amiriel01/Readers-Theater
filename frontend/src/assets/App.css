@@ -4,6 +4,7 @@ button.btn.btn-primary {
 
 input.form-control {
     border-radius: 0px;
+    outline: none;
 }
 
 .btn-primary {
