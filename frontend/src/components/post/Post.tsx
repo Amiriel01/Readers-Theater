@@ -31,7 +31,7 @@ interface PostPageProps {
     setEditedPost?: React.Dispatch<React.SetStateAction<{ user: UserInterface; title: string; content: string }>> | undefined;
 }
 
-export default function GetAllPosts({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }: PostPageProps) {
+export default function Post({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }: PostPageProps) {
 
     // const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
