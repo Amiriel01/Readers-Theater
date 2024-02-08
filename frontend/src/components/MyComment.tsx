@@ -4,15 +4,33 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
+import { UserInterface } from '../interfaces/user.interface.js';
+import { PostInterface } from '../interfaces/post.interface.js';
 
-export default function MyComment({ user, post, openCommentForms, toggleCommentForm }) {
+// Define interface for Newsfeed page
+interface NewsfeedProps {
+    user: UserInterface;
+    post: PostInterface;
+}
 
-    const [formVisibility, setFormVisibility] = useState({});
+export default function MyComment({ user, post }: NewsfeedProps) {
+
+    const [formVisibility, setFormVisibility] = useState<Record<string, boolean>>({});
     const [commentId, setCommentId] = useState("");
     const [allComments, setAllComments] = useState([{
-        user: {},
-        post: {},
+        user: {
+            _id: '',
+            username: '',
+            profile_name: '',
+            about_section: '',
+            imageURL: '',
+            friends: [],
+        },
+        post: {
+            _id: '',
+        },
         comment_text: "",
+        _id: '',
     }]);
 
     const [newComment, setNewComment] = useState({
@@ -23,12 +41,12 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
 
     const [editedComment, setEditedComment] = useState({
         user: {},
-        title: '',
-        content: '',
+        post: {},
+        comment_text: '',
     });
 
-    const handleToggleCommentForm = (commentId) => {
-        setFormVisibility((prevVisibility) => ({
+    const handleToggleCommentForm = (commentId: string) => {
+        setFormVisibility((prevVisibility: Record<string, boolean>) => ({
             ...prevVisibility,
             [commentId]: !prevVisibility[commentId],
         }));
@@ -91,7 +109,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
         }));
     };
 
-    async function handleCommentEdit(event: FormEvent, commentId) {
+    async function handleCommentEdit(event: FormEvent, commentId: string) {
         event.preventDefault();
 
         const commentEditData = {
@@ -118,7 +136,7 @@ export default function MyComment({ user, post, openCommentForms, toggleCommentF
         }
     };
 
-    const handleDeleteComment = async (event, commentId) => {
+    const handleDeleteComment = async (event: FormEvent, commentId: string) => {
 
         try {
             const commentDeleteResponse = await axios.delete(`http://localhost:3000/comments/commentDetails/${commentId}`);
