@@ -8,7 +8,8 @@ import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header';
 import { useLocation } from 'react-router-dom';
 import Post from '../../components/post/Post';
-import { UserInterface } from '../../interfaces/user.interface.js';
+import { UserInterface, UserModel } from '../../interfaces/user.interface.js';
+import { PostInterface } from '../../interfaces/post.interface.js';
 
 //Define interface for OtherProfilePage
 interface OtherProfilePageProps {
@@ -41,14 +42,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
     const [friendId, setFriendId] = useState("");
     const [isFriend, setIsFriend] = useState(false);
 
-    const [allPosts, setAllPosts] = useState<Array<{
-        user: {
-            _id: string;
-        };
-        _id: string;
-        title: string;
-        content: string;
-    }>>([]);
+    const [allPosts, setAllPosts] = useState<Array<PostInterface>>([]);
 
     useEffect(() => {
         window.scrollTo(0, 0)

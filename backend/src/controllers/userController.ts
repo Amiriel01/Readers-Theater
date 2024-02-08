@@ -39,7 +39,7 @@ export function user_create() {
             .escape(),
         body("confirm_password", "Password cannot be blank.")
             .trim()
-            .isLength({ min: 5 })
+            .isLength({ min: 1 })
             .isLength({ max: 25 })
             .custom(async (confirmPassword, { req }) => {
                 // console.log(confirmPassword)
@@ -58,7 +58,7 @@ export function user_create() {
             .escape(),
         body("about_section")
             .trim()
-            .isLength({ max: 250 })
+            .isLength({ max: 300 })
             .escape(),
         body("imageURL")
             .trim()

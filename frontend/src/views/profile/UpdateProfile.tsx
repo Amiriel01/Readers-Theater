@@ -86,7 +86,7 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
             // password: user.password,
             profile_name: userUpdate.profile_name,
             about_section: userUpdate.about_section,
-            imageURL: imageURL,
+            imageURL: imageURL || user.imageURL,
         }
 
         axios.put(`http://localhost:3000/users/user/${user._id}`, profileDataUpdate).then((response) => {
@@ -96,7 +96,7 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
                     ...user,
                     profile_name: userUpdate.profile_name,
                     about_section: userUpdate.about_section,
-                    imageURL: imageURL,
+                    imageURL: profileDataUpdate.imageURL,
                  });
                 console.log(response.data)
                 navigate('/UserProfilePage')

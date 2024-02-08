@@ -3,6 +3,8 @@ import axios from 'axios';
 import InputGroup from 'react-bootstrap/InputGroup';
 import Form from 'react-bootstrap/Form';
 import { Link } from 'react-router-dom';
+import { UserInterface } from '../../interfaces/user.interface';
+import { ChangeEvent, KeyboardEvent } from 'react';
 
 export default function FollowerSearch() {
     const [query, setQuery] = useState('');
@@ -14,7 +16,7 @@ export default function FollowerSearch() {
         const autocompleteSearch = async () => {
             try {
                 if (query.trim() !== '') {
-                    const response = await axios.get(`http://localhost:3000/users/userList?query=${query}`);
+                    const response = await axios.get<UserInterface[]>(`http://localhost:3000/users/userList?query=${query}`);
                     // Filter results based on the query
                     const filteredResults = response.data.filter(result =>
                         result.profile_name.toLowerCase().includes(query.toLowerCase())
@@ -40,13 +42,13 @@ export default function FollowerSearch() {
         }
     }, [query, isTyping]);
 
-    const handleInputChange = (event) => {
+    const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         const inputValue = event.target.value;
         setQuery(inputValue);
         setIsTyping(inputValue.trim() !== '');
     };
 
-    const handleEnterKey = (event) => {
+    const handleEnterKey = (event: KeyboardEvent) => {
         if (event.key === 'Enter' && results.length > 0) {
             window.location.href = `http://localhost:3000/users/user/${results[0]._id}`;
         }

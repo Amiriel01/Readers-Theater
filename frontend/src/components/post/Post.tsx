@@ -20,15 +20,19 @@ interface PostPageProps {
         likes: number;
     };
     formVisibility?: { [postId: string]: boolean };
-    handleToggleForm?: ((postId?: string | undefined) => void) | undefined;
+    handleToggleForm?: ((postId?: string | undefined) => void);
     commentVisibility?: { [postId: string]: boolean };
     postId?: string;
-    setPostId?: React.Dispatch<React.SetStateAction<string>> | undefined;
+    setPostId?: React.Dispatch<React.SetStateAction<string>>;
     onPostEdit?: (editedPost: PostInterface) => void;
     onPostDelete?: (deletedPost: PostInterface) => void;
-    handleToggleCommentForm?: (postId: string) => void;
+    handleToggleCommentForm: (postId: string) => void;
     friendId?: string;
-    setEditedPost?: React.Dispatch<React.SetStateAction<{ user: UserInterface; title: string; content: string }>> | undefined;
+    setEditedPost?: React.Dispatch<React.SetStateAction<{ 
+        user: UserInterface; 
+        title: string; 
+        content: string 
+    }>>;
 }
 
 export default function Post({ user, userPost, formVisibility, handleToggleForm, commentVisibility, postId, setPostId, onPostEdit, onPostDelete, handleToggleCommentForm, friendId }: PostPageProps) {
@@ -38,20 +42,41 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
     const [likeCount, setLikeCount] = useState(0);
 
     const [allPosts, setAllPosts] = useState([{
-        user: {},
+        user: {
+            _id: '',
+            username: '',
+            profile_name: '',
+            about_section: '',
+            imageURL: '',
+            friends: [],
+        },
         title: '',
         content: '',
         like_count: '',
     }]);
 
     const [newPost, setNewPost] = useState({
-        user: {},
+        user: {
+            _id: '',
+            username: '',
+            profile_name: '',
+            about_section: '',
+            imageURL: '',
+            friends: [],
+        },
         title: '',
         content: '',
     });
 
     const [editedPost, setEditedPost] = useState({
-        user: {},
+        user: {
+            _id: '',
+            username: '',
+            profile_name: '',
+            about_section: '',
+            imageURL: '',
+            friends: [],
+        },
         title: '',
         content: '',
     });
@@ -115,7 +140,14 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
 
                 // Reset the editedPost state
                 setEditedPost({
-                    user: {},
+                    user: {
+                        _id: '',
+                        username: '',
+                        profile_name: '',
+                        about_section: '',
+                        imageURL: '',
+                        friends: [],
+                    },
                     title: '',
                     content: '',
                 });
@@ -195,7 +227,10 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
                             </Form>
                         )}
                     {commentVisibility && commentVisibility[userPost._id] && (
-                        <MyComment user={user} post={userPost} />
+                        <MyComment 
+                        user={user} 
+                        post={userPost} 
+                        />
                     )}
                 </div >
             )

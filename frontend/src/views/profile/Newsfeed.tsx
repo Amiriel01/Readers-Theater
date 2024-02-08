@@ -25,14 +25,7 @@ export default function NewsFeed({ user }: NewsfeedProps) {
     const [likedPostId, setLikedPostId] = useState(null);
     const [updatedLikeCount, setUpdatedLikeCount] = useState(0);
 
-    const [allPosts, setAllPosts] = useState([{
-        _id: '',
-        user: {
-            _id: ''
-        },
-        title: '',
-        content: '',
-    }]);
+    const [allPosts, setAllPosts] = useState<PostInterface[]>([]);
 
     const [editedPost, setEditedPost] = useState({
         user: {},

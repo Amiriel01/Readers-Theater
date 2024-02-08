@@ -10,10 +10,10 @@ import { useNavigate } from "react-router";
 import Alert from 'react-bootstrap/Alert';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Button from 'react-bootstrap/Button';
-import { User } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
 
 interface LoginInterface {
-    setUser: React.Dispatch<React.SetStateAction<User>>;
+    setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
 }
 
 export default function Login({setUser}: LoginInterface) {

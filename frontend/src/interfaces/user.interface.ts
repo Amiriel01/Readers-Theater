@@ -8,3 +8,11 @@ export interface UserInterface {
     friends: Array<UserInterface>,
 }
 
+export class UserModel implements UserInterface {
+    _id: string = '';
+    username: string = '';
+    profile_name: string = '';
+    about_section: string = '';
+    imageURL: string = '';
+    friends: UserInterface[] = [];
+}

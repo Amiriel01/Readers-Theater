@@ -18,7 +18,7 @@ const UserSchema = new Schema<UserDocument>({
     type: String,
     required: true,
     unique: true,
-    minLength: 5,
+    minLength: 1,
     maxLength: 25,
   },
   password: {
@@ -34,7 +34,7 @@ const UserSchema = new Schema<UserDocument>({
   about_section: {
     type: String,
     required: true,
-    maxLength: 250,
+    maxLength: 300,
   },
   imageURL: {
     type: String,

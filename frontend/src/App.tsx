@@ -64,10 +64,7 @@ function App() {
             />
             <Route path="/ReaderSearch" element={<ReaderSearch />} />
             <Route path="/Newsfeed" element={<NewsFeed user={user} />} />
-            <Route path="/MyComment" element={<MyComment />} />
             <Route path="/PostCreateForm" element={<PostCreateForm />} />
-            <Route path="/Posts" element={<Posts />} />
-            <Route path="/PostView" element={<PostView />} />
             <Route path="/AllReaders" element={<AllReaders user={user} />} />
           </>
         )}

@@ -8,8 +8,8 @@ import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header.js';
 import PostCreateForm from '../../components/post/PostCreateForm.js';
 import Posts from '../../components/post/Post.js';
-import { UserInterface } from '../../interfaces/user.interface.js';
-import { PostInterface } from '../../interfaces/post.interface.js';
+import { UserInterface, UserModel } from '../../interfaces/user.interface.js';
+import { PostInterface, PostModel } from '../../interfaces/post.interface.js';
 
 //Define interface for Updaterofile
 interface UserProfileProps {
@@ -23,12 +23,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
     const [formVisibility, setFormVisibility] = useState({});
     const [commentVisibility, setCommentVisibility] = useState({});
 
-    const [newPost, setNewPost] = useState({
-        user: {},
-        title: '',
-        content: '',
-        _id: '',
-    });
+    const [newPost, setNewPost] = useState(new PostModel());
 
     const [editedPost, setEditedPost] = useState({
         user: {},
@@ -36,14 +31,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
         content: '',
     });
 
-    const [allPosts, setAllPosts] = useState([{
-        _id: '',
-        user: {
-            _id: ''
-        },
-        title: '',
-        content: '',
-    }]);
+    const [allPosts, setAllPosts] = useState<PostInterface[]>([]);
 
     const handleTogglePostForm = (postId: string) => {
         setFormVisibility((prevVisibility: Record<string, boolean>) => ({
