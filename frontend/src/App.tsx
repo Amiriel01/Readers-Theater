@@ -10,11 +10,9 @@ import UpdateProfile from './views/profile/UpdateProfile';
 import OtherProfilePage from './views/profile/OtherProfilePage';
 import ReaderSearch from './components/SiteLayout/ReaderSearch';
 import NewsFeed from './views/profile/Newsfeed';
-import MyComment from './components/MyComment';
 import PostCreateForm from './components/post/PostCreateForm';
-import Posts from './components/post/Post';
 import AllReaders from './views/AllReaders';
-import PostView from './components/post/PostView';
+import { HelmetProvider } from 'react-helmet-async';
 
 function App() {
 
@@ -40,36 +38,38 @@ function App() {
 
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<StartPage />} />
-        <Route path="/Login" element={<Login setUser={setUser} />} />
-        <Route path="/SignUp" element={<SignUp />} />
-        {user.username && (
-          <>
-            <Route path="/UserProfilePage" element={<UserProfilePage
-              user={user}
-            />} />
-            <Route path="/UpdateProfile" element={<UpdateProfile
-              user={user}
-              setUser={setUser}
-            />} />
-            <Route
-              path="/users/user/:id"
-              element={<OtherProfilePage
+      <HelmetProvider>
+        <Routes>
+          <Route path="/" element={<StartPage />} />
+          <Route path="/Login" element={<Login setUser={setUser} />} />
+          <Route path="/SignUp" element={<SignUp />} />
+          {user.username && (
+            <>
+              <Route path="/UserProfilePage" element={<UserProfilePage
+                user={user}
+              />} />
+              <Route path="/UpdateProfile" element={<UpdateProfile
                 user={user}
                 setUser={setUser}
-                userId={userId}
-                setUserId={setUserId}
-              />}
-            />
-            <Route path="/ReaderSearch" element={<ReaderSearch />} />
-            <Route path="/Newsfeed" element={<NewsFeed user={user} />} />
-            <Route path="/PostCreateForm" element={<PostCreateForm />} />
-            <Route path="/AllReaders" element={<AllReaders user={user} />} />
-          </>
-        )}
-      </Routes>
-    </div>
+              />} />
+              <Route
+                path="/users/user/:id"
+                element={<OtherProfilePage
+                  user={user}
+                  setUser={setUser}
+                  userId={userId}
+                  setUserId={setUserId}
+                />}
+              />
+              <Route path="/ReaderSearch" element={<ReaderSearch />} />
+              <Route path="/Newsfeed" element={<NewsFeed user={user} />} />
+              <Route path="/PostCreateForm" element={<PostCreateForm />} />
+              <Route path="/AllReaders" element={<AllReaders user={user} />} />
+            </>
+          )}
+        </Routes>
+      </HelmetProvider>
+    </div >
   )
 }
 
