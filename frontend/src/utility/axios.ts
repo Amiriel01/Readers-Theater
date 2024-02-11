@@ -5,14 +5,6 @@ let customAxios = axios.create({
 });
 
 export function updateWithKey(key: string) {
-    // customAxios = axios.create({
-    //     headers: {
-    //         Authorization: `Bearer ${key}`
-    //     },
-    //     transformRequest: axios.defaults.transformRequest,
-    //     transformResponse: axios.defaults.transformResponse,
-    // });
-    // console.log(customAxios.)
     customAxios.defaults.headers.common.Authorization = `Bearer ${key}`;
 }
 

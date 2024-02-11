@@ -18,8 +18,6 @@ export function posts_list() {
                 await Like.exists({ user: req.user, post: post }).exec() != null,
             )
         }));
-        // console.log(PostDTOList);
-        // console.log(req.user)
         res.json(PostDTOList);
     });
 };
@@ -28,7 +26,6 @@ export function posts_list() {
 export function post_details() {
     return asyncHandler(async (req, res, next) => {
         const postDetails = await Post.findById(req.params.id).populate('user').exec();
-        // console.log(postDetails);
         res.json(postDetails);
     });
 };
@@ -56,7 +53,6 @@ export function post_create() {
             const post = new Post({
                 title: he.decode(req.body.title),
                 content: he.decode(req.body.content),
-                // user: req.user,
                 user: (req.user as any)._id,
             });
 
@@ -64,11 +60,9 @@ export function post_create() {
             if (!errors.isEmpty()) {
                 //take staff information from the form
                 errors.array();
-                console.log(errors);
                 res.json(post);
             } else {
                 //form data is valid, save the staff member
-                // console.log(post);
                 res.json(await post.save());
             };
         })
@@ -98,7 +92,6 @@ export function post_edit() {
             if (!errors.isEmpty()) {
                 //take staff information from the form
                 errors.array()
-                console.log(errors)
                 res.json(errors)
             } else {
                 //find the staff member and update
@@ -109,7 +102,6 @@ export function post_edit() {
                     user: (req.user as any)._id,
                 }, { new: true }).exec()
                 //save profile update
-                // console.log(postUpdate)
                 res.json(postUpdate)
             }
         })
@@ -120,7 +112,6 @@ export function post_edit() {
 export function post_delete() {
     return asyncHandler(async (req, res, next) => {
         const postDelete = await Post.findByIdAndDelete(req.params.id).exec();
-        // console.log("item deleted");
         res.status(200).json(await Post.find().populate('user').exec());
     })
 };

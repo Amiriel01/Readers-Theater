@@ -84,7 +84,6 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
     useEffect(() => {
         if (userPost) {
             setIsLiked(userPost.isLiked);
-            // console.log(userPost);
             setLikeCount(userPost.likes);
         }
     }, [userPost]);
@@ -95,18 +94,10 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
             const response = await axios.post(`http://localhost:3000/posts/postDetails/${postId}/like`, {
                 userId: user._id
             });
-            // console.log(response.data.like_count);
             setLikeCount(response.data.like_count);
             setIsLiked(!isLiked);
-            // console.log(response.data);
-
-            // Check if the user has liked the post and update the isLiked state
-            // console.log(response.data)
-            // console.log(response.data.likes)
-            // setIsLiked(response.data.like_count > 0);
-            // setIsLiked(response.data.like !== null);
-        } catch (ex) {
-            console.log(ex);
+        } catch (error) {
+            
         }
     };
 
@@ -123,14 +114,12 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
         event.preventDefault();
 
         const postEditData = {
-            // userId: user._id,
             title: editedPost.title,
             content: editedPost.content,
         };
 
         try {
             const response = await axios.put(`http://localhost:3000/posts/postDetails/${postId}`, postEditData);
-            console.log(response.status, response.data);
 
             if (response.status === 200) {
                 if (onPostEdit) {
@@ -157,8 +146,8 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
                     handleToggleForm(postId);
                 }
             }
-        } catch (ex) {
-            console.log(ex);
+        } catch (error) {
+
         }
     };
 
@@ -172,7 +161,7 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
                 onPostDelete(postDeleteResponse.data)
             }
         } catch (error) {
-            console.error(error);
+
         };
     };
 

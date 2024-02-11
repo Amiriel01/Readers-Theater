@@ -8,18 +8,15 @@ import cors from 'cors';
 import Session from 'express-session';
 import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
-// import JwtStrategy from 'passport-jwt';
 import {Strategy as JwtStrategy, ExtractJwt, StrategyOptions} from 'passport-jwt';
 import bcrypt from 'bcrypt';
 import User from './models/userModel.ts';
-// import passportLocalMongoose from 'passport-local-mongoose';
 import PassportAuth from './utility/authentication.ts';
 
 import indexRouter from './routes/index.ts';
 import usersRouter from './routes/users.ts';
 import postsRouter from './routes/posts.ts';
 import commentsRouter from './routes/comments.ts';
-// import imageUploadRouter from './routes/imageUpload.ts';
 
 const app = express();
 
@@ -41,14 +38,11 @@ app.use(cookieParser());
 app.use('/public', express.static('public'));
 app.use(Session({ secret: "cats", resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
-// app.use(passport.session());
-// passport.use(new LocalStrategy(User.authenticate()));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
 app.use('/comments', commentsRouter);
-// app.use('/imageUpload', imageUploadRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -64,15 +58,11 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.json(err);
-  console.log(err)
 });
 
 passport.use(
   new LocalStrategy({usernameField: 'username', passwordField: 'password'}, async (username, password, done) => {
-    // console.log('try local')
     try {
-      // console.log('random')
-      // console.log(username, password)
       const user = await User.findOne({ username: username });
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
@@ -82,14 +72,11 @@ passport.use(
       };
       return done(null, user);
     } catch(err) {
-      console.log(err)
       return done(err);
     };
   })
 );
 
-// passport.serializeUser(User.serializeUser());
-// passport.deserializeUser(User.deserializeUser());
 const options: StrategyOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(), 
   secretOrKey: process.env.JWT_KEY,

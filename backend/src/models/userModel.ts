@@ -1,6 +1,4 @@
 import mongoose, { Document } from "mongoose";
-import Post from "./postModel.ts";
-import Comment from "./commentModel.ts";
 
 const Schema = mongoose.Schema;
 
@@ -45,35 +43,6 @@ const UserSchema = new Schema<UserDocument>({
     ref: "User",
   }],
 });
-
-// // Custom method to delete a user along with associated posts and comments
-// UserSchema.pre('deleteMany', async function (userId: mongoose.Types.ObjectId) {
-//   try {
-
-//     console.log('Deleting user with associations...');
-//     // Remove posts and comments
-//     const postDeletionResult = await Post.deleteMany({ user: userId } as any);
-//     const commentDeletionResult = await Comment.deleteMany({ user: userId } as any);
-
-//     console.log('Post deletion result:', postDeletionResult);
-//     console.log('Comment deletion result:', commentDeletionResult);
-
-//     // await Promise.all([
-//     //   Post.deleteMany({ user: userId } as any),
-//     //   Comment.deleteMany({ user: userId } as any),
-//     // ]);
-
-//     // Remove user
-//     const user = await this.findByIdAndDelete(userId);
-
-//     console.log('User deletion result:', user);
-
-//     return user;
-//   } catch (error) {
-//     console.error('Error deleting user with associations:', error);
-//     throw error;
-//   }
-// });
 
 export default mongoose.model<UserDocument>("User", UserSchema);
 

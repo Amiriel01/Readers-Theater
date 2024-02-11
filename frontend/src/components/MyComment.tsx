@@ -55,10 +55,9 @@ export default function MyComment({ user, post }: NewsfeedProps) {
     const getAllComments = async () => {
         try {
             const response = await axios.get('http://localhost:3000/comments/commentList');
-            console.log(response.status, response.data)
             setAllComments(response.data.reverse());
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+
         }
     };
 
@@ -85,9 +84,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
 
         try {
             const response = await axios.post("http://localhost:3000/comments/commentCreate", commentData);
-            console.log(response.status, response.data);
             if (response.status === 200) {
-                // console.log(response.data);
                 setNewComment(response.data)
                 setNewComment({
                     user: {},
@@ -95,8 +92,8 @@ export default function MyComment({ user, post }: NewsfeedProps) {
                     comment_text: "",
                 });
             }
-        } catch (ex) {
-            console.log(ex);
+        } catch (error) {
+
         }
     };
 
@@ -120,9 +117,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
 
         try {
             const response = await axios.put(`http://localhost:3000/comments/commentDetails/${commentId}`, commentEditData);
-            console.log(response.status, response.data);
             if (response.status === 200) {
-                console.log(response.data);
                 setEditedComment(response.data);
                 setEditedComment({
                     user: {},
@@ -131,8 +126,8 @@ export default function MyComment({ user, post }: NewsfeedProps) {
                 });
                 handleToggleCommentForm(commentId);
             }
-        } catch (ex) {
-            console.log(ex);
+        } catch (error) {
+
         }
     };
 
@@ -142,7 +137,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
             const commentDeleteResponse = await axios.delete(`http://localhost:3000/comments/commentDetails/${commentId}`);
             setAllComments(commentDeleteResponse.data.reverse())
         } catch (error) {
-            console.error(error);
+
         };
     };
 

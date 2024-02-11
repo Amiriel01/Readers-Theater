@@ -10,7 +10,6 @@ import Comment from '../models/commentModel.ts';
 export function user_list() {
     return asyncHandler(async (req, res, next) => {
         const userList = await User.find().exec();
-        // console.log(userList);
         res.json(userList);
     });
 };
@@ -19,7 +18,6 @@ export function user_list() {
 export function user_get() {
     return asyncHandler(async (req, res, next) => {
         const userDetails = await User.findById(req.params.id).populate('friends').exec();
-        console.log(userDetails);
         res.json(userDetails);
     });
 };
@@ -42,9 +40,7 @@ export function user_create() {
             .isLength({ min: 1 })
             .isLength({ max: 25 })
             .custom(async (confirmPassword, { req }) => {
-                // console.log(confirmPassword)
                 const password = req.body.password
-                // console.log(password)
                 if (password !== confirmPassword) {
                     throw new Error('Passwords must match.')
                 }
@@ -83,11 +79,9 @@ export function user_create() {
             if (!errors.isEmpty()) {
                 //take staff information from the form
                 errors.array();
-                console.log(errors);
                 res.json(user);
             } else {
                 //form data is valid, save the staff member
-                // console.log(user);
                 res.json(await user.save());
             };
         })
@@ -119,7 +113,6 @@ export function user_details_edit() {
             if (!errors.isEmpty()) {
                 //take staff information from the form
                 errors.array()
-                console.log(errors)
                 res.json(errors)
             } else {
                 //find the staff member and update
@@ -132,7 +125,6 @@ export function user_details_edit() {
                     friends: req.body.friends,
                 }, { new: true }).exec()
                 //save profile update
-                // console.log(userDetailsUpdate)
                 res.json(userDetailsUpdate)
             }
         })
@@ -149,17 +141,11 @@ export function user_delete() {
                 const postDeletionResult = await Post.deleteMany({ user: req.params.id });
                 const commentDeletionResult = await Comment.deleteMany({ user: req.params.id });
             
-                console.log('Post deletion result:', postDeletionResult);
-                console.log('Comment deletion result:', commentDeletionResult);
-            
                 // Remove user
                 const user = await User.findByIdAndDelete(req.params.id);
             
-                console.log('User deletion result:', user);
-            
                 // return user;
               } catch (error) {
-                console.error('Error deleting user with associations:', error);
                 throw error;
               }
         res.json("item deleted");
@@ -186,7 +172,6 @@ export function add_friend() {
             res.status(200).json(await User.findById(userId).populate('friends').exec());
 
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: 'Internal Server Error' });
         }
     })
@@ -204,7 +189,6 @@ export function delete_friend() {
             res.status(200).json(await User.findById(userId).populate('friends').exec());
 
         } catch (error) {
-            console.error(error);
             res.status(500).json({ error: 'Internal Server Error' });
         }
     })

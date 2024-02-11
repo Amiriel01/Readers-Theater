@@ -28,7 +28,7 @@ export default function FollowerSearch() {
                 }
 
             } catch (error) {
-                console.error('Error fetching user list:', error);
+              
             }
         };
 

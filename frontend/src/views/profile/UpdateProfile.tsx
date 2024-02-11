@@ -37,7 +37,6 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            console.log(event.target.files[0]);
             setImage(event.target.files[0]);
         }
     };
@@ -54,11 +53,9 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
                     'Content-Type': 'multipart/form-data'
                 }
             })
-            console.log(result.data)
             setImageURL(result.data)
-            console.log(formData)
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+       
         }
     };
 
@@ -90,7 +87,6 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
         }
 
         axios.put(`http://localhost:3000/users/user/${user._id}`, profileDataUpdate).then((response) => {
-            console.log(response.status, response.data)
             if (response.status === 200) {
                 setUser({
                     ...user,
@@ -98,7 +94,6 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
                     about_section: userUpdate.about_section,
                     imageURL: profileDataUpdate.imageURL,
                  });
-                console.log(response.data)
                 navigate('/UserProfilePage')
             }
         })

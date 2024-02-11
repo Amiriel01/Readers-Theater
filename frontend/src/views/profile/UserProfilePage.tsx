@@ -17,7 +17,6 @@ interface UserProfileProps {
 }
 
 export default function UserProfilePage({ user }: UserProfileProps) {
-    // console.log(user)
     const navigate = useNavigate();
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
@@ -50,14 +49,13 @@ export default function UserProfilePage({ user }: UserProfileProps) {
     const getAllPosts = async () => {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
-            // console.log(response.status, response.data)
 
             // Reverse the order of the posts
             const reversedPosts = response.data.reverse();
 
             setAllPosts(reversedPosts);
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            
         }
     };
 
@@ -79,15 +77,6 @@ export default function UserProfilePage({ user }: UserProfileProps) {
         navigate('/')
     };
 
-    // const handlePostChange = (event: FormEvent) => {
-    //     const { name, value } = event.target as any;
-
-    //     setEditedPost((prevEditedPost) => ({
-    //         ...prevEditedPost,
-    //         [name]: value === '' ? userPost[name] : value,
-    //     }));
-    // };
-
     const handlePostEdit = async (editedData: PostInterface) => {
         try {
             // Fetch the updated post details after editing
@@ -105,7 +94,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
                 });
             }
         } catch (error) {
-            console.error(error);
+            
         }
     };
 
@@ -118,7 +107,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
             setAllPosts(deletedPostsResponse.data);
 
         } catch (error) {
-            console.error(error);
+           
         }
     };
 
@@ -130,7 +119,6 @@ export default function UserProfilePage({ user }: UserProfileProps) {
             if (response.status === 200) {
                 // Fetch the updated list of posts
                 const updatedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
-                // console.log(updatedPostsResponse.status, updatedPostsResponse.data);
 
                 // Reverse the order of the posts
                 const reversedPosts = updatedPostsResponse.data.reverse();
@@ -139,7 +127,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
                 setAllPosts(reversedPosts);
             }
         } catch (error) {
-            console.error(error);
+            
         }
     };
 

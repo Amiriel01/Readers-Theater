@@ -59,7 +59,6 @@ export default function SignUp() {
 
     const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (event.target.files) {
-            console.log(event.target.files[0]);
             setImage(event.target.files[0]);
         }
     };
@@ -79,10 +78,9 @@ export default function SignUp() {
                     'Content-Type': 'multipart/form-data',
                 }
             }).then((response) => {
-                console.log(response.status, response.data);
                 setImageURL(response.data);
-            }).catch((ex) => {
-                console.log(ex)
+            }).catch((error) => {
+
             })
         } else {
             return
@@ -104,18 +102,12 @@ export default function SignUp() {
 
             try {
                 const response = await axios.post("http://localhost:3000/users/userCreate", signUpData);
-                console.log(response.status, response.data);
                 if (response.status === 200) {
-                    console.log(response.data)
                     setSignUp(response.data)
                     navigate('/Login')
                 }
             } catch (ex: any) {
-                console.log(signUpData)
-                console.log(ex);
-                console.log(imageURL)
-                console.log(signUp.about_section)
-                console.log(signUp.profile_name)
+
                 if (ex.response.status === 500) {
                     setUsernameAlertShow(true)
                 }

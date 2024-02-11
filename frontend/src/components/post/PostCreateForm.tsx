@@ -35,10 +35,8 @@ export default function PostCreateForm({  onPostCreated }: PostCreateProps) {
 
         try {
             const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
-            console.log(response.status, response.data);
 
             if (response.status === 200) {
-                console.log(response.data);
                 setNewPost(response.data)
                 setNewPost({
                     user: {},
@@ -52,8 +50,8 @@ export default function PostCreateForm({  onPostCreated }: PostCreateProps) {
                 }
                 
             }
-        } catch (ex) {
-            console.log(ex);
+        } catch (error) {
+
         }
     };
 

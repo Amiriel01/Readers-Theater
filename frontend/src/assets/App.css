@@ -813,10 +813,6 @@ input.form-control {
         padding-right: 1rem;
         margin-bottom: 1rem;
     }
-
-    /* #edit-post-button {
-        width: 4rem;
-    } */
 }
 
 @media(max-width: 500px) {

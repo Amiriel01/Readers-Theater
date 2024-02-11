@@ -45,7 +45,6 @@ export default function Login({setUser}: LoginInterface) {
         setLogin(signUpData)
 
         await axios.post("http://localhost:3000/users/login", signUpData).then((response) => {
-            // console.log(response.status, response.data);
             const token = response.data.token;
             updateWithKey(token);
             setUser(response.data.user)

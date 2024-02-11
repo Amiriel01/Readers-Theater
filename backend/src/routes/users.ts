@@ -2,15 +2,8 @@ import {Router} from "express";
 const router = Router();
 import passport from 'passport';
 import { user_list, user_get, user_create, user_details_edit, user_delete, add_friend, delete_friend } from "../controllers/userController.ts";
-// import {sign} from 'jsonwebtoken';
 import jwt from 'jsonwebtoken';
-import mongoose from "mongoose";
 import User from '../models/userModel.ts';
-
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   res.send('respond with a resource');
-// });
 
 //POST new user
 router.post("/userCreate", user_create());
@@ -47,7 +40,6 @@ router.post(
 
       res.json({ user: req.user, token: token });
     } catch (error) {
-      console.error(error);
       res.status(500).json({ error: "Internal Server Error" });
     }
   }

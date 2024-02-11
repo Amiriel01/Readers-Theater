@@ -42,14 +42,13 @@ export default function NewsFeed({ user }: NewsfeedProps) {
     const getAllPosts = async () => {
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
-            // console.log(response.status, response.data)
 
             // Reverse the order of the posts
             const reversedPosts = response.data.reverse();
 
             setAllPosts(reversedPosts);
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+
         }
     };
 
@@ -88,7 +87,6 @@ export default function NewsFeed({ user }: NewsfeedProps) {
             if (response.status === 200) {
                 // Fetch the updated list of posts
                 const updatedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
-                console.log(updatedPostsResponse.status, updatedPostsResponse.data);
 
                 // Reverse the order of the posts
                 const reversedPosts = updatedPostsResponse.data.reverse();
@@ -97,7 +95,7 @@ export default function NewsFeed({ user }: NewsfeedProps) {
                 setAllPosts(reversedPosts);
             }
         } catch (error) {
-            console.error(error);
+           
         }
     };
 
@@ -118,7 +116,7 @@ export default function NewsFeed({ user }: NewsfeedProps) {
                 });
             }
         } catch (error) {
-            console.error(error);
+           
         }
     };
 

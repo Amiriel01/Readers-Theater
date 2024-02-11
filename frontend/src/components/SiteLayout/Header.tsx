@@ -19,10 +19,10 @@ export default function Header() {
                 navigate('/');
             } else {
                 // Handle logout error
-                console.error('Logout failed');
+
             }
         } catch (error) {
-            console.error('Error during logout:', error);
+
         }
     };
 

@@ -11,7 +11,6 @@ router.post('/postDetails/:id/like', like_post);
 
 //GET posts list
 router.get("/postsList", posts_list());
-// router.get("/postsList", passport.authenticate('jwt', {session: false}), posts_list());
 
 //GET single post details
 router.get("/postDetails/:id", post_details());

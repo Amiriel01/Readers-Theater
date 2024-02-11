@@ -67,8 +67,8 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
             const isFriend = response.data.friends.some((friend: { _id: string }) => friend._id === user._id);
             setIsFriend(isFriend);
 
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            
         }
     };
 
@@ -90,7 +90,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
                 setUser(followerAddData.data);
             }
         } catch (error) {
-            console.error(error);
+            
         }
     };
 
@@ -98,8 +98,8 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
         try {
             const response = await axios.get('http://localhost:3000/posts/postsList');
             setAllPosts(response.data);
-        } catch (err) {
-            console.log(err)
+        } catch (error) {
+            
         }
     };
 
