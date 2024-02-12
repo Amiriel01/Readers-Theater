@@ -4,8 +4,9 @@ import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from './MyButton';
-import { UserInterface } from '../interfaces/user.interface.js';
-import { PostInterface } from '../interfaces/post.interface.js';
+import { UserInterface } from '../interfaces/user.interface';
+import { PostInterface } from '../interfaces/post.interface';
+import { CommentInterface } from '../interfaces/comment.interface';
 
 // Define interface for Newsfeed page
 interface NewsfeedProps {
@@ -17,21 +18,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
 
     const [formVisibility, setFormVisibility] = useState<Record<string, boolean>>({});
     const [commentId, setCommentId] = useState("");
-    const [allComments, setAllComments] = useState([{
-        user: {
-            _id: '',
-            username: '',
-            profile_name: '',
-            about_section: '',
-            imageURL: '',
-            friends: [],
-        },
-        post: {
-            _id: '',
-        },
-        comment_text: "",
-        _id: '',
-    }]);
+    const [allComments, setAllComments] = useState<CommentInterface[]>([]);
 
     const [newComment, setNewComment] = useState({
         user: {},

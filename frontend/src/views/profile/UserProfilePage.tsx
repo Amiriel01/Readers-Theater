@@ -8,8 +8,9 @@ import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header.js';
 import PostCreateForm from '../../components/post/PostCreateForm.js';
 import Posts from '../../components/post/Post.js';
-import { UserInterface, UserModel } from '../../interfaces/user.interface.js';
-import { PostInterface, PostModel } from '../../interfaces/post.interface.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
+import { PostInterface } from '../../interfaces/post.interface.js';
+import { PostModel } from '../../models/post.model.js';
 
 //Define interface for Updaterofile
 interface UserProfileProps {

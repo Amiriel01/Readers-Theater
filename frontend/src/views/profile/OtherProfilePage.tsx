@@ -8,7 +8,7 @@ import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header';
 import { useLocation } from 'react-router-dom';
 import Post from '../../components/post/Post';
-import { UserInterface, UserModel } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface.js';
 import { PostInterface } from '../../interfaces/post.interface.js';
 
 //Define interface for OtherProfilePage
