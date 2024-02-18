@@ -1,7 +1,7 @@
 import {Router} from "express";
 const router = Router();
-import { comment_list, comment_details, comment_create, comment_edit, comment_delete } from "../controllers/commentController.ts";
-import PassportAuth from '../utility/authentication.ts';
+import { comment_list, comment_details, comment_create, comment_edit, comment_delete } from "../controllers/commentController";
+import PassportAuth from '../utility/authentication';
 
 router.use(PassportAuth);
 

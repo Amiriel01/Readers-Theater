@@ -10,13 +10,12 @@ import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
 import {Strategy as JwtStrategy, ExtractJwt, StrategyOptions} from 'passport-jwt';
 import bcrypt from 'bcrypt';
-import User from './models/userModel.ts';
-import PassportAuth from './utility/authentication.ts';
+import User from './models/userModel';
 
-import indexRouter from './routes/index.ts';
-import usersRouter from './routes/users.ts';
-import postsRouter from './routes/posts.ts';
-import commentsRouter from './routes/comments.ts';
+import indexRouter from './routes/index';
+import usersRouter from './routes/users';
+import postsRouter from './routes/posts';
+import commentsRouter from './routes/comments';
 
 const app = express();
 

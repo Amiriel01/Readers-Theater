@@ -1,9 +1,8 @@
 import { body, validationResult } from 'express-validator';
-import User from "../models/userModel.ts";
-import Post from '../models/postModel.ts';
+import Post from '../models/postModel';
 import asyncHandler from "express-async-handler";
-import PostDTO from '../dataTranserObjects/postDTO.ts';
-import Like from '../models/likeModel.ts';
+import PostDTO from '../dataTranserObjects/postDTO';
+import Like from '../models/likeModel';
 import he from 'he';
 
 //GET a list of all posts and likes

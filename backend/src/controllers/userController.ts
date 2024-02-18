@@ -1,10 +1,10 @@
 import { body, validationResult } from 'express-validator';
-import User from "../models/userModel.ts";
+import User from "../models/userModel";
 import asyncHandler from "express-async-handler";
 import bcrypt from 'bcrypt';
 import he from 'he';
-import Post from '../models/postModel.ts';
-import Comment from '../models/commentModel.ts';
+import Post from '../models/postModel';
+import Comment from '../models/commentModel';
 
 //GET a list of all users with details
 export function user_list() {

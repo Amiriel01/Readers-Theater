@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../utility/axios.js';
+import axios from '../../utility/axios';
 
 export default function Header() {
 

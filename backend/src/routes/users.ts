@@ -1,9 +1,9 @@
 import {Router} from "express";
 const router = Router();
 import passport from 'passport';
-import { user_list, user_get, user_create, user_details_edit, user_delete, add_friend, delete_friend } from "../controllers/userController.ts";
+import { user_list, user_get, user_create, user_details_edit, user_delete, add_friend, delete_friend } from "../controllers/userController";
 import jwt from 'jsonwebtoken';
-import User from '../models/userModel.ts';
+import User from '../models/userModel';
 
 //POST new user
 router.post("/userCreate", user_create());

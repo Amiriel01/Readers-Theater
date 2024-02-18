@@ -6,8 +6,8 @@ import Col from 'react-bootstrap/Col';
 import Form from 'react-bootstrap/Form';
 import PostCreateForm from '../../components/post/PostCreateForm';
 import Posts from '../../components/post/Post';
-import { UserInterface } from '../../interfaces/user.interface.js';
-import { PostInterface } from '../../interfaces/post.interface.js';
+import { UserInterface } from '../../interfaces/user.interface';
+import { PostInterface } from '../../interfaces/post.interface';
 
 // Define interface for Newsfeed page
 interface NewsfeedProps {
@@ -41,7 +41,7 @@ export default function NewsFeed({ user }: NewsfeedProps) {
 
     const getAllPosts = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/posts/postsList');
+            const response = await axios.get('posts/postsList');
 
             // Reverse the order of the posts
             const reversedPosts = response.data.reverse();
@@ -82,11 +82,11 @@ export default function NewsFeed({ user }: NewsfeedProps) {
     const handlePostCreated = async (newPostData: PostInterface) => {
         try {
             // Fetch the details of the created post
-            const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
+            const response = await axios.get(`posts/postDetails/${newPostData._id}`);
 
             if (response.status === 200) {
                 // Fetch the updated list of posts
-                const updatedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+                const updatedPostsResponse = await axios.get('posts/postsList');
 
                 // Reverse the order of the posts
                 const reversedPosts = updatedPostsResponse.data.reverse();
@@ -102,7 +102,7 @@ export default function NewsFeed({ user }: NewsfeedProps) {
     const handlePostEdit = async (editedData: PostInterface) => {
         try {
             // Fetch the updated post details after editing
-            const response = await axios.get(`http://localhost:3000/posts/postDetails/${editedData._id}`);
+            const response = await axios.get(`posts/postDetails/${editedData._id}`);
 
             if (response.status === 200) {
                 // Update the state with the edited post data
@@ -123,7 +123,7 @@ export default function NewsFeed({ user }: NewsfeedProps) {
     const handlePostDelete = async (deletedData: PostInterface) => {
         try {
             // Fetch the updated list of posts
-            const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+            const deletedPostsResponse = await axios.get('posts/postsList');
 
             // Set the state with the updated list of posts
             setAllPosts(deletedPostsResponse.data.reverse());

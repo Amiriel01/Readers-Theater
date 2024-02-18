@@ -3,7 +3,7 @@ import { useState, FormEvent } from 'react';
 import Form from 'react-bootstrap/Form';
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from '../MyButton';
-import { PostInterface } from '../../interfaces/post.interface.js';
+import { PostInterface } from '../../interfaces/post.interface';
 
 interface PostCreateProps {
     onPostCreated?: (onPostCreated: PostInterface) => void;
@@ -34,7 +34,7 @@ export default function PostCreateForm({  onPostCreated }: PostCreateProps) {
         };
 
         try {
-            const response = await axios.post("http://localhost:3000/posts/postCreate", postData);
+            const response = await axios.post("posts/postCreate", postData);
 
             if (response.status === 200) {
                 setNewPost(response.data)

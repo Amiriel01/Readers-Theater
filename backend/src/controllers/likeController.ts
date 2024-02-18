@@ -1,6 +1,6 @@
-import Like from "../models/likeModel.ts";
+import Like from "../models/likeModel";
 import asyncHandler from "express-async-handler";
-import Post from '../models/postModel.ts';
+import Post from '../models/postModel';
 
 // Like a post
 export const like_post = asyncHandler(async (req, res, next) => {

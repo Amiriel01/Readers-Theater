@@ -1,5 +1,5 @@
 import { body, validationResult } from 'express-validator';
-import Comment from '../models/commentModel.ts';
+import Comment from '../models/commentModel';
 import asyncHandler from "express-async-handler";
 import he from 'he';
 

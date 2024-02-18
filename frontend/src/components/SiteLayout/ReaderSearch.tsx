@@ -16,7 +16,7 @@ export default function FollowerSearch() {
         const autocompleteSearch = async () => {
             try {
                 if (query.trim() !== '') {
-                    const response = await axios.get<UserInterface[]>(`http://localhost:3000/users/userList?query=${query}`);
+                    const response = await axios.get<UserInterface[]>(`users/userList?query=${query}`);
                     // Filter results based on the query
                     const filteredResults = response.data.filter(result =>
                         result.profile_name.toLowerCase().includes(query.toLowerCase())
@@ -50,7 +50,7 @@ export default function FollowerSearch() {
 
     const handleEnterKey = (event: KeyboardEvent) => {
         if (event.key === 'Enter' && results.length > 0) {
-            window.location.href = `http://localhost:3000/users/user/${results[0]._id}`;
+            window.location.href = `users/user/${results[0]._id}`;
         }
     };
 

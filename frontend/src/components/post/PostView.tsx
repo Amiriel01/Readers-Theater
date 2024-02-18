@@ -1,7 +1,7 @@
 import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import MyButton from '../MyButton';
-import { UserInterface } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface';
 
 // Define interface for Post page
 interface PostViewProps {

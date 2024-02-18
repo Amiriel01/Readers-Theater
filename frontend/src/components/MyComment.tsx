@@ -41,7 +41,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
 
     const getAllComments = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/comments/commentList');
+            const response = await axios.get('comments/commentList');
             setAllComments(response.data.reverse());
         } catch (error) {
 
@@ -70,7 +70,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
         }
 
         try {
-            const response = await axios.post("http://localhost:3000/comments/commentCreate", commentData);
+            const response = await axios.post("comments/commentCreate", commentData);
             if (response.status === 200) {
                 setNewComment(response.data)
                 setNewComment({
@@ -103,7 +103,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
         }
 
         try {
-            const response = await axios.put(`http://localhost:3000/comments/commentDetails/${commentId}`, commentEditData);
+            const response = await axios.put(`comments/commentDetails/${commentId}`, commentEditData);
             if (response.status === 200) {
                 setEditedComment(response.data);
                 setEditedComment({
@@ -121,7 +121,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
     const handleDeleteComment = async (event: FormEvent, commentId: string) => {
 
         try {
-            const commentDeleteResponse = await axios.delete(`http://localhost:3000/comments/commentDetails/${commentId}`);
+            const commentDeleteResponse = await axios.delete(`comments/commentDetails/${commentId}`);
             setAllComments(commentDeleteResponse.data.reverse())
         } catch (error) {
 

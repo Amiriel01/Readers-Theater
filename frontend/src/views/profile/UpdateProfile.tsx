@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import MyButton from "../../components/MyButton";
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import { useNavigate } from "react-router";
-import { UserInterface } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface';
 
 //Define interface for Updaterofile
 interface UpdateProfileProps {
@@ -48,7 +48,7 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
         formData.append("image", image as Blob)
 
         try {
-            const result = await axios.post("http://localhost:3000/upload-image-profile", formData, {
+            const result = await axios.post("upload-image-profile", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
@@ -86,7 +86,7 @@ export default function UpdateProfile({user, setUser}:UpdateProfileProps) {
             imageURL: imageURL || user.imageURL,
         }
 
-        axios.put(`http://localhost:3000/users/user/${user._id}`, profileDataUpdate).then((response) => {
+        axios.put(`users/user/${user._id}`, profileDataUpdate).then((response) => {
             if (response.status === 200) {
                 setUser({
                     ...user,

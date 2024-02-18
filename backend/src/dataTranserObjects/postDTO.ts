@@ -1,5 +1,3 @@
-import Post from '../models/postModel.ts';
-
 export default class PostDTO {
     _id: string;
     user: any;

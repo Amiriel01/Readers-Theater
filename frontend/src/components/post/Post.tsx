@@ -5,8 +5,8 @@ import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import MyButton from '../MyButton';
 import MyComment from '../MyComment';
 import PostView from './PostView';
-import { PostInterface } from '../../interfaces/post.interface.js';
-import { UserInterface } from '../../interfaces/user.interface.js';
+import { PostInterface } from '../../interfaces/post.interface';
+import { UserInterface } from '../../interfaces/user.interface';
 
 // Define interface for Post page
 interface PostPageProps {
@@ -91,7 +91,7 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
     const handleLike = async (postId: string) => {
         // Make a request to the backend to like/unlike the post
         try {
-            const response = await axios.post(`http://localhost:3000/posts/postDetails/${postId}/like`, {
+            const response = await axios.post(`posts/postDetails/${postId}/like`, {
                 userId: user._id
             });
             setLikeCount(response.data.like_count);
@@ -119,7 +119,7 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
         };
 
         try {
-            const response = await axios.put(`http://localhost:3000/posts/postDetails/${postId}`, postEditData);
+            const response = await axios.put(`posts/postDetails/${postId}`, postEditData);
 
             if (response.status === 200) {
                 if (onPostEdit) {
@@ -154,7 +154,7 @@ export default function Post({ user, userPost, formVisibility, handleToggleForm,
     const handleDeletePost = async (event: FormEvent, postId: string) => {
 
         try {
-            const postDeleteResponse = await axios.delete(`http://localhost:3000/posts/postDetails/${postId}`);
+            const postDeleteResponse = await axios.delete(`posts/postDetails/${postId}`);
             setAllPosts(postDeleteResponse.data)
 
             if (onPostDelete) {

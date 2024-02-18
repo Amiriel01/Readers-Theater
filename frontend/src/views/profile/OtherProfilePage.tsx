@@ -8,8 +8,8 @@ import Card from 'react-bootstrap/Card';
 import Header from '../../components/SiteLayout/Header';
 import { useLocation } from 'react-router-dom';
 import Post from '../../components/post/Post';
-import { UserInterface } from '../../interfaces/user.interface.js';
-import { PostInterface } from '../../interfaces/post.interface.js';
+import { UserInterface } from '../../interfaces/user.interface';
+import { PostInterface } from '../../interfaces/post.interface';
 
 //Define interface for OtherProfilePage
 interface OtherProfilePageProps {
@@ -58,7 +58,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
 
     async function getProfile() {
         try {
-            const response = await axios.get(`http://localhost:3000/users/user/${id}`);
+            const response = await axios.get(`users/user/${id}`);
             setProfile(response.data);
             setFriendId(response.data._id);
 
@@ -80,12 +80,12 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
         try {
             if (isFriend) {
                 // Delete friend
-                const followerDeleteResponse = await axios.delete("http://localhost:3000/users/deleteFriend", { data: { userId: user._id, friendId } });
+                const followerDeleteResponse = await axios.delete("users/deleteFriend", { data: { userId: user._id, friendId } });
                 setIsFriend(false);
                 setUser(followerDeleteResponse.data);
             } else {
                 // Add friend
-                const followerAddData = await axios.put('http://localhost:3000/users/addFriend', { userId: user._id, friendId });
+                const followerAddData = await axios.put('users/addFriend', { userId: user._id, friendId });
                 setIsFriend(true);
                 setUser(followerAddData.data);
             }
@@ -96,7 +96,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
 
     const getAllPosts = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/posts/postsList');
+            const response = await axios.get('posts/postsList');
             setAllPosts(response.data);
         } catch (error) {
             

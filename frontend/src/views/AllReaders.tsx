@@ -5,7 +5,7 @@ import Header from '../components/SiteLayout/Header';
 import Card from 'react-bootstrap/Card';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { UserInterface } from '../interfaces/user.interface.js';
+import { UserInterface } from '../interfaces/user.interface';
 
 //Define interface for AllReaders
 interface AllReadersProps {
@@ -30,7 +30,7 @@ export default function AllReaders({ user }: AllReadersProps) {
 
     const getAllUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/users/userList');
+            const response = await axios.get('users/userList');
 
              // Exclude the current user from allReaders
              const filteredReaders = response.data.filter((reader:  Reader) => reader._id !== user._id);

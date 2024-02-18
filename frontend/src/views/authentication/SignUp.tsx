@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { ProgressBar } from 'react-bootstrap';
-import axios, { updateWithKey } from '../../utility/axios.js';
+import axios, { updateWithKey } from '../../utility/axios';
 import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from "react-router";
@@ -73,7 +73,7 @@ export default function SignUp() {
             const formData = new FormData();
             formData.append("image", image as Blob)
 
-            axios.post("http://localhost:3000/upload-image-sign-up", formData, {
+            axios.post("upload-image-sign-up", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 }
@@ -101,7 +101,7 @@ export default function SignUp() {
             }
 
             try {
-                const response = await axios.post("http://localhost:3000/users/userCreate", signUpData);
+                const response = await axios.post("users/userCreate", signUpData);
                 if (response.status === 200) {
                     setSignUp(response.data)
                     navigate('/Login')

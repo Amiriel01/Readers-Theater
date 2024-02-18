@@ -1,16 +1,16 @@
 import FloatingLabel from 'react-bootstrap/FloatingLabel';
 import Form from 'react-bootstrap/Form';
-import MyButton from '../../components/MyButton.js';
+import MyButton from '../../components/MyButton';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import axios, {updateWithKey} from '../../utility/axios.js';
+import axios, {updateWithKey} from '../../utility/axios';
 import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
 import Alert from 'react-bootstrap/Alert';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import Button from 'react-bootstrap/Button';
-import { UserInterface } from '../../interfaces/user.interface.js';
+import { UserInterface } from '../../interfaces/user.interface';
 
 interface LoginInterface {
     setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
@@ -44,7 +44,7 @@ export default function Login({setUser}: LoginInterface) {
         }
         setLogin(signUpData)
 
-        await axios.post("http://localhost:3000/users/login", signUpData).then((response) => {
+        await axios.post("users/login", signUpData).then((response) => {
             const token = response.data.token;
             updateWithKey(token);
             setUser(response.data.user)

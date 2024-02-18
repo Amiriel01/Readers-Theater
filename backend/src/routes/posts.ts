@@ -1,8 +1,8 @@
 import { Router } from "express";
 const router = Router();
-import { posts_list, post_details, post_create, post_edit, post_delete } from "../controllers/postController.ts";
-import { like_post } from "../controllers/likeController.ts";
-import PassportAuth from '../utility/authentication.ts';
+import { posts_list, post_details, post_create, post_edit, post_delete } from "../controllers/postController";
+import { like_post } from "../controllers/likeController";
+import PassportAuth from '../utility/authentication';
 
 router.use(PassportAuth);
 

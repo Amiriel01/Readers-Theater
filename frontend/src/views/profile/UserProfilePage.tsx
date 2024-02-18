@@ -5,12 +5,12 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from "react-router";
 import Card from 'react-bootstrap/Card';
-import Header from '../../components/SiteLayout/Header.js';
-import PostCreateForm from '../../components/post/PostCreateForm.js';
+import Header from '../../components/SiteLayout/Header';
+import PostCreateForm from '../../components/post/PostCreateForm';
 import Posts from '../../components/post/Post.js';
-import { UserInterface } from '../../interfaces/user.interface.js';
-import { PostInterface } from '../../interfaces/post.interface.js';
-import { PostModel } from '../../models/post.model.js';
+import { UserInterface } from '../../interfaces/user.interface';
+import { PostInterface } from '../../interfaces/post.interface';
+import { PostModel } from '../../models/post.model';
 
 //Define interface for Updaterofile
 interface UserProfileProps {
@@ -49,7 +49,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
 
     const getAllPosts = async () => {
         try {
-            const response = await axios.get('http://localhost:3000/posts/postsList');
+            const response = await axios.get('posts/postsList');
 
             // Reverse the order of the posts
             const reversedPosts = response.data.reverse();
@@ -73,7 +73,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
 
     const handleDeleteUser = () => {
 
-        axios.delete(`http://localhost:3000/users/user/${user._id}`);
+        axios.delete(`users/user/${user._id}`);
 
         navigate('/')
     };
@@ -81,7 +81,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
     const handlePostEdit = async (editedData: PostInterface) => {
         try {
             // Fetch the updated post details after editing
-            const response = await axios.get(`http://localhost:3000/posts/postDetails/${editedData._id}`);
+            const response = await axios.get(`posts/postDetails/${editedData._id}`);
 
             if (response.status === 200) {
                 // Update the state with the edited post data
@@ -102,7 +102,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
     const handlePostDelete = async (deletedData: PostInterface) => {
         try {
             // Fetch the updated list of posts
-            const deletedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+            const deletedPostsResponse = await axios.get('posts/postsList');
 
             // Set the state with the updated list of posts
             setAllPosts(deletedPostsResponse.data);
@@ -115,11 +115,11 @@ export default function UserProfilePage({ user }: UserProfileProps) {
     const handlePostCreated = async (newPostData: PostInterface) => {
         try {
             // Fetch the details of the created post
-            const response = await axios.get(`http://localhost:3000/posts/postDetails/${newPostData._id}`);
+            const response = await axios.get(`posts/postDetails/${newPostData._id}`);
 
             if (response.status === 200) {
                 // Fetch the updated list of posts
-                const updatedPostsResponse = await axios.get('http://localhost:3000/posts/postsList');
+                const updatedPostsResponse = await axios.get('posts/postsList');
 
                 // Reverse the order of the posts
                 const reversedPosts = updatedPostsResponse.data.reverse();
