@@ -11,6 +11,7 @@ import Posts from '../../components/post/Post.js';
 import { UserInterface } from '../../interfaces/user.interface';
 import { PostInterface } from '../../interfaces/post.interface';
 import { PostModel } from '../../models/post.model';
+import { backendURL } from '../../utility/backendSettings.js';
 
 //Define interface for Updaterofile
 interface UserProfileProps {
@@ -146,7 +147,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
                     </Row>
                     <Row id='profile-information-container'>
                         <Col lg={4} id='profile-image-container'>
-                            <img id='profile-image' src={`http://localhost:3000/public/${user.imageURL}`}></img>
+                            <img id='profile-image' src={`${backendURL}public/${user.imageURL}`}></img>
                             <Link id='update-profile-link' to='/UpdateProfile'>Update Profile</Link>
                             <button id='delete-user-button' onClick={handleDeleteUser}>Delete User</button>
                         </Col>

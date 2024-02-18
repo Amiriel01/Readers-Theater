@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card';
 import { Link } from 'react-router-dom';
 import MyButton from '../MyButton';
 import { UserInterface } from '../../interfaces/user.interface';
+import { backendURL } from '../../utility/backendSettings';
 
 // Define interface for Post page
 interface PostViewProps {
@@ -31,7 +32,7 @@ export default function PostView({ user, userPost, likeCount, handleToggleCommen
             <Card.Body>
                 <div id='post-flex-container'>
                     <Link id='post-name-link' to={"/users/user/" + userPost.user._id}>
-                        <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userPost.user.imageURL}`}></img>
+                        <img id='post-image-thumbnail' src={`${backendURL}public/${userPost.user.imageURL}`}></img>
                     </Link>
                     <div>
                         <Card.Subtitle id='post-profile-name'>{userPost.user.profile_name}</Card.Subtitle>

@@ -10,6 +10,7 @@ import { useLocation } from 'react-router-dom';
 import Post from '../../components/post/Post';
 import { UserInterface } from '../../interfaces/user.interface';
 import { PostInterface } from '../../interfaces/post.interface';
+import { backendURL } from '../../utility/backendSettings.js';
 
 //Define interface for OtherProfilePage
 interface OtherProfilePageProps {
@@ -114,7 +115,7 @@ export default function OtherProfilePage({ user, setUser, userId, setUserId }: O
                 <Row id='profile-page-information-container'>
                     <Row id='profile-information-container'>
                         <Col lg={4} id='profile-image-container'>
-                            <img id='profile-image' src={`http://localhost:3000/public/${profile.imageURL}`} alt='user profile image'></img>
+                            <img id='profile-image' src={`${backendURL}public/${profile.imageURL}`} alt='user profile image'></img>
                             <button id='delete-user-button' onClick={(event) => handleFriendButtonClick(event, userId, friendId, isFriend)}>
                                 {isFriend ? 'Unfollow' : 'Follow'}
                             </button>

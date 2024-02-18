@@ -7,6 +7,7 @@ import MyButton from './MyButton';
 import { UserInterface } from '../interfaces/user.interface';
 import { PostInterface } from '../interfaces/post.interface';
 import { CommentInterface } from '../interfaces/comment.interface';
+import { backendURL } from '../utility/backendSettings';
 
 // Define interface for Newsfeed page
 interface NewsfeedProps {
@@ -158,7 +159,7 @@ export default function MyComment({ user, post }: NewsfeedProps) {
                         <Card id='posts-card'>
                             <Card.Body>
                                 <div id='post-flex-container'>
-                                    <img id='post-image-thumbnail' src={`http://localhost:3000/public/${userComment.user.imageURL}`}></img>
+                                    <img id='post-image-thumbnail' src={`${backendURL}public/${userComment.user.imageURL}`}></img>
                                     <div>
                                         <Card.Title>
                                             {userComment.user.profile_name}

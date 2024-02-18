@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { backendURL } from './backendSettings';
 let customAxios = axios.create({
     transformRequest: axios.defaults.transformRequest,
     transformResponse: axios.defaults.transformResponse,
-    baseURL: import.meta.env.DEV ? "http://localhost:3000/" : "oeoewvoewvbowevb"
+    baseURL: backendURL 
 });
 
 export function updateWithKey(key: string) {
