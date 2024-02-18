@@ -190,7 +190,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
                             {user.friends.map((friend) => {
                                 return <Link to={"/users/user/" + friend._id} key={friend._id} id='following-link'>
                                     <Card id='following-card'>
-                                        <img className='following-image' src={`http://localhost:3000/public/${friend.imageURL}`}></img>
+                                        <img className='following-image' src={`${backendURL}public/${friend.imageURL}`}></img>
                                         <Card.Body>
                                             <Card.Title>{friend.profile_name}</Card.Title>
                                         </Card.Body>
