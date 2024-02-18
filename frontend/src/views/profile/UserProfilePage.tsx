@@ -149,7 +149,7 @@ export default function UserProfilePage({ user }: UserProfileProps) {
                         <Col lg={4} id='profile-image-container'>
                             <img id='profile-image' src={`${backendURL}public/${user.imageURL}`}></img>
                             <Link id='update-profile-link' to='/UpdateProfile'>Update Profile</Link>
-                            <button id='delete-user-button' onClick={handleDeleteUser}>Delete User</button>
+                            {/* <button id='delete-user-button' onClick={handleDeleteUser}>Delete User</button> */}
                         </Col>
                         <Col lg={6}>
                             <div id='profile-name-container'>
