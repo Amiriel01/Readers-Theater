@@ -12,7 +12,7 @@ export default function Header() {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.get('logout');
+            const response = await axios.get('users/logout');
 
             if (response.status === 200) {
                 // Redirect to the start page
