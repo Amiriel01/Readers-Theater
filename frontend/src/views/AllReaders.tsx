@@ -88,7 +88,7 @@ export default function AllReaders({ user }: AllReadersProps) {
                             {allReaders.filter((reader) => user.friends.some(friend => friend._id === reader._id)).map((readerDetails, index) => {
                                 return <div key={index} id='readers-card-container'>
                                     <Card id='readers-card'>
-                                        <img className='readers-image' src={`http://localhost:3000/public/${readerDetails.imageURL}`} alt={readerDetails.profile_name}></img>
+                                        <img className='readers-image' src={`${backendURL}public/${readerDetails.imageURL}`} alt={readerDetails.profile_name}></img>
                                         <Card.Body>
                                             <Card.Title>{readerDetails.profile_name}</Card.Title>
                                             <Link to={"/users/user/" + readerDetails._id} id='following-link'>
