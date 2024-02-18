@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../utility/axios'
 import { useEffect, useState, FormEvent } from 'react';
 import { Link } from 'react-router-dom';
 import Header from '../components/SiteLayout/Header';
