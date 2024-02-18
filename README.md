@@ -10,7 +10,7 @@
   <p align="center">
     Full Stack MERN (MongoDB, Express, React, and Node) Project
     <br />
-    <a href="https://github.com/github_username/repo_name">View Demo</a>
+    <a href="https://readers-theater.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/Amiriel01/Readers-Theater/issues">Report Bug</a>
     ·
@@ -71,7 +71,7 @@ The sign up page has a three stepper form. In the first step the user creates th
 ![Sign Up Page Image 2](ReadMeImages/signup2.png)
 ![Sign Up Page Image 3](ReadMeImages/signup3.png)
 
-**User Profile Page**
+**User Profile Page (Delete User Disabled on Demo Site)**
 
 After the user has successfully logged into their account they are routed to their user profile page. The profile page showcases the information given in the sign up form first. The user profile section also has the options to update and delete the user's profile. If the profile is deleted the user's comments and posts will also be deleted as well. The rest of the user profile page holds the followed readers and posts section. The user can click the followed readers to link to their profile page, make posts, like their posts, comment on their posts, and read other reader's comments about the post on this page. The user can edit, delete, read, and create posts and their own comments on this page. Readers only have access to their posts on their profile page.
 
