@@ -98,6 +98,6 @@ passport.deserializeUser(async (id, done) => {
   };
 });
 
-app.listen(3000, "localhost", () => {
+app.listen(3000, "0.0.0.0", () => {
   console.log("listening")
 })
