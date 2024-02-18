@@ -89,6 +89,7 @@ export default function SignUp() {
 
     async function handleSubmit(event: FormEvent) {
         alert("Sign-Up is disabled for the demo site. Please use the login username: Guest and password: Guest to demo the site.")
+        navigate('/Login')
         // event.preventDefault();
 
         // if (signUp.password === signUp.confirm_password) {
