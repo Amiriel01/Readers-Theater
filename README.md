@@ -45,7 +45,7 @@
 
 I wanted to create a social media site that catered to readers. I've not run across a social media site that served just the reading enthusiasts of the world and thought it would be a unique spin on a social media site. Below you will see several images and descriptions, you can also view the live demo by clicking the link above in the header also. 
 
-This full stack social media site was created using TypeScript, React, Vite, Node.js, Express, Mongoose, and MongoDB. I used Passport and Bcrypt for password authentication. Bootstrap was used in some of the styling and Multer was used for image uploads. The website is fully mobile and tablet responsive also.
+This full stack social media site was created using TypeScript, React, Vite, Node.js, Express, Mongoose, and MongoDB. I used Passport and Bcrypt for password authentication. Bootstrap was used in some of the styling and Multer was used for image uploads. The website is fully mobile and tablet responsive also. 
 
 If you notice any bugs or have an idea to make this website even better please use the links above to make your suggestions! Thank you in advance for viewing my website. 
 
