@@ -88,35 +88,35 @@ export default function SignUp() {
     };
 
     async function handleSubmit(event: FormEvent) {
-        alert("Sign-Up is disabled for the demo site. Please use the login username: Guest and password: Guest to demo the site.")
-        navigate('/Login')
-        // event.preventDefault();
+        // alert("Sign-Up is disabled for the demo site. Please use the login username: Guest and password: Guest to demo the site.")
+        // navigate('/Login')
+        event.preventDefault();
 
-        // if (signUp.password === signUp.confirm_password) {
-        //     const signUpData = {
-        //         username: signUp.username,
-        //         password: signUp.password,
-        //         confirm_password: signUp.confirm_password,
-        //         profile_name: signUp.profile_name,
-        //         imageURL: imageURL,
-        //         about_section: signUp.about_section,
-        //     }
+        if (signUp.password === signUp.confirm_password) {
+            const signUpData = {
+                username: signUp.username,
+                password: signUp.password,
+                confirm_password: signUp.confirm_password,
+                profile_name: signUp.profile_name,
+                imageURL: imageURL,
+                about_section: signUp.about_section,
+            }
 
-        //     try {
-        //         const response = await axios.post("users/userCreate", signUpData);
-        //         if (response.status === 200) {
-        //             setSignUp(response.data)
-        //             navigate('/Login')
-        //         }
-        //     } catch (ex: any) {
+            try {
+                const response = await axios.post("users/userCreate", signUpData);
+                if (response.status === 200) {
+                    setSignUp(response.data)
+                    navigate('/Login')
+                }
+            } catch (ex: any) {
 
-        //         if (ex.response.status === 500) {
-        //             setUsernameAlertShow(true)
-        //         }
-        //     }
-        // } else {
-        //     setPasswordAlertShow(true)
-        // }
+                if (ex.response.status === 500) {
+                    setUsernameAlertShow(true)
+                }
+            }
+        } else {
+            setPasswordAlertShow(true)
+        }
     }
 
 

@@ -23,7 +23,6 @@ export default function UserProfilePage({ user }: UserProfileProps) {
     const [postId, setPostId] = useState("");
     const [formVisibility, setFormVisibility] = useState({});
     const [commentVisibility, setCommentVisibility] = useState({});
-
     const [newPost, setNewPost] = useState(new PostModel());
 
     const [editedPost, setEditedPost] = useState({
