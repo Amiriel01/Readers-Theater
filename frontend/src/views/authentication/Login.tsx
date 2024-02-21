@@ -23,7 +23,7 @@ export default function Login({setUser}: LoginInterface) {
         password: '',
     });
 
-    const [alertShow, setAlertShow] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
     const [showPassword, setShowPassword] = useState(false);
 
@@ -51,7 +51,7 @@ export default function Login({setUser}: LoginInterface) {
             if (response.status === 200) {
                 navigate('/UserProfilePage')
             } else {
-                setAlertShow(true)
+                setShowAlert(true);
             }
         })
     }
@@ -101,13 +101,13 @@ export default function Login({setUser}: LoginInterface) {
                                 </Button>
                             </FloatingLabel>
                         </Form.Group>
-                        <Row>
+                        {/* <Row>
                             <Col>
                                 <Alert hidden={!alertShow} variant={"danger"}>
-                                    Username or Password Not Found
+                                Username and password not recognized!
                                 </Alert>
                             </Col>
-                        </Row>
+                        </Row> */}
                         <div id='login-buttons-container'>
                             <Row>
                                 <MyButton id='login-page-button1' title='Login'></MyButton>
@@ -120,6 +120,11 @@ export default function Login({setUser}: LoginInterface) {
                         </div>
                     </Form>
                 </Row>
+                {showAlert && (
+                    <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible id='login-alert'>
+                        Username and password not recognized!
+                    </Alert>
+                )}
             </div>
         </>
     )
