@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import MyButton from '../../components/MyButton';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import axios, {updateWithKey} from '../../utility/axios';
+import axios, { updateWithKey } from '../../utility/axios';
 import { useLocation, Link } from 'react-router-dom';
 import { FormEvent, useState, useEffect } from 'react';
 import { useNavigate } from "react-router";
@@ -16,7 +16,7 @@ interface LoginInterface {
     setUser: React.Dispatch<React.SetStateAction<UserInterface>>;
 }
 
-export default function Login({setUser}: LoginInterface) {
+export default function Login({ setUser }: LoginInterface) {
 
     const [login, setLogin] = useState({
         username: '',
@@ -122,7 +122,7 @@ export default function Login({setUser}: LoginInterface) {
                 </Row>
                 {showAlert && (
                     <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible id='login-alert'>
-                        Username and password not recognized!
+                        Username and password not recognized
                     </Alert>
                 )}
             </div>
