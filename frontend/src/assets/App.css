@@ -455,9 +455,10 @@ input.form-control {
     background-color: rgb(248, 196, 198);
 }
 
-/* #login-alert {
-    width: ;
-} */
+#login-alert {
+    margin-top: 2rem;
+    border-radius: 0px;
+}
 
 @media(min-width: 735px) {
     #login-page-button1 {
