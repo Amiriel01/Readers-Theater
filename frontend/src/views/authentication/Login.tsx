@@ -113,12 +113,12 @@ export default function Login({ setUser }: LoginInterface) {
                             </Row>
                         </div>
                     </Form>
-                </Row>
-                {showAlert && (
+                    {showAlert && (
                     <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible id='login-alert'>
                         Username and password not recognized
                     </Alert>
                 )}
+                </Row>
             </div>
         </>
     )
