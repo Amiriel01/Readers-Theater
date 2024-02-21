@@ -101,13 +101,11 @@ export default function Login({ setUser }: LoginInterface) {
                                 </Button>
                             </FloatingLabel>
                         </Form.Group>
-                        {/* <Row>
-                            <Col>
-                                <Alert hidden={!alertShow} variant={"danger"}>
-                                Username and password not recognized!
-                                </Alert>
-                            </Col>
-                        </Row> */}
+                        {showAlert && (
+                            <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible id='login-alert'>
+                                Username and password not recognized
+                            </Alert>
+                        )}
                         <div id='login-buttons-container'>
                             <Row>
                                 <MyButton id='login-page-button1' title='Login'></MyButton>
@@ -120,11 +118,6 @@ export default function Login({ setUser }: LoginInterface) {
                         </div>
                     </Form>
                 </Row>
-                {showAlert && (
-                    <Alert variant="danger" onClose={() => setShowAlert(false)} dismissible id='login-alert'>
-                        Username and password not recognized
-                    </Alert>
-                )}
             </div>
         </>
     )
