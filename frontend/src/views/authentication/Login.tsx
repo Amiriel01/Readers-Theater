@@ -53,8 +53,9 @@ export default function Login({ setUser }: LoginInterface) {
             } else {
                 setShowAlert(true);
             }
-        })
-    }
+        }).catch(error => {
+            setShowAlert(true);
+    })}
 
     const { pathname } = useLocation();
 
