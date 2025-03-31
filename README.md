@@ -10,8 +10,8 @@
   <p align="center">
     Full Stack MERN (MongoDB, Express, React, and Node) Project
     <br />
-    <a href="https://readers-theater.netlify.app/">View Demo</a>
-    ·
+<!--     <a href="https://readers-theater.netlify.app/">View Demo</a>
+    · -->
     <a href="https://github.com/Amiriel01/Readers-Theater/issues">Report Bug</a>
     ·
     <a href="https://github.com/Amiriel01/Readers-Theater/issues">Request Feature</a>
